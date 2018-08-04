@@ -1,32 +1,36 @@
-grammar FOOL;
-
-@header {
-    import java.util.ArrayList;
-}
+grammar FOOLold;
 
 @lexer::members {
-   public ArrayList<String> errors = new ArrayList<>();
+   //there is a much better way to do this, check the ANTLR guide
+   //I will leave it like this for now just becasue it is quick
+   //but it doesn't work well
+   public int lexicalErrors=0;
 }
 
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
-  
-prog:  exp SEMIC | LET decs IN (exp | stats) SEMIC ;
 
-decs:   (vardec SEMIC | fundec)+ ;
+prog   : exp SEMIC                           #singleExp
+       | let (exp | stats) SEMIC             #letInExp
+       ;
 
-vardec: type ID (ASM exp)?;
+let       : LET (dec SEMIC)+ IN ;
 
-varasm: ID ASM exp ;
+vardec  : type ID (ASM exp)?;
 
-fundec: type ID LPAR (args)? RPAR fbody SEMIC ;
+varasm     : ID ASM exp ;
 
-fbody:  exp | stats | LET (vardec)+ IN (exp | stats) ;
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
 
-args:   vardec (COMMA vardec)* ;
+dec   : vardec           #varDeclaration
+      | fun              #funDeclaration
+      ;
 
-type:   INT | BOOL | VOID ;
+
+type   : INT
+        | BOOL
+      ;
 
 exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
       ;
@@ -45,9 +49,11 @@ value  :  INTEGER                           #intVal
       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
       ;
 
+
 stats:  stat (COMMA stat)* ;
 
 stat:   varasm | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR ;
+
 
 /*------------------------------------------------------------------
  * LEXER RULES
@@ -70,19 +76,18 @@ CRPAR  : '}' ;
 IF        : 'if' ;
 THEN   : 'then' ;
 ELSE   : 'else' ;
-PRINT : 'print' ;
+//PRINT : 'print' ;
 LET    : 'let' ;
 IN     : 'in' ;
 VAR    : 'var' ;
 FUN    : 'fun' ;
 INT    : 'int' ;
 BOOL   : 'bool' ;
-VOID   : 'void' ;
 
 
 
 //Numbers
-fragment DIGIT : '0'..'9';    
+fragment DIGIT : '0'..'9';
 INTEGER       : DIGIT+;
 
 //IDs
@@ -99,5 +104,4 @@ BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
  //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
  //THIS IS WRONG!!!!
-ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;
-//  ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
+ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);

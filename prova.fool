@@ -1,1 +1,1 @@
-let int stocazzo = 1; in  stocazzo + 1;
+let int x = 1; int y = 2; in y = x;
