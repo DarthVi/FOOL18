@@ -11,8 +11,9 @@ grammar FOOLold;
  * PARSER RULES
  *------------------------------------------------------------------*/
 
-prog   : exp SEMIC                           #singleExp
-       | let (exp | stats) SEMIC             #letInExp
+prog   : exp SEMIC                                  #singleExp
+       | let (exp | stats) SEMIC                    #letInExp
+       | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
        ;
 
 let       : LET (dec SEMIC)+ IN ;
@@ -26,6 +27,9 @@ fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
 dec   : vardec           #varDeclaration
       | fun              #funDeclaration
       ;
+
+classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
+              (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
 
 
 type   : INT
@@ -83,6 +87,8 @@ VAR    : 'var' ;
 FUN    : 'fun' ;
 INT    : 'int' ;
 BOOL   : 'bool' ;
+CLASS  : 'class' ;
+EXTENDS: 'extends' ;
 
 
 

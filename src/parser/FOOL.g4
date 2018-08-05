@@ -12,7 +12,7 @@ grammar FOOL;
  * PARSER RULES
  *------------------------------------------------------------------*/
   
-prog:  exp SEMIC | LET decs IN (exp | stats) SEMIC ;
+prog:  exp SEMIC | LET decs IN (exp | stats) SEMIC | classdec+ ( (LET decs IN)? (exp | stats) SEMIC)?;
 
 decs:   (vardec SEMIC | fundec)+ ;
 
@@ -25,6 +25,9 @@ fundec: type ID LPAR (args)? RPAR fbody SEMIC ;
 fbody:  exp | stats | LET (vardec)+ IN (exp | stats) ;
 
 args:   vardec (COMMA vardec)* ;
+
+classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
+              (CLPAR fundec (fundec)* CRPAR)? ;
 
 type:   INT | BOOL | VOID ;
 
@@ -78,6 +81,8 @@ FUN    : 'fun' ;
 INT    : 'int' ;
 BOOL   : 'bool' ;
 VOID   : 'void' ;
+CLASS  : 'class' ;
+EXTENDS: 'extends' ;
 
 
 
