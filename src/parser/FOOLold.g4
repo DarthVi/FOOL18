@@ -1,10 +1,11 @@
 grammar FOOLold;
 
+@header {
+    import java.util.ArrayList;
+}
+
 @lexer::members {
-   //there is a much better way to do this, check the ANTLR guide
-   //I will leave it like this for now just becasue it is quick
-   //but it doesn't work well
-   public int lexicalErrors=0;
+   public ArrayList<String> errors = new ArrayList<>();
 }
 
 /*------------------------------------------------------------------
@@ -45,12 +46,16 @@ term   : left=factor ((TIMES | DIV) right=term)?
 factor : left=value (EQ right=value)?
       ;
 
-value  :  INTEGER                           #intVal
+value  :  INTEGER                          #intVal
       | ( TRUE | FALSE )                   #boolVal
+      | NULL                               #nullVal
+      | VOID                               #voidExp
       | LPAR exp RPAR                      #baseExp
       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
       | ID                                             #varExp
       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
+      | NEW ID LPAR (ID (COMMA ID)* )? RPAR            #objInst
+      | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR          #objCall
       ;
 
 
@@ -89,6 +94,9 @@ INT    : 'int' ;
 BOOL   : 'bool' ;
 CLASS  : 'class' ;
 EXTENDS: 'extends' ;
+NULL   : 'null';
+NEW    : 'new' ;
+VOID   : 'void' ;
 
 
 
@@ -108,6 +116,4 @@ BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
 
 
- //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
- //THIS IS WRONG!!!!
-ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
+ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;

@@ -42,10 +42,14 @@ factor : left=value (EQ right=value)?
 
 value  :  INTEGER                           #intVal
       | ( TRUE | FALSE )                   #boolVal
+      | NULL                               #nullVal
+      | VOID                               #voidExp
       | LPAR exp RPAR                      #baseExp
       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
       | ID                                             #varExp
       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
+      | NEW ID LPAR (ID (COMMA ID)* )? RPAR            #objInst
+      | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR          #objCall
       ;
 
 stats:  stat (COMMA stat)* ;
@@ -83,7 +87,8 @@ BOOL   : 'bool' ;
 VOID   : 'void' ;
 CLASS  : 'class' ;
 EXTENDS: 'extends' ;
-
+NEW    : 'new' ;
+NULL   : 'null';
 
 
 //Numbers
@@ -102,7 +107,4 @@ BLOCKCOMENTS    : '/*'( ~('/'|'*')|'/'~'*'|'*'~'/'|BLOCKCOMENTS)* '*/' -> skip;
 
 
 
- //VERY SIMPLISTIC ERROR CHECK FOR THE LEXING PROCESS, THE OUTPUT GOES DIRECTLY TO THE TERMINAL
- //THIS IS WRONG!!!!
 ERR     : . { errors.add("Invalid char: " + getText());} -> channel(HIDDEN) ;
-//  ERR     : . { System.out.println("Invalid char: "+ getText()); lexicalErrors++; } -> channel(HIDDEN);
