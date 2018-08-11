@@ -21,9 +21,12 @@ let       : LET (dec SEMIC)+ IN ;
 
 vardec  : type ID (ASM exp)?;
 
+funlet  : LET (vardec SEMIC)+ IN ;
+
 varasm     : ID ASM exp ;
 
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (let)? exp ;
+// funlet serve ad evitare di usare let, il quale permetterebbe di avere funzioni annidate
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (funlet)? (exp | stats) ;
 
 dec   : vardec           #varDeclaration
       | fun              #funDeclaration
