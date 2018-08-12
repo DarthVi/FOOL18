@@ -1,10 +1,11 @@
 package vm;
 
+import exception.StackOverflowException;
+import exception.StackUnderflowException;
+import exception.VMOutOfMemoryException;
 import util.VMConfigReader;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Manages the memory space with utilities to allocate space and deallocate it via garbage collection (for the heap
@@ -19,8 +20,10 @@ public class MemoryManager
     //heap size
     private int heapSize;
 
-    //list of objects allocated
-    List<ObjectInfo> allocatedInstances = new ArrayList<ObjectInfo>();
+    private int[] stackMemory;
+
+    //map of objects allocated
+    Map<Integer, ObjectInfo> allocatedInstances = new HashMap<Integer, ObjectInfo>();
 
     //list of indexes of free memory available
     List<Integer> freeHeapMemory;
@@ -37,6 +40,7 @@ public class MemoryManager
         configReader.closePropFile();
 
         freeHeapMemory = new ArrayList<Integer>(heapSize);
+        stackMemory = new int[memorySize];
 
         for( int i = 0; i < heapSize; i++)
         {
@@ -44,4 +48,72 @@ public class MemoryManager
         }
 
     }
+
+    /**
+     * pushes a value at the top of the stack of the virtual machine
+     * @param value
+     * @param vm
+     * @throws StackOverflowException
+     */
+    public void push(int value, VirtualMachine vm) throws StackOverflowException
+    {
+        if(vm.sp + 1 > this.memorySize)
+            throw new StackOverflowException();
+
+        stackMemory[vm.sp++] = value;
+    }
+
+    /**
+     * Pops values from the stack
+     * @param value
+     * @param vm
+     * @throws StackUnderflowException
+     */
+    public void pop(int value, VirtualMachine vm) throws StackUnderflowException
+    {
+        if (vm.sp - 1 < 0)
+            throw new StackUnderflowException();
+
+        vm.sp--;
+    }
+
+    /**
+     * Allocates a chunk of memory of dimension size from the heap memory. It also adds some info about allocation
+     * in the allocatedInstance list (it will be needed for garbage collection) and removes entries from the
+     * freeHeapMemory list.
+     *
+     * Returns an ObjectInfo
+     * @param size
+     * @return  ObjectInfo containing startIndex, size and pointers list
+     * @throws VMOutOfMemoryException
+     */
+    public ObjectInfo allocate(int size) throws VMOutOfMemoryException
+    {
+        if(freeHeapMemory.size() < size)
+            throw new VMOutOfMemoryException();
+
+        int startIndex = freeHeapMemory.get(0);
+        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size);
+        allocatedInstances.put(startIndex, objinfo);
+        freeHeapMemory.remove(0);
+        return objinfo;
+    }
+
+    /**
+     * Deallocates memory on the heap, adding it to the freeHeapMemory and removing data from the allocatedIstances
+     * @param index
+     * @param size
+     */
+    public void deallocate(int index, int size)
+    {
+        allocatedInstances.remove(index);
+
+        for(int i = index; i < index + size; i++)
+        {
+            freeHeapMemory.add(i);
+        }
+
+        Collections.sort(freeHeapMemory);
+    }
+
 }
