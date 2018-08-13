@@ -1,4 +1,4 @@
-grammar FOOLold;
+grammar FOOLexperimental;
 
 @header {
     import java.util.ArrayList;
@@ -11,34 +11,25 @@ grammar FOOLold;
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
+  
+prog:  exp SEMIC | LET decs IN (exp | stats) SEMIC | classdec+ ( (LET decs IN)? (exp | stats) SEMIC)?;
 
-prog   : exp SEMIC                                  #singleExp
-       | let (exp | stats) SEMIC                    #letInExp
-       | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
-       ;
+decs:   (vardec SEMIC | fundec)+ ;
 
-let       : LET (dec SEMIC)+ IN ;
+vardec: type ID (ASM exp)?;
 
-vardec  : type ID (ASM exp)?;
+varasm: ID ASM exp ;
 
-funlet  : LET (vardec SEMIC)+ IN ;
+fundec: type ID LPAR (args)? RPAR fbody SEMIC ;
 
-varasm     : ID ASM exp ;
+fbody:  exp | stats | LET (vardec)+ IN (exp | stats) ;
 
-// funlet serve ad evitare di usare let, il quale permetterebbe di avere funzioni annidate
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (funlet)? (exp | stats) ;
-
-dec   : vardec           #varDeclaration
-      | fun              #funDeclaration
-      ;
+args:   vardec (COMMA vardec)* ;
 
 classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
-              (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
+              (CLPAR fundec (fundec)* CRPAR)? ;
 
-
-type   : INT
-        | BOOL
-      ;
+type:   INT | BOOL | VOID ;
 
 exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
       ;
@@ -49,7 +40,7 @@ term   : left=factor ((TIMES | DIV) right=term)?
 factor : left=value (EQ right=value)?
       ;
 
-value  :  INTEGER                          #intVal
+value  :  INTEGER                           #intVal
       | ( TRUE | FALSE )                   #boolVal
       | NULL                               #nullVal
       | VOID                               #voidExp
@@ -61,11 +52,9 @@ value  :  INTEGER                          #intVal
       | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR          #objCall
       ;
 
-
 stats:  stat (COMMA stat)* ;
 
 stat:   varasm | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR ;
-
 
 /*------------------------------------------------------------------
  * LEXER RULES
@@ -88,23 +77,22 @@ CRPAR  : '}' ;
 IF        : 'if' ;
 THEN   : 'then' ;
 ELSE   : 'else' ;
-//PRINT : 'print' ;
+PRINT : 'print' ;
 LET    : 'let' ;
 IN     : 'in' ;
 VAR    : 'var' ;
 FUN    : 'fun' ;
 INT    : 'int' ;
 BOOL   : 'bool' ;
+VOID   : 'void' ;
 CLASS  : 'class' ;
 EXTENDS: 'extends' ;
-NULL   : 'null';
 NEW    : 'new' ;
-VOID   : 'void' ;
-
+NULL   : 'null';
 
 
 //Numbers
-fragment DIGIT : '0'..'9';
+fragment DIGIT : '0'..'9';    
 INTEGER       : DIGIT+;
 
 //IDs

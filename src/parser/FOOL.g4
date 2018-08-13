@@ -11,25 +11,34 @@ grammar FOOL;
 /*------------------------------------------------------------------
  * PARSER RULES
  *------------------------------------------------------------------*/
-  
-prog:  exp SEMIC | LET decs IN (exp | stats) SEMIC | classdec+ ( (LET decs IN)? (exp | stats) SEMIC)?;
 
-decs:   (vardec SEMIC | fundec)+ ;
+prog   : exp SEMIC                                  #singleExp
+       | let (exp | stats) SEMIC                    #letInExp
+       | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
+       ;
 
-vardec: type ID (ASM exp)?;
+let       : LET (dec SEMIC)+ IN ;
 
-varasm: ID ASM exp ;
+vardec  : type ID (ASM exp)?;
 
-fundec: type ID LPAR (args)? RPAR fbody SEMIC ;
+funlet  : LET (vardec SEMIC)+ IN ;
 
-fbody:  exp | stats | LET (vardec)+ IN (exp | stats) ;
+varasm     : ID ASM exp ;
 
-args:   vardec (COMMA vardec)* ;
+// funlet serve ad evitare di usare let, il quale permetterebbe di avere funzioni annidate
+fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (funlet)? (exp | stats) ;
+
+dec   : vardec           #varDeclaration
+      | fun              #funDeclaration
+      ;
 
 classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
-              (CLPAR fundec (fundec)* CRPAR)? ;
+              (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
 
-type:   INT | BOOL | VOID ;
+
+type   : INT
+        | BOOL
+      ;
 
 exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
       ;
@@ -40,7 +49,7 @@ term   : left=factor ((TIMES | DIV) right=term)?
 factor : left=value (EQ right=value)?
       ;
 
-value  :  INTEGER                           #intVal
+value  :  INTEGER                          #intVal
       | ( TRUE | FALSE )                   #boolVal
       | NULL                               #nullVal
       | VOID                               #voidExp
@@ -52,9 +61,11 @@ value  :  INTEGER                           #intVal
       | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR          #objCall
       ;
 
+
 stats:  stat (COMMA stat)* ;
 
 stat:   varasm | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR ;
+
 
 /*------------------------------------------------------------------
  * LEXER RULES
@@ -77,22 +88,23 @@ CRPAR  : '}' ;
 IF        : 'if' ;
 THEN   : 'then' ;
 ELSE   : 'else' ;
-PRINT : 'print' ;
+//PRINT : 'print' ;
 LET    : 'let' ;
 IN     : 'in' ;
 VAR    : 'var' ;
 FUN    : 'fun' ;
 INT    : 'int' ;
 BOOL   : 'bool' ;
-VOID   : 'void' ;
 CLASS  : 'class' ;
 EXTENDS: 'extends' ;
-NEW    : 'new' ;
 NULL   : 'null';
+NEW    : 'new' ;
+VOID   : 'void' ;
+
 
 
 //Numbers
-fragment DIGIT : '0'..'9';    
+fragment DIGIT : '0'..'9';
 INTEGER       : DIGIT+;
 
 //IDs
