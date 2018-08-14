@@ -64,7 +64,9 @@ value  :  INTEGER                          #intVal
 
 stats:  stat (COMMA stat)* ;
 
-stat:   varasm | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR ;
+stat:   varasm  #varasmStat
+        | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat
+        ;
 
 
 /*------------------------------------------------------------------
