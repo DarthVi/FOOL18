@@ -13,6 +13,7 @@ import java.util.*;
  */
 public class MemoryManager
 {
+    //TODO: progettare la dispatch table
     //stack size
     private int memorySize;
     //code size
@@ -29,7 +30,7 @@ public class MemoryManager
     List<Integer> freeHeapMemory;
 
     //virtual table
-    Map<String, ArrayList<VTableEntry>> virtualTables = new HashMap<>();
+    //Map<String, ArrayList<VTableEntry>> virtualTables = new HashMap<>();
 
     //table of break records used by the table-compaction algorithm
     Map<Integer, BreakRecord> breakRecords;
@@ -90,21 +91,28 @@ public class MemoryManager
      * @return  ObjectInfo containing startIndex, size and pointers list
      * @throws VMOutOfMemoryException
      */
-    public ObjectInfo allocate(int size, int[] args, VirtualMachine vm) throws VMOutOfMemoryException
+    public ObjectInfo allocate(int size, int vftAddress, int[] args, VirtualMachine vm) throws VMOutOfMemoryException
     {
-        //TODO: progettare la dispatch table
 
-        if(freeHeapMemory.size() < size || vm.hp - 1 < vm.sp)
+
+        //object size + 1 for the virtual function table address
+        if(freeHeapMemory.size() < size + 1 || vm.hp - 1 < vm.sp)
             throw new VMOutOfMemoryException();
 
         int startIndex = freeHeapMemory.get(0);
-        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size, null);
+        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size, vftAddress);
         allocatedInstances.put(startIndex, objinfo);
 
-        for(int i = 0; i < size; i++)
+        for(int i = 0; i < size + 1; i++)
             freeHeapMemory.remove(i);
 
-        //TODO: mettere in memory l'indirizzo della dispatch table e gli argomenti
+        memory[startIndex] = vftAddress;
+
+        for(int i = startIndex + 1, j = 0; i < startIndex + size; i++, j++)
+            memory[i] = args[j];
+
+        vm.hp -= size + 1;
+
 
         return objinfo;
     }
@@ -114,17 +122,18 @@ public class MemoryManager
      * @param index
      * @param size
      */
-    public void deallocate(int index, int size)
+    public void deallocate(int index, int size, VirtualMachine vm)
     {
-
-        //TODO: aggiustare questa funzione tenendo conto della dispatch table in memory e dei valori sempre in memory
 
         allocatedInstances.remove(index);
 
-        for(int i = index; i < index + size; i++)
+        for(int i = index; i < index + size + 1; i++)
         {
+            memory[i] = 0;
             freeHeapMemory.add(i);
         }
+
+        vm.hp += size + 1;
 
         Collections.sort(freeHeapMemory);
     }
