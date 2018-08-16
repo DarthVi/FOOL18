@@ -28,6 +28,9 @@ public class MemoryManager
     //list of indexes of free memory available
     List<Integer> freeHeapMemory;
 
+    //virtual table
+    Map<String, ArrayList<VTableEntry>> virtualTables = new HashMap<>();
+
     //table of break records used by the table-compaction algorithm
     Map<Integer, BreakRecord> breakRecords;
 
@@ -95,7 +98,7 @@ public class MemoryManager
             throw new VMOutOfMemoryException();
 
         int startIndex = freeHeapMemory.get(0);
-        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size);
+        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size, null);
         allocatedInstances.put(startIndex, objinfo);
 
         for(int i = 0; i < size; i++)
