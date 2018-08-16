@@ -1,8 +1,10 @@
 package parser.errorhandling;
 import org.antlr.v4.runtime.*;
 
-
-public class ErrorListener extends BaseErrorListener
+/**
+ * Listens for Syntax Error and repoters the line where they happen
+ */
+public class SyntaxErrorListener extends BaseErrorListener
 {
     public void syntaxError(Recognizer<?, ?> recognizer,
                             Object offendingSymbol,
