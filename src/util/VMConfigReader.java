@@ -37,9 +37,9 @@ public class VMConfigReader
         return Integer.parseInt(prop.getProperty("codesize"));
     }
 
-    public int getHeapSize()
+    public int getHeapStart()
     {
-        return Integer.parseInt(prop.getProperty("heapsize"));
+        return Integer.parseInt(prop.getProperty("heapstart"));
     }
 
     public void closePropFile()

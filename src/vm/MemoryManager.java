@@ -17,10 +17,10 @@ public class MemoryManager
     private int memorySize;
     //code size
     private int codeSize;
-    //heap size
-    private int heapSize;
+    //start memory address for the heap
+    private int heapstart;
 
-    private int[] stackMemory;
+    private int[] memory;
 
     //map of objects allocated
     Map<Integer, ObjectInfo> allocatedInstances = new HashMap<Integer, ObjectInfo>();
@@ -36,13 +36,13 @@ public class MemoryManager
         VMConfigReader configReader = new VMConfigReader("vmconfig.properties");
         memorySize = configReader.getMemorySize();
         codeSize = configReader.getCodeSize();
-        heapSize = configReader.getHeapSize();
+        heapstart = configReader.getHeapStart();
         configReader.closePropFile();
 
-        freeHeapMemory = new ArrayList<Integer>(heapSize);
-        stackMemory = new int[memorySize];
+        freeHeapMemory = new ArrayList<Integer>(memorySize);
+        memory = new int[memorySize];
 
-        for( int i = 0; i < heapSize; i++)
+        for( int i = heapstart -1; i >= 0; i--)
         {
             freeHeapMemory.set(i, i);
         }
@@ -57,10 +57,10 @@ public class MemoryManager
      */
     public void push(int value, VirtualMachine vm) throws StackOverflowException
     {
-        if(vm.sp + 1 > this.memorySize)
+        if(vm.sp + 1 > this.memorySize || vm.sp + 1 > vm.hp)
             throw new StackOverflowException();
 
-        stackMemory[vm.sp++] = value;
+        memory[vm.sp++] = value;
     }
 
     /**
@@ -87,15 +87,22 @@ public class MemoryManager
      * @return  ObjectInfo containing startIndex, size and pointers list
      * @throws VMOutOfMemoryException
      */
-    public ObjectInfo allocate(int size) throws VMOutOfMemoryException
+    public ObjectInfo allocate(int size, int[] args, VirtualMachine vm) throws VMOutOfMemoryException
     {
-        if(freeHeapMemory.size() < size)
+        //TODO: progettare la dispatch table
+
+        if(freeHeapMemory.size() < size || vm.hp - 1 < vm.sp)
             throw new VMOutOfMemoryException();
 
         int startIndex = freeHeapMemory.get(0);
         ObjectInfo objinfo = new ObjectInfo(startIndex, false, size);
         allocatedInstances.put(startIndex, objinfo);
-        freeHeapMemory.remove(0);
+
+        for(int i = 0; i < size; i++)
+            freeHeapMemory.remove(i);
+
+        //TODO: mettere in memory l'indirizzo della dispatch table e gli argomenti
+
         return objinfo;
     }
 
@@ -106,6 +113,9 @@ public class MemoryManager
      */
     public void deallocate(int index, int size)
     {
+
+        //TODO: aggiustare questa funzione tenendo conto della dispatch table in memory e dei valori sempre in memory
+
         allocatedInstances.remove(index);
 
         for(int i = index; i < index + size; i++)
