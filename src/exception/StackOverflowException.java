@@ -1,6 +1,6 @@
 package exception;
 
-public class StackOverflowException extends Exception
+public class StackOverflowException extends RuntimeException
 {
     public StackOverflowException()
     {

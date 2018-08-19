@@ -1,6 +1,6 @@
 package exception;
 
-public class StackUnderflowException extends Exception
+public class StackUnderflowException extends RuntimeException
 {
     public StackUnderflowException()
     {

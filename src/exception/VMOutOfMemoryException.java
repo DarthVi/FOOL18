@@ -1,6 +1,6 @@
 package exception;
 
-public class VMOutOfMemoryException extends Exception
+public class VMOutOfMemoryException extends RuntimeException
 {
     public VMOutOfMemoryException()
     {
