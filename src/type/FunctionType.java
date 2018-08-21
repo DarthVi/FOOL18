@@ -1,6 +1,5 @@
 package type;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class FunctionType implements IType
@@ -91,5 +90,25 @@ public class FunctionType implements IType
         }
 
         return false;
+    }
+
+    @Override
+    public String toString()
+    {
+
+        StringBuilder retStrBfr = new StringBuilder("FunctionType{" +
+                "returnType=" + returnType +
+                ", argumentsType=" + "{ ");
+
+        for(IType type : argumentsType)
+        {
+            retStrBfr.append(type);
+            retStrBfr.append(",");
+        }
+
+        retStrBfr.deleteCharAt(retStrBfr.length() - 1);
+        retStrBfr.append("} }");
+
+        return retStrBfr.toString();
     }
 }
