@@ -2,5 +2,7 @@ package type;
 
 public interface IType
 {
-    //TODO: insert code
+    TypeID getTypeID();
+
+    boolean isSubtypeOf(IType type);
 }
