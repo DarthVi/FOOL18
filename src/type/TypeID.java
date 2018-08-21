@@ -6,6 +6,5 @@ public enum TypeID
     BOOL,
     VOID,
     FUNCTION,
-    OBJECT,
-    CLASSDEC
+    CLASS
 }

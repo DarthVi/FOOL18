@@ -1,5 +1,6 @@
 package type;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionType implements IType
@@ -11,6 +12,12 @@ public class FunctionType implements IType
     {
         this.returnType = returnType;
         this.argumentsType = argumentsType;
+    }
+
+    public FunctionType(IType returnType)
+    {
+        this.returnType = returnType;
+        this.argumentsType = new ArrayList<>();
     }
 
     @Override
@@ -90,6 +97,24 @@ public class FunctionType implements IType
         }
 
         return false;
+    }
+
+    public IType getArgumentType(int index) throws IndexOutOfBoundsException
+    {
+        if(index >= 0 && index < argumentsType.size())
+            return argumentsType.get(index);
+        else
+            throw new IndexOutOfBoundsException();
+    }
+
+    public int getArgumentListSize()
+    {
+        return argumentsType.size();
+    }
+
+    public void addArgument(IType argument)
+    {
+        argumentsType.add(argument);
     }
 
     @Override
