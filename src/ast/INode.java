@@ -13,5 +13,6 @@ public interface INode
 
     ArrayList<SemanticError> checkSemantics(Environment env);
 
-    String toPrint(String str);
+    @Override
+    String toString();
 }

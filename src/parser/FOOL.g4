@@ -38,6 +38,8 @@ classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMI
 
 type   : INT
         | BOOL
+        | VOID
+        | ID
       ;
 
 exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
