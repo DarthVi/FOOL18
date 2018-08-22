@@ -2,6 +2,8 @@ package ast;
 
 import exception.TypeException;
 import exception.UndeclaredVariableException;
+import jdk.nashorn.internal.parser.Token;
+import org.antlr.runtime.CommonToken;
 import parser.FOOLParser;
 import util.SemanticError;
 import util.Environment;
@@ -12,8 +14,8 @@ import java.util.ArrayList;
 //TODO: controllare meglio questa classe
 public class TypeNode implements INode {
 
-    String declaredType;
-    IType type;
+    private String declaredType;
+    private IType type;
 
     public TypeNode(FOOLParser.TypeContext ctx, String type) {
         declaredType = type;
@@ -48,7 +50,8 @@ public class TypeNode implements INode {
 //        }
 //        return res;
         //TODO: fixare questo metodo dopo aver capito come minchia gestire le classi
-        return null;
+        return new ArrayList<>();
+
     }
 
     @Override
