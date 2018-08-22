@@ -33,10 +33,9 @@ public class TypeNode implements INode {
     }
 
     @Override
-    public INode typeCheck()
+    public IType typeCheck() throws TypeException
     {
-        //TODO: fixare questo metodo
-        return null;
+        return type;
     }
 
     @Override
@@ -48,7 +47,7 @@ public class TypeNode implements INode {
 //            res.add(new SemanticError("Class '" + declaredType + "' does not exist"));
 //        }
 //        return res;
-        //TODO: fixare questo metodo
+        //TODO: fixare questo metodo dopo aver capito come minchia gestire le classi
         return null;
     }
 

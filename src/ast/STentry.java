@@ -65,7 +65,8 @@ public class STentry
         isAttribute = attribute;
     }
 
-    public String toString(String s)
+    @Override
+    public String toString()
     {
         return "STentry: nestingLevel " + this.nestingLevel + "\n" +
                "STentry: type " + type +
