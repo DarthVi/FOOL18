@@ -1,32 +1,33 @@
 package type;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClassType implements IType
 {
     private String className;
     private ClassType parent;
-    private List<IType> classMembers;
-    private List<FunctionType> classMethods;
+    private Map<String, ClassMember> classMembers;
+    private Map<String, ClassMethod> classMethods;
 
     public ClassType(String className)
     {
         this.className = className;
         this.parent = null;
-        this.classMembers = new ArrayList<>();
-        this.classMethods = new ArrayList<>();
+        this.classMembers = new HashMap<>();
+        this.classMethods = new HashMap<>();
     }
 
-    public ClassType(String className, List<IType> classMembers)
+    public ClassType(String className, Map<String, ClassMember> classMembers)
     {
         this.className = className;
         this.parent = null;
         this.classMembers = classMembers;
-        this.classMethods = new ArrayList<>();
+        this.classMethods = new HashMap<>();
     }
 
-    public ClassType(String className, List<IType> classMembers, List<FunctionType> classMethods)
+    public ClassType(String className, Map<String, ClassMember> classMembers, Map<String, ClassMethod> classMethods)
     {
         this.className = className;
         this.parent = null;
@@ -34,7 +35,8 @@ public class ClassType implements IType
         this.classMethods = classMethods;
     }
 
-    public ClassType(String className, ClassType parent, List<IType> classMembers, List<FunctionType> classMethods)
+    public ClassType(String className, ClassType parent, Map<String, ClassMember> classMembers, Map<String,
+            ClassMethod> classMethods)
     {
         this.className = className;
         this.parent = parent;
@@ -81,22 +83,22 @@ public class ClassType implements IType
         this.parent = parent;
     }
 
-    public List<IType> getClassMembers()
+    public Map getClassMembers()
     {
         return classMembers;
     }
 
-    public void setClassMembers(List<IType> classMembers)
+    public void setClassMembers(Map classMembers)
     {
         this.classMembers = classMembers;
     }
 
-    public List<FunctionType> getClassMethods()
+    public Map getClassMethods()
     {
         return classMethods;
     }
 
-    public void setClassMethods(List<FunctionType> classMethods)
+    public void setClassMethods(Map classMethods)
     {
         this.classMethods = classMethods;
     }
