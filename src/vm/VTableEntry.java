@@ -7,7 +7,7 @@ package vm;
 public class VTableEntry
 {
     private String methodID;
-    private String methodLable;
+    private String methodLabel;
 
     public String getMethodID()
     {
@@ -19,13 +19,13 @@ public class VTableEntry
         this.methodID = methodID;
     }
 
-    public String getMethodLable()
+    public String getMethodLabel()
     {
-        return methodLable;
+        return methodLabel;
     }
 
-    public void setMethodLable(String methodLable)
+    public void setMethodLabel(String methodLabel)
     {
-        this.methodLable = methodLable;
+        this.methodLabel = methodLabel;
     }
 }
