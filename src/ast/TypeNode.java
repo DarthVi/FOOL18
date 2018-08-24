@@ -50,7 +50,7 @@ public class TypeNode implements INode {
 //        }
 //        return res;
         //TODO: fixare questo metodo dopo aver capito come minchia gestire le classi
-        return new ArrayList<>();
+        return new ArrayList<SemanticError>();
 
     }
 

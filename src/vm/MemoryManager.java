@@ -61,7 +61,7 @@ public class MemoryManager
      */
     public void push(int value, VirtualMachine vm) throws StackOverflowException
     {
-        if(vm.sp - 1 < this.memorySize || vm.sp - 1 < vm.hp)
+        if(vm.sp - 1 < 0 || vm.sp - 1 < vm.hp)
             throw new StackOverflowException();
 
         memory[vm.sp--] = value;
@@ -75,7 +75,7 @@ public class MemoryManager
      */
     public void pop(int value, VirtualMachine vm) throws StackUnderflowException
     {
-        if (vm.sp + 1 > 0)
+        if (vm.sp + 1 > this.memorySize)
             throw new StackUnderflowException();
 
         vm.sp++;

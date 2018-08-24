@@ -6,17 +6,17 @@ package vm;
  */
 public class VTableEntry
 {
-    private String methodID;
+    private String methodAddress;
     private String methodLabel;
 
-    public String getMethodID()
+    public String getMethodAddress()
     {
-        return methodID;
+        return methodAddress;
     }
 
-    public void setMethodID(String methodID)
+    public void setMethodAddress(String methodAddress)
     {
-        this.methodID = methodID;
+        this.methodAddress = methodAddress;
     }
 
     public String getMethodLabel()

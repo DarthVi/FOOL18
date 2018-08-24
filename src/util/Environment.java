@@ -2,7 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import ast.STentry;
+
 import exception.UndeclaredVariableException;
 import exception.VariableAlreadyDefinedException;
 import org.antlr.v4.runtime.Token;
