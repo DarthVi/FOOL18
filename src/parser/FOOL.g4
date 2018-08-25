@@ -84,7 +84,7 @@ GREATER: '>' ;
 LESS   : '<' ;
 AND    : '&&' ;
 OR     : '||' ;
-NOT    : '!' ;
+NOT    : 'not' ;
 ASM    : '=' ;
 PLUS   : '+' ;
 MINUS  : '-' ;
