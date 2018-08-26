@@ -5,14 +5,12 @@ import type.ClassType;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
-import vm.VTableEntry;
 
 import java.util.ArrayList;
 
 public class ClassNode implements INode
 {
     private ClassType classType;
-    private VTableEntry virtualFunctionTable;
 
 
     //TODO: completare questo codice

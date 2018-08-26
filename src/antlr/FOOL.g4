@@ -42,17 +42,17 @@ type   : INT
         | ID
       ;
 
-exp    :  ('-')? left=term (operator=(PLUS | MINUS) right=exp)?
+exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
       ;
 
-term   : left=factor (operator=(TIMES | DIV) right=term)?
+term   : left=factor ((TIMES | DIV) right=term)?
       ;
 
-factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR) right=value)?
+factor : left=value (EQ right=value)?
       ;
 
 value  :  INTEGER                          #intVal
-      | NOT? ( TRUE | FALSE )              #boolVal
+      | ( TRUE | FALSE )                   #boolVal
       | NULL                               #nullVal
       | VOID                               #voidExp
       | LPAR exp RPAR                      #baseExp
@@ -78,13 +78,6 @@ SEMIC  : ';' ;
 COLON  : ':' ;
 COMMA  : ',' ;
 EQ     : '==' ;
-LQ     : '<=' ;
-GQ     : '>=' ;
-GREATER: '>' ;
-LESS   : '<' ;
-AND    : '&&' ;
-OR     : '||' ;
-NOT    : 'not' ;
 ASM    : '=' ;
 PLUS   : '+' ;
 MINUS  : '-' ;

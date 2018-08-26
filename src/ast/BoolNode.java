@@ -15,7 +15,8 @@ public class BoolNode implements INode {
     val=n;
   }
 
-  @Override
+
+    @Override
   public String toString() {
     if (val) return "Bool:true\n";
     else return "Bool:false\n";

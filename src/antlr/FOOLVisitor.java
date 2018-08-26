@@ -1,9 +1,7 @@
-// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/FOOL.g4 by ANTLR 4.7
-package parser;
+// Generated from C:/Users/Lorenzo/Desktop/src/antlr\FOOL.g4 by ANTLR 4.6
+package antlr;
 
-    import java.util.ArrayList;
-
-import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+    import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced

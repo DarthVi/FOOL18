@@ -2,9 +2,7 @@ package ast;
 
 import exception.TypeException;
 import exception.UndeclaredVariableException;
-import jdk.nashorn.internal.parser.Token;
 import org.antlr.runtime.CommonToken;
-import parser.FOOLParser;
 import util.SemanticError;
 import util.Environment;
 import type.*;
@@ -17,7 +15,7 @@ public class TypeNode implements INode {
     private String declaredType;
     private IType type;
 
-    public TypeNode(FOOLParser.TypeContext ctx, String type) {
+    public TypeNode(antlr.FOOLParser.TypeContext ctx, String type) {
         declaredType = type;
         switch (type) {
             case "int":

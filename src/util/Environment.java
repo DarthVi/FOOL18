@@ -2,32 +2,24 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import exception.UndeclaredVariableException;
 import exception.VariableAlreadyDefinedException;
 import org.antlr.v4.runtime.Token;
 import type.IType;
-import vm.VTableEntry;
 
 public class Environment
 {
     private ArrayList<HashMap<String,STentry>> symTable;
 
-    //virtual table
-    Map<Integer, ArrayList<VTableEntry>> virtualTables;
-
-    public Environment(ArrayList<HashMap<String, STentry>> symTable, Map<Integer, ArrayList<VTableEntry>> vtable)
+    public Environment(ArrayList<HashMap<String, STentry>> symTable)
     {
-
         this.symTable = symTable;
-        this.virtualTables = vtable;
     }
 
     public Environment()
     {
         symTable = new ArrayList<HashMap<String,STentry>>();
-        virtualTables = new HashMap<>();
     }
 
     /**
