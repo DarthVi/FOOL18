@@ -39,6 +39,7 @@ classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMI
 type   : INT
         | BOOL
         | VOID
+        | NULL
         | ID
       ;
 
