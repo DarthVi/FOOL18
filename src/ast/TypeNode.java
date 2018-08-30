@@ -2,8 +2,8 @@ package ast;
 
 import exception.TypeException;
 import exception.UndeclaredVariableException;
-import jdk.nashorn.internal.parser.Token;
 import org.antlr.runtime.CommonToken;
+import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
 import util.SemanticError;
 import util.Environment;
@@ -16,6 +16,7 @@ public class TypeNode implements INode {
 
     private String declaredType;
     private IType type;
+    private Token token;
 
     public TypeNode(FOOLParser.TypeContext ctx, String type) {
         declaredType = type;
@@ -30,6 +31,7 @@ public class TypeNode implements INode {
                 this.type = new VoidType();
             default:
                 this.type = new ClassType(ctx.getText());
+                this.token = ctx.getToken(FOOLParser.ID, 0).getSymbol();
                 break;
         }
     }
@@ -42,15 +44,22 @@ public class TypeNode implements INode {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-//        ArrayList<SemanticError> res = new ArrayList<>();
-//        try {
-//            this.type = env.getLatestEntryOf(declaredType).getType();
-//        } catch (UndeclaredVarException e) {
-//            res.add(new SemanticError("Class '" + declaredType + "' does not exist"));
-//        }
-//        return res;
-        //TODO: fixare questo metodo dopo aver capito come minchia gestire le classi
-        return new ArrayList<SemanticError>();
+        ArrayList<SemanticError> res = new ArrayList<>();
+
+        //if we are referring to a class (for assignemnt, declarations, return type, etc.)
+        //we must check if we have defined this class and produce an error otherwise.
+        if(this.type instanceof ClassType)
+        {
+            try
+            {
+                this.type = env.getEntry(this.token).getType();
+            } catch (UndeclaredVariableException e)
+            {
+                res.add(new SemanticError("Class '" + declaredType + "' does not exist"));
+            }
+        }
+
+        return res;
 
     }
 
