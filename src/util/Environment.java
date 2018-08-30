@@ -12,6 +12,7 @@ import vm.VTableEntry;
 
 public class Environment
 {
+    public int offset = 0;
     private ArrayList<HashMap<String,STentry>> symTable;
 
     //virtual table
