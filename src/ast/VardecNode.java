@@ -4,6 +4,7 @@ import exception.TypeException;
 import exception.VariableAlreadyDefinedException;
 import parser.FOOLParser;
 import type.IType;
+import type.VoidType;
 import util.Environment;
 import util.SemanticError;
 
@@ -44,7 +45,8 @@ public class VardecNode implements INode
                     throw new TypeException("rhs value is not a subtype of the lhs declaration", ctx);
             }
 
-            return sxType;
+            //declarations and assignment modify the environment but they only return void
+            return new VoidType();
 
         }
         catch (TypeException e)
