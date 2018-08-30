@@ -74,4 +74,8 @@ public class TypeNode implements INode {
         return type.toString();
     }
 
+    public IType getType()
+    {
+        return type;
+    }
 }
