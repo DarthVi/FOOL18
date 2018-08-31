@@ -7,6 +7,12 @@ public class FollVisitorImpl extends FOOLBaseVisitor<INode>
 {
 
     @Override
+    public INode visitType(FOOLParser.TypeContext ctx)
+    {
+        return new TypeNode(ctx, ctx.getText());
+    }
+
+    @Override
     public INode visitVardec(FOOLParser.VardecContext ctx)
     {
         VardecNode vardecNode;
@@ -24,5 +30,33 @@ public class FollVisitorImpl extends FOOLBaseVisitor<INode>
             isAttribute = true;
 
         return new VardecNode(typeNode, ctx.ID().getSymbol().getText(), expression, ctx, isAttribute);
+    }
+
+    @Override
+    public INode visitIntVal(FOOLParser.IntValContext ctx)
+    {
+        // notice that this method is not actually a rule but a named production #intVal
+
+        //there is no need to perform a check here, the lexer ensures this text is an int
+        return new IntNode(Integer.parseInt(ctx.INTEGER().getText()));
+    }
+
+    @Override
+    public INode visitNullVal(FOOLParser.NullValContext ctx)
+    {
+        return new NullNode();
+    }
+
+    @Override
+    public INode visitVoidExp(FOOLParser.VoidExpContext ctx)
+    {
+        return new VoidNode();
+    }
+
+    @Override
+    public INode visitBoolVal(FOOLParser.BoolValContext ctx)
+    {
+        //there is no need to perform a check here, the lexer ensures this text is a boolean
+        return new BoolNode(Boolean.parseBoolean(ctx.getText()));
     }
 }
