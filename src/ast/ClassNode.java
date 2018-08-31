@@ -20,18 +20,21 @@ public class ClassNode implements INode
     @Override
     public IType typeCheck() throws TypeException
     {
-        return null;
+        //TODO: controllare che, in caso di ereditarietà, l'overriding dei metodi sia fatto correttamente
+        return this.classType;
     }
 
     @Override
     public String codeGeneration()
     {
-        return null;
+        return "";
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
+        //TODO: controllare che la classe non sia già stata definita precedentemente
+        //TODO: controllare che, in caso di ereditarietà, non stiamo overridando i membri
         return null;
     }
 }

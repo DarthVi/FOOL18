@@ -32,13 +32,14 @@ dec   : vardec           #varDeclaration
       | fun              #funDeclaration
       ;
 
-classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
+classdec    : CLASS ID (EXTENDS ID)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
               (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
 
 
 type   : INT
         | BOOL
         | VOID
+        | NULL
         | ID
       ;
 

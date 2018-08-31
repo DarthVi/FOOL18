@@ -2,40 +2,36 @@ package ast;
 
 import exception.TypeException;
 import type.IType;
+import type.NullType;
 import util.Environment;
-import util.STentry;
 import util.SemanticError;
 
 import java.util.ArrayList;
 
-public class IdNode implements INode
+public class NullNode implements INode
 {
-    //TODO: completare questa classe
-
-    private String varName;
-    private STentry entry;
-    private int nestingLevel;
+    @Override
+    public String toString()
+    {
+        return "null";
+    }
 
     @Override
     public IType typeCheck() throws TypeException
     {
-        return null;
+        return new NullType();
     }
 
     @Override
     public String codeGeneration()
     {
-        return null;
+        //TODO: shouldn't we consider a machine code value for null?
+        return "";
     }
 
     @Override
-    public String toString(){
-        return null;
-    }
-
-
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        return null;
+        return new ArrayList<SemanticError>();
     }
 }
