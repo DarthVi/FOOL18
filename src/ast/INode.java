@@ -7,16 +7,8 @@ import util.SemanticError;
 
 import java.util.ArrayList;
 
-public interface INode
-{
-    IType typeCheck() throws TypeException;
+public interface INode {
 
     String codeGeneration();
-
-    ArrayList<SemanticError> checkSemantics(Environment env);
-
-    @Override
-    String toString();
-
 
 }

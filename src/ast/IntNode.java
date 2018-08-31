@@ -25,8 +25,7 @@ public class IntNode implements INode {
   {
     return new IntType();
   } 
-  
-  @Override
+
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
 
  	  return new ArrayList<SemanticError>();

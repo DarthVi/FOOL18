@@ -32,13 +32,13 @@ public class TypeNode implements INode {
         }
     }
 
-    @Override
+
     public IType typeCheck() throws TypeException
     {
         return type;
     }
 
-    @Override
+
     public ArrayList<SemanticError> checkSemantics(Environment env) {
 //        ArrayList<SemanticError> res = new ArrayList<>();
 //        try {

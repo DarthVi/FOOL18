@@ -15,7 +15,7 @@ public class ClassNode implements INode
 
     //TODO: completare questo codice
 
-    @Override
+
     public IType typeCheck() throws TypeException
     {
         return null;
@@ -27,7 +27,7 @@ public class ClassNode implements INode
         return null;
     }
 
-    @Override
+
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         return null;

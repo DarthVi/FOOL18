@@ -1,5 +1,5 @@
-package src.vm;
-import src.antlr.*;
+package vm;
+import antlr.*;
 
 
 public class ExecuteVM {

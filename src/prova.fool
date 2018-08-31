@@ -1,1 +1,1 @@
-let int x = 1; int y = 2; in y = x;
+if true then {12} else {1}

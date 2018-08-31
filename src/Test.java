@@ -7,7 +7,7 @@ import ast.FoolVisitorImpl;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import src.vm.ExecuteVM;
+import vm.ExecuteVM;
 import antlr.FOOLLexer;
 import antlr.FOOLParser;
 import antlr.SVMLexer;
@@ -32,16 +32,10 @@ public class Test {
 
             FoolVisitorImpl visitor = new FoolVisitorImpl();
 
-            ast.INode ast = visitor.visit(parser.prog()); //generazione AST
+            ast.INode ast = visitor.visit(parser.exp()); //generazione AST
 
             Environment env = new Environment();
-            ArrayList<SemanticError> err = ast.checkSemantics(env);
 
-            if(err.size()>0){
-                System.out.println("You had: " +err.size()+" errors:");
-                for(SemanticError e : err)
-                    System.out.println("\t" + e);
-            }else{
 
                 System.out.println("Visualizing AST...");
 
@@ -66,7 +60,7 @@ public class Test {
                 System.out.println("Starting Virtual Machine...");
                 ExecuteVM vm = new ExecuteVM(parserASM.code);
                 vm.cpu();
-            }
+
 
 
 

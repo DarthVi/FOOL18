@@ -16,7 +16,7 @@ public class VoidNode implements INode
         return "void";
     }
 
-    @Override
+
     public IType typeCheck() throws TypeException
     {
         return new VoidType();
@@ -29,7 +29,7 @@ public class VoidNode implements INode
         return "";
     }
 
-    @Override
+
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         return new ArrayList<SemanticError>();

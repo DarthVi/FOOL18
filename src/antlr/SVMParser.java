@@ -91,7 +91,7 @@ public class SVMParser extends Parser {
 
 
 
-	    public int[] code = new int[src.vm.ExecuteVM.CODESIZE];
+	    public int[] code = new int[vm.ExecuteVM.CODESIZE];
 	    private int i = 0;
 	    private HashMap<String,Integer> labelAdd = new HashMap<String,Integer>();
 	    private HashMap<Integer,String> labelRef = new HashMap<Integer,String>();
