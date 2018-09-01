@@ -29,8 +29,6 @@ public class MemoryManager
     //list of indexes of free memory available
     List<Integer> freeHeapMemory;
 
-    //virtual table
-    //Map<String, ArrayList<VTableEntry>> virtualTables = new HashMap<>();
 
     //table of break records used by the table-compaction algorithm
     Map<Integer, BreakRecord> breakRecords;

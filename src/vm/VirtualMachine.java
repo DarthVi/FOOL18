@@ -21,8 +21,7 @@ public class VirtualMachine
         ip = 0;
         fp = 0;
 
-
-
         this.code = code;
     }
+
 }

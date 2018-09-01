@@ -32,27 +32,28 @@ dec   : vardec           #varDeclaration
       | fun              #funDeclaration
       ;
 
-classdec    : CLASS ID (EXTENDS ID (COMMA ID)*)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
+classdec    : CLASS ID (EXTENDS ID)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
               (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
 
 
 type   : INT
         | BOOL
         | VOID
+        | NULL
         | ID
       ;
 
-exp    :  ('-')? left=term ((PLUS | MINUS) right=exp)?
+exp    :  ('-')? left=term (operator=(PLUS | MINUS) right=exp)?
       ;
 
-term   : left=factor ((TIMES | DIV) right=term)?
+term   : left=factor (operator=(TIMES | DIV) right=term)?
       ;
 
-factor : left=value (EQ right=value)?
+factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR) right=value)?
       ;
 
 value  :  INTEGER                          #intVal
-      | ( TRUE | FALSE )                   #boolVal
+      | NOT? ( TRUE | FALSE )              #boolVal
       | NULL                               #nullVal
       | VOID                               #voidExp
       | LPAR exp RPAR                      #baseExp
@@ -78,6 +79,13 @@ SEMIC  : ';' ;
 COLON  : ':' ;
 COMMA  : ',' ;
 EQ     : '==' ;
+LQ     : '<=' ;
+GQ     : '>=' ;
+GREATER: '>' ;
+LESS   : '<' ;
+AND    : '&&' ;
+OR     : '||' ;
+NOT    : 'not' ;
 ASM    : '=' ;
 PLUS   : '+' ;
 MINUS  : '-' ;

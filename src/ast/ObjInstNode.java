@@ -9,32 +9,42 @@ import vm.VTableEntry;
 
 import java.util.ArrayList;
 
-public class ClassNode implements INode
+public class ObjInstNode implements INode
 {
+    private String objectName;
     private ClassType classType;
     private VTableEntry virtualFunctionTable;
 
-
-    //TODO: completare questo codice
+    public ObjInstNode(String objectName, ClassType classType, VTableEntry vft)
+    {
+        this.objectName = objectName;
+        this.classType = classType;
+        this.virtualFunctionTable = vft;
+    }
 
     @Override
     public IType typeCheck() throws TypeException
     {
-        //TODO: controllare che, in caso di ereditarietà, l'overriding dei metodi sia fatto correttamente
         return this.classType;
     }
 
     @Override
     public String codeGeneration()
     {
-        return "";
+        return null;
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        //TODO: controllare che la classe non sia già stata definita precedentemente
-        //TODO: controllare che, in caso di ereditarietà, non stiamo overridando i membri
+        //TODO: controllare che non vengano ridefiniti i simboli della superclasse
+        //TODO: aggiungere questa classe e il suo nome/simbolo all'environment
         return null;
+    }
+
+    @Override
+    public String toString()
+    {
+        return super.toString();
     }
 }

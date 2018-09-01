@@ -1,8 +1,11 @@
 package ast;
 
-import java.util.ArrayList;
+import exception.TypeException;
+import type.IType;
 import util.Environment;
 import util.SemanticError;
+
+import java.util.ArrayList;
 
 public class MinusNode implements INode {
 
@@ -14,12 +17,23 @@ public class MinusNode implements INode {
         right=r;
     }
 
+
+    @Override
+    public IType typeCheck() throws TypeException {
+        return null; //TO DO
+    }
+
+
+    @Override
+    public ArrayList<SemanticError> checkSemantics(Environment env) {
+        return null; //TO DO
+    }
+
     @Override
     public String codeGeneration() {
         return left.codeGeneration() +
                 right.codeGeneration() +
                 "sub\n";
     }
-
 
 }

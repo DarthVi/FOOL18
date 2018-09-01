@@ -2,36 +2,30 @@ package ast;
 
 import exception.TypeException;
 import type.IType;
-import type.VoidType;
 import util.Environment;
 import util.SemanticError;
 
 import java.util.ArrayList;
 
-public class VoidNode implements INode
+public class FunctionNode implements INode
 {
-    @Override
-    public String toString()
-    {
-        return "void";
-    }
+    //TODO: completare questa classe
 
     @Override
     public IType typeCheck() throws TypeException
     {
-        return new VoidType();
+        return null;
     }
 
     @Override
     public String codeGeneration()
     {
-        //TODO: shouldn't we consider a non-empty machine code value for void?
-        return "";
+        return null;
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        return new ArrayList<SemanticError>();
+        return null;
     }
 }

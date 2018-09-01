@@ -2,31 +2,31 @@ package ast;
 
 import exception.TypeException;
 import type.IType;
-import type.VoidType;
+import type.NullType;
 import util.Environment;
 import util.SemanticError;
 
 import java.util.ArrayList;
 
-public class VoidNode implements INode
+public class NullNode implements INode
 {
     @Override
     public String toString()
     {
-        return "void";
+        return "null";
     }
 
     @Override
     public IType typeCheck() throws TypeException
     {
-        return new VoidType();
+        return new NullType();
     }
 
     @Override
     public String codeGeneration()
     {
-        //TODO: shouldn't we consider a non-empty machine code value for void?
-        return "";
+        //TODO: is 0 a good value for null?
+        return "push 0";
     }
 
     @Override

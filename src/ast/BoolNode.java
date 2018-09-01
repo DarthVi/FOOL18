@@ -15,8 +15,7 @@ public class BoolNode implements INode {
     val=n;
   }
 
-
-    @Override
+  @Override
   public String toString() {
     if (val) return "Bool:true\n";
     else return "Bool:false\n";
@@ -26,7 +25,7 @@ public class BoolNode implements INode {
     return new BoolType();
   }    
   
-
+  @Override
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
 
  	  return new ArrayList<SemanticError>();

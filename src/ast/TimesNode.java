@@ -7,22 +7,19 @@ import util.SemanticError;
 
 import java.util.ArrayList;
 
-public class PlusNode implements INode {
-
+public class TimesNode implements INode {
     private INode left;
     private INode right;
 
-    public PlusNode (INode l, INode r) {
+    public TimesNode (INode l, INode r) {
         left=l;
         right=r;
     }
-
 
     @Override
     public IType typeCheck() throws TypeException {
         return null; //TO DO
     }
-
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
@@ -33,8 +30,6 @@ public class PlusNode implements INode {
     public String codeGeneration() {
         return left.codeGeneration() +
                 right.codeGeneration() +
-                "add\n";
+                "mult\n";
     }
-
 }
-
