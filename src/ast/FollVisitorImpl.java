@@ -63,8 +63,8 @@ public class FollVisitorImpl extends FOOLBaseVisitor<INode>
          * Otherwise we must convert the value into the opposite one (true to false and false to true).
          *
          * We can do this by checking if the booleanVal text is equal to the literal name chosen for the TRUE token.
-         * If that's the case, we have "not true", which must be transforme in false. Likewise if we have "not false",
-         * we must transform it in true. For this reason the assigment expression in the else branch has a "!"
+         * If that's the case, we have "not true", which must be transformed in false. Likewise if we have "not false",
+         * we must transform it in true. For this reason the assignment expression in the else branch has a "!"
          */
         if(ctx.optionalNot == null)
             value = Boolean.parseBoolean(ctx.booleanVal.getText());
