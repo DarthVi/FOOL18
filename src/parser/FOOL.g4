@@ -49,7 +49,7 @@ exp    :  ('-')? left=term (operator=(PLUS | MINUS) right=exp)?
 term   : left=factor (operator=(TIMES | DIV) right=term)?
       ;
 
-factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR) right=value)?
+factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR | DEQ) right=value)?
       ;
 
 value  :  INTEGER                                     #intVal
@@ -79,6 +79,7 @@ SEMIC  : ';' ;
 COLON  : ':' ;
 COMMA  : ',' ;
 EQ     : '==' ;
+DEQ    : '!=' ;
 LQ     : '<=' ;
 GQ     : '>=' ;
 GREATER: '>' ;
