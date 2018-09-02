@@ -1241,6 +1241,8 @@ public class FOOLParser extends Parser {
 		}
 	}
 	public static class BoolValContext extends ValueContext {
+		public Token optionalNot;
+		public Token booleanVal;
 		public TerminalNode TRUE() { return getToken(FOOLParser.TRUE, 0); }
 		public TerminalNode FALSE() { return getToken(FOOLParser.FALSE, 0); }
 		public TerminalNode NOT() { return getToken(FOOLParser.NOT, 0); }
@@ -1299,14 +1301,15 @@ public class FOOLParser extends Parser {
 				if (_la==NOT) {
 					{
 					setState(173);
-					match(NOT);
+					((BoolValContext)_localctx).optionalNot = match(NOT);
 					}
 				}
 
 				setState(176);
+				((BoolValContext)_localctx).booleanVal = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(_la==TRUE || _la==FALSE) ) {
-				_errHandler.recoverInline(this);
+					((BoolValContext)_localctx).booleanVal = (Token)_errHandler.recoverInline(this);
 				}
 				else {
 					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
