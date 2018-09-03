@@ -49,14 +49,14 @@ exp    :  ('-')? left=term (operator=(PLUS | MINUS) right=exp)?
 term   : left=factor (operator=(TIMES | DIV) right=term)?
       ;
 
-factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR) right=value)?
+factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR | DEQ) right=value)?
       ;
 
-value  :  INTEGER                          #intVal
-      | NOT? ( TRUE | FALSE )              #boolVal
-      | NULL                               #nullVal
-      | VOID                               #voidExp
-      | LPAR exp RPAR                      #baseExp
+value  :  INTEGER                                     #intVal
+      | optionalNot=NOT? booleanVal=( TRUE | FALSE )  #boolVal
+      | NULL                                          #nullVal
+      | VOID                                          #voidExp
+      | LPAR exp RPAR                                 #baseExp
       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
       | ID                                             #varExp
       | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
@@ -79,6 +79,7 @@ SEMIC  : ';' ;
 COLON  : ':' ;
 COMMA  : ',' ;
 EQ     : '==' ;
+DEQ    : '!=' ;
 LQ     : '<=' ;
 GQ     : '>=' ;
 GREATER: '>' ;

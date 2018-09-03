@@ -10,19 +10,21 @@ import util.SemanticError;
 
 import java.util.ArrayList;
 
-public class EqualNode implements INode{
+public class DiseqNode implements INode
+{
     private INode left;
     private INode right;
     private ParserRuleContext ctx;
 
-    public EqualNode( INode left, INode right, ParserRuleContext ctx) {
+    public DiseqNode( INode left, INode right, ParserRuleContext ctx) {
         this.left = left;
         this.right = right;
         this.ctx = ctx;
     }
 
     @Override
-    public IType typeCheck() throws TypeException {
+    public IType typeCheck() throws TypeException
+    {
         IType leftType = left.typeCheck();
         IType rightType = left.typeCheck();
 
@@ -40,16 +42,18 @@ public class EqualNode implements INode{
     }
 
     @Override
-     public String codeGeneration() {
-        String l1 = FOOLlib.freshLabel();
-        String l2 = FOOLlib.freshLabel();
-        return left.codeGeneration() +
-                right.codeGeneration() +
-                "beq " + l1 + "\n" +
-                "push 0\n" +
-                "b " + l2 + "\n" +
-                l1 + ":\n" +
-                "push 1\n" +
-                l2 + ":\n";
+    public String codeGeneration() {
+            String l1 = FOOLlib.freshLabel();
+            String l2 = FOOLlib.freshLabel();
+            return  left.codeGeneration() +
+                    right.codeGeneration() +
+                    "beq " + l1 + "\n" +
+                    "push 1\n" +
+                    "b " + l2 + "\n" +
+                    l1 + ":\n" +
+                    "push 0\n" +
+                    l2 + ":\n";
     }
+
+
 }

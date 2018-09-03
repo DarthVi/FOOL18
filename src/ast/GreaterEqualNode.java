@@ -1,10 +1,13 @@
 package ast;
 
 import exception.TypeException;
-import lib.FOOLlib;
+import org.antlr.v4.runtime.ParserRuleContext;
+import type.BoolType;
 import type.IType;
+import type.IntType;
 import util.Environment;
 import util.SemanticError;
+import lib.FOOLlib;
 
 import java.util.ArrayList;
 
@@ -12,20 +15,33 @@ public class GreaterEqualNode implements INode {
 
     private INode left;
     private INode right;
+    private ParserRuleContext ctx;
 
-    public GreaterEqualNode(INode left, INode right) {
+    public GreaterEqualNode(INode left, INode right, ParserRuleContext ctx)
+    {
         this.left = left;
         this.right = right;
-    }
-
-
-    @Override
-    public IType typeCheck() throws TypeException {
-        return null;
+        this.ctx = ctx;
     }
 
     @Override
-    public ArrayList<SemanticError> checkSemantics(Environment env) {
+    public IType typeCheck() throws TypeException
+    {
+        IType l = left.typeCheck();
+        IType r = right.typeCheck();
+
+        if(!(l.isSubtypeOf(new IntType()) && r.isSubtypeOf(new IntType())))
+        {
+            throw new TypeException("Type error: >= operator allowed only on int", ctx);
+        }
+
+        return new BoolType();
+    }
+
+    @Override
+    public ArrayList<SemanticError> checkSemantics(Environment env)
+    {
+        //TODO
         return null;
     }
 
@@ -43,5 +59,4 @@ public class GreaterEqualNode implements INode {
                 "push 1\n" +
                 l2 + ":\n";
     }
-
 }
