@@ -34,6 +34,15 @@ public class Main {
             //   throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
             System.out.println("...END SYNTAX ANALYSIS");
 
+            //SEMANTIC
+            /*System.out.println("BEGIN SEMANTIC ANALYSIS...");
+            FoolV visitor = new FoolVisitorImpl();
+            Node ast = visitor.visit(progContext);
+            SymbolTable env = new SymbolTable();
+            List<String> err = ast.checkSemantics(env);
+            if (err.size() > 0) throw new SemanticException(err);
+            System.out.println("...END SEMANTIC ANALYSIS");*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }
