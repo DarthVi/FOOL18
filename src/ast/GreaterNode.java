@@ -39,8 +39,18 @@ public class GreaterNode implements INode{
     @Override
     public String codeGeneration()
     {
-        //TODO
-        return null;
+       String l1 = FOOLlib.freshLabel();
+        String l2 = FOOLlib.freshLabel();
+        return right.codeGeneration() +
+                "push 1\n" +
+                "add\n" +
+                left.codeGeneration() +
+                "bleq " + l1 + "\n" +
+                "push 0\n" +
+                "b " + l2 + "\n" +
+                l1 + ":\n" +
+                "push 1\n" +
+                l2 + ":\n";
     }
 
     @Override

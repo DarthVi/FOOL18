@@ -13,7 +13,7 @@ grammar FOOL;
  *------------------------------------------------------------------*/
 
 prog   : exp SEMIC                                  #singleExp
-       | let (exp | stats) SEMIC                    #letInExp
+       | let (exp | stats) SEMIC                    #
        | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
        ;
 
@@ -36,7 +36,7 @@ classdec    : CLASS ID (EXTENDS ID)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
               (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
 
 
-type   : INT
+type   : INTletInExp
         | BOOL
         | VOID
         | NULL
