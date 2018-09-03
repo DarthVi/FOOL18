@@ -7,6 +7,7 @@ import type.IType;
 import type.IntType;
 import util.Environment;
 import util.SemanticError;
+import lib.FOOLlib;
 
 import java.util.ArrayList;
 

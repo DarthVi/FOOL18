@@ -7,6 +7,7 @@ import type.IType;
 import type.IntType;
 import util.Environment;
 import util.SemanticError;
+import lib.FOOLlib;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class GreaterEqualNode implements INode {
     }
 
     @Override
-    public String codeGeneration()
+    public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         //TODO
         return null;
