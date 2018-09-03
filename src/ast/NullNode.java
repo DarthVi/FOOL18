@@ -25,8 +25,8 @@ public class NullNode implements INode
     @Override
     public String codeGeneration()
     {
-        //TODO: shouldn't we consider a machine code value for null?
-        return "";
+        //TODO: is 0 a good value for null?
+        return "push 0";
     }
 
     @Override

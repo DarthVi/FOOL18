@@ -25,7 +25,7 @@ public class VoidNode implements INode
     @Override
     public String codeGeneration()
     {
-        //TODO: shouldn't we consider a machine code value for void?
+        //TODO: shouldn't we consider a non-empty machine code value for void?
         return "";
     }
 
