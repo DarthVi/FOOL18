@@ -1,5 +1,6 @@
 package ast;
 import exception.TypeException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.BoolType;
 import type.IType;
@@ -36,10 +37,24 @@ public class AndNode implements INode
     }
 
     @Override
-    public String codeGeneration()
-    {
-        //TODO
-        return null;
+    public String codeGeneration() {
+        String l1 = FOOLlib.freshLabel();
+        String l2 = FOOLlib.freshLabel();
+        String l3 = FOOLlib.freshLabel();
+        return  left.codeGeneration()
+                + right.codeGeneration()
+                + "beq " + l1 + "\n"
+                + "push 0\n"
+                + "b " + l2 + "\n"
+                + l1 + ":\n"
+                + left.codeGeneration()
+                + "push 1\n"
+                + "beq " + l3 + "\n"
+                + "push 0\n"
+                + "b " + l2 + "\n"
+                + l3 + ":\n"
+                + "push 1\n"
+                + l2 + ":\n";
     }
 
     @Override
