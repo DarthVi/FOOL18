@@ -27,7 +27,6 @@ public class BoolNode implements INode {
   
   @Override
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
-
  	  return new ArrayList<SemanticError>();
  	}
   

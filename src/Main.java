@@ -1,9 +1,11 @@
+import ast.INode;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLLexer;
 import parser.FOOLParser;
+import parser.FOOLVisitorImpl;
 
 import java.io.IOException;
 
@@ -35,13 +37,13 @@ public class Main {
             System.out.println("...END SYNTAX ANALYSIS");
 
             //SEMANTIC
-            /*System.out.println("BEGIN SEMANTIC ANALYSIS...");
-            FoolV visitor = new FoolVisitorImpl();
-            Node ast = visitor.visit(progContext);
-            SymbolTable env = new SymbolTable();
+            System.out.println("BEGIN SEMANTIC ANALYSIS...\n");
+            FOOLVisitorImpl visitor = new FOOLVisitorImpl();
+            INode ast = (INode) visitor.visit(progContext);
+            /*SymbolTable env = new SymbolTable();
             List<String> err = ast.checkSemantics(env);
-            if (err.size() > 0) throw new SemanticException(err);
-            System.out.println("...END SEMANTIC ANALYSIS");*/
+            if (err.size() > 0) throw new SemanticException(err);*/
+            System.out.println("\n...END SEMANTIC ANALYSIS");
 
         } catch (IOException e) {
             e.printStackTrace();
