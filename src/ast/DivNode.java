@@ -44,4 +44,10 @@ public class DivNode implements INode {
                 right.codeGeneration() +
                 "div\n";
     }
+
+    @Override
+    public String toString()
+    {
+        return "Div" + left.toString() + right.toString();
+    }
 }

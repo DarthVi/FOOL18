@@ -3,6 +3,7 @@ package ast;
 import exception.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.IType;
+import type.VoidType;
 import util.Environment;
 import util.SemanticError;
 
@@ -26,8 +27,11 @@ public class VarNode implements INode{
     @Override
     public IType typeCheck() throws TypeException
     {
-        //TODO
-        return null;
+        if(!exp.typeCheck().isSubtypeOf(type))
+            throw new TypeException("Type error: assignment not allowed if rhs is not a subtype or the same tipe of lhs", ctx);
+
+        //assignments are statements, which means they return void according to the specifications
+        return new VoidType();
     }
 
     @Override
@@ -42,5 +46,13 @@ public class VarNode implements INode{
     {
         //TODO
         return null;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Var: " + id + "\n"
+                + type.toString()
+                + exp.toString();
     }
 }

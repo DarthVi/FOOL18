@@ -65,4 +65,10 @@ public class AndNode implements INode
         errors.addAll(right.checkSemantics(env));
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        return "And" + left.toString() + right.toString();
+    }
 }

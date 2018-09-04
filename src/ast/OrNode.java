@@ -64,4 +64,10 @@ public class OrNode implements INode
         errors.addAll(right.checkSemantics(env));
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Or" + left.toString() + right.toString();
+    }
 }

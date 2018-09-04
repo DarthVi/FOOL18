@@ -61,4 +61,10 @@ public class LessEqualNode implements INode{
         errors.addAll(right.checkSemantics(env));
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        return "LessEqual" + left.toString() + right.toString();
+    }
 }

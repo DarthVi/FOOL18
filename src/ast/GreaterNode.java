@@ -62,4 +62,10 @@ public class GreaterNode implements INode{
         errors.addAll(right.checkSemantics(env));
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Greater" + left.toString() + right.toString();
+    }
 }

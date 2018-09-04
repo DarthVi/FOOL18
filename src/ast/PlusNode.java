@@ -49,5 +49,10 @@ public class PlusNode implements INode {
                 "add\n";
     }
 
+    @Override
+    public String toString()
+    {
+        return "Plus" + left.toString() + right.toString();
+    }
 }
 

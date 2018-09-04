@@ -63,4 +63,10 @@ public class LessNode implements INode{
         errors.addAll(right.checkSemantics(env));
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Less" + left.toString() + right.toString();
+    }
 }

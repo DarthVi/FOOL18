@@ -48,4 +48,9 @@ public class MinusNode implements INode {
                 "sub\n";
     }
 
+    @Override
+    public String toString()
+    {
+        return "Minus" + left.toString() + right.toString();
+    }
 }
