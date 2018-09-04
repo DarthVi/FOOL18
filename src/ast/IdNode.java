@@ -29,6 +29,11 @@ public class IdNode implements INode
     }
 
     @Override
+    public String toString(){
+        return null;
+    }
+
+
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         return null;
