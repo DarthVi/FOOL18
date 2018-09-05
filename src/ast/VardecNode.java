@@ -61,7 +61,7 @@ public class VardecNode implements INode
         if(expression != null)
             return expression.codeGeneration();
         else
-            return "";
+            return "push 0";
     }
 
     /**
