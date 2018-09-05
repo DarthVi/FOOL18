@@ -44,7 +44,12 @@ public class VarNode implements INode{
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        //TODO
+        /*
+         * TODO: vedere se abbiamo l'id nella tabella dei simboli, ma oltre a ritornare la lista di errori
+         * (eventualmente vuota qualora non ce ne siano), va aggiornato anche this.type, in modo da poter far
+         * partire successivamente il typechecking. Non possiamo dedurre il tipo dalla sintassi visto che questo nodo
+         * può essere anche generato tramite istruzioni di assegnamento
+         */
         return null;
     }
 
