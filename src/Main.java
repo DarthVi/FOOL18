@@ -1,4 +1,7 @@
 import ast.INode;
+import exception.LexerException;
+import exception.ParserException;
+import exception.SemanticException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -6,47 +9,51 @@ import org.antlr.v4.runtime.Token;
 import parser.FOOLLexer;
 import parser.FOOLParser;
 import parser.FOOLVisitorImpl;
+import util.Environment;
+import util.SemanticError;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
     public static void main(String[] args) {
         try {
 
-            String fileName = "src/main.fool";
+            String fileName = "src/test/test2.fool";
             CharStream input = CharStreams.fromFileName(fileName);
 
             //LEXER
             System.out.println("BEGIN LEXICAL ANALYSIS...");
             FOOLLexer lexer = new FOOLLexer(input);
-            // if (lexer.lexicalErrors.size() > 0) throw new LexerException(lexer.lexicalErrors);
+            if (lexer.errors.size() > 0)
+                throw new LexerException(lexer.errors);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             for (int i = 0; i < tokens.getNumberOfOnChannelTokens(); i++) {
                 Token token = tokens.get(i);
                 System.out.println(token.getTokenIndex() + " " + token.getText());
             }
-            System.out.println("...END LEXICAL ANALYSIS");
+            System.out.println("...END LEXICAL ANALYSIS\n");
 
             //PARSER
             System.out.println("BEGIN SYNTAX ANALYSIS...");
             FOOLParser parser = new FOOLParser(tokens);
-            FOOLParser.ProgContext progContext = parser.prog(); //in caso di errore solleva l'eccezione ed il programma termina
-            if (parser.getNumberOfSyntaxErrors() > 0) System.out.println("Problem!");
-            //   throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
-            System.out.println("...END SYNTAX ANALYSIS");
+            FOOLParser.ProgContext progContext = parser.prog();
+            if (parser.getNumberOfSyntaxErrors() > 0)
+                throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
+            System.out.println("...END SYNTAX ANALYSIS\n");
 
             //SEMANTIC
             System.out.println("BEGIN SEMANTIC ANALYSIS...\n");
             FOOLVisitorImpl visitor = new FOOLVisitorImpl();
             INode ast = (INode) visitor.visit(progContext);
-            /*SymbolTable env = new SymbolTable();
-            List<String> err = ast.checkSemantics(env);
-            if (err.size() > 0) throw new SemanticException(err);*/
+            Environment env = new Environment();
+            ArrayList<SemanticError> errors = ast.checkSemantics(env);
+                if (errors.size() > 0) throw new SemanticException(errors);
             System.out.println("\n...END SEMANTIC ANALYSIS");
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | LexerException | ParserException | SemanticException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
