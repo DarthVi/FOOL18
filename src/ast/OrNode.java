@@ -1,6 +1,7 @@
 package ast;
 
 import exception.TypeException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.BoolType;
 import type.IType;
@@ -39,8 +40,20 @@ public class OrNode implements INode
     @Override
     public String codeGeneration()
     {
-        //TODO
-        return null;
+        String l1 = FOOLlib.freshLabel();
+        String l2 = FOOLlib.freshLabel();
+
+        return    left.codeGeneration()
+                + "push 1\n"
+                + "beq " + l1 + "\n"
+                + right.codeGeneration()
+                + "push 1\n"
+                + "beq " + l1 + "\n"
+                + "push 0\n"
+                + "b " + l2 + "\n"
+                + l1 + ":\n"
+                + "push 1\n"
+                + l2 + "\n";
     }
 
     @Override
@@ -50,5 +63,11 @@ public class OrNode implements INode
         errors.addAll(left.checkSemantics(env));
         errors.addAll(right.checkSemantics(env));
         return errors;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Or" + left.toString() + right.toString();
     }
 }

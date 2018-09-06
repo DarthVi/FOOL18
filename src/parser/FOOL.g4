@@ -13,7 +13,7 @@ grammar FOOL;
  *------------------------------------------------------------------*/
 
 prog   : exp SEMIC                                  #singleExp
-       | let (exp | stats) SEMIC                    #
+       | let (exp | stats) SEMIC                    #letInExp
        | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
        ;
 
@@ -21,12 +21,14 @@ let       : LET (dec SEMIC)+ IN ;
 
 vardec  : type ID (ASM exp)?;
 
+argdec : type ID;
+
 funlet  : LET (vardec SEMIC)+ IN ;
 
 varasm     : ID ASM exp ;
 
 // funlet serve ad evitare di usare let, il quale permetterebbe di avere funzioni annidate
-fun    : type ID LPAR ( vardec ( COMMA vardec)* )? RPAR (funlet)? (exp | stats)* ;
+fun    : type ID LPAR ( argdec ( COMMA argdec)* )? RPAR (funlet)? (exp | stats) ;
 
 dec   : vardec           #varDeclaration
       | fun              #funDeclaration
@@ -36,7 +38,7 @@ classdec    : CLASS ID (EXTENDS ID)? (LPAR vardec SEMIC (vardec SEMIC)* RPAR)?
               (CLPAR fun SEMIC (fun SEMIC)* CRPAR)? ;
 
 
-type   : INTletInExp
+type   :  INT
         | BOOL
         | VOID
         | NULL
@@ -65,7 +67,7 @@ value  :  INTEGER                                     #intVal
       ;
 
 
-stats:  stat (SEMIC stat)* ;
+stats:  stat SEMIC (stats)* ;
 
 stat:   varasm  #varasmStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat

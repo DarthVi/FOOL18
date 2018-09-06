@@ -44,4 +44,10 @@ public class TimesNode implements INode {
                 right.codeGeneration() +
                 "mult\n";
     }
+
+    @Override
+    public String toString()
+    {
+        return "Times" + left.toString() + right.toString();
+    }
 }

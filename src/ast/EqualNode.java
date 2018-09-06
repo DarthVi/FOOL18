@@ -55,4 +55,10 @@ public class EqualNode implements INode{
                 "push 1\n" +
                 l2 + ":\n";
     }
+
+    @Override
+    public String toString()
+    {
+        return "Equal" + left.toString() + right.toString();
+    }
 }

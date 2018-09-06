@@ -61,4 +61,10 @@ public class GreaterEqualNode implements INode {
                 "push 1\n" +
                 l2 + ":\n";
     }
+
+    @Override
+    public String toString()
+    {
+        return "GreaterEqual" + left.toString() + right.toString();
+    }
 }
