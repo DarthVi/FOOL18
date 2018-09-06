@@ -51,7 +51,7 @@ public class VardecNode implements INode
         }
         catch (TypeException e)
         {
-            throw new TypeException("Error during assignment: " + e.getMessage(), ctx);
+            throw new TypeException("error during assignment; " + e.getMessage(), ctx);
         }
     }
 

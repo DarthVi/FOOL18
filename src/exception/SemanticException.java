@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class SemanticException extends Exception {
 
     public SemanticException(ArrayList<SemanticError> errors) {
-        // TODO controllare la bontà della linea seguente
-        super(errors.stream().toString());
+        super(errors.stream().map(SemanticError::toString).reduce("", (prev, curr) -> prev + "\n" + curr));
     }
 
 }

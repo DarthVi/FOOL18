@@ -34,7 +34,7 @@ public class IdNode implements INode
     public IType typeCheck() throws TypeException
     {
         if(entry.getType() instanceof FunctionType)
-            throw new TypeException("Error: cannot call function without parentheses surrounding arguments (if any)\n", ctx);
+            throw new TypeException("cannot call function without parentheses surrounding arguments (if any)", ctx);
 
         return entry.getType();
     }

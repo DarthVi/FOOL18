@@ -31,7 +31,7 @@ public class OrNode implements INode
 
         if(!(l.isSubtypeOf(new BoolType()) && r.isSubtypeOf((new BoolType()))))
         {
-            throw new TypeException("Type error: AND operator works only between booleans", ctx);
+            throw new TypeException("|| operator works only between booleans", ctx);
         }
 
         return new BoolType();

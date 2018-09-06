@@ -32,7 +32,7 @@ public class VarNode implements INode{
     public IType typeCheck() throws TypeException
     {
         if(!exp.typeCheck().isSubtypeOf(type))
-            throw new TypeException("Type error: assignment not allowed if rhs is not a subtype or the same tipe of lhs", ctx);
+            throw new TypeException("assignment not allowed if rhs is not a subtype or the same tipe of lhs", ctx);
 
         //assignments are statements, which means they return void according to the specifications
         return new VoidType();

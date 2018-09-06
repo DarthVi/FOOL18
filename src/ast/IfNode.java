@@ -30,7 +30,7 @@ public class IfNode implements INode {
     public IType typeCheck() throws TypeException {
 
         if(!cond.typeCheck().isSubtypeOf(new BoolType()))
-            throw new TypeException("Type error: non-boolean condition; ", ctx);
+            throw new TypeException("non-boolean condition", ctx);
 
         IType thType = th.typeCheck();
         IType elType = el.typeCheck();
