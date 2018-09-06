@@ -97,4 +97,13 @@ public class VardecNode implements INode
 
         return res;
     }
+
+    @Override
+    public String toString()
+    {
+        String expStr = (this.expression == null) ? "0" : this.expression.toString();
+        return "Vardec: " + id + "\n"
+                + type.toString()
+                + expStr;
+    }
 }
