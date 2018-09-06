@@ -41,8 +41,10 @@ public class GreaterEqualNode implements INode {
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        //TODO
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        errors.addAll(left.checkSemantics(env));
+        errors.addAll(right.checkSemantics(env));
+        return errors;
     }
 
     @Override
@@ -58,5 +60,11 @@ public class GreaterEqualNode implements INode {
                 l1 + ":\n" +
                 "push 1\n" +
                 l2 + ":\n";
+    }
+
+    @Override
+    public String toString()
+    {
+        return "GreaterEqual" + left.toString() + right.toString();
     }
 }

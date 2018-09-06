@@ -1,7 +1,6 @@
 package ast;
 
 import exception.TypeException;
-import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.IType;
 import type.VoidType;
@@ -9,19 +8,16 @@ import util.Environment;
 import util.SemanticError;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class LetNode implements INode{
 
     private ArrayList<INode> declist;
     private ParserRuleContext ctx;
-    private INode exp;
 
-    public LetNode(ArrayList<INode> declist, ParserRuleContext ctx, INode exp)
+    public LetNode(ArrayList<INode> declist, ParserRuleContext ctx)
     {
         this.declist = declist;
         this.ctx = ctx;
-        this.exp = exp;
     }
 
     @Override
@@ -36,22 +32,22 @@ public class LetNode implements INode{
         return new VoidType();
     }
 
+    @Override
+    public String codeGeneration()
+    {
+        String declCode = "";
+        for (INode dec : declist)
+            declCode += dec.codeGeneration();
+	//TODO: LorenzoMass, controlla che sia corretto
+	//ho tolto exp, dovremmo gestirle lato vardec e varasm
+        return "push 0\n" +
+                declCode +
+                "halt\n";
+    }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         return null;
     }
-
-
-    @Override
-    public String codeGeneration() {
-        String declCode = "";
-        for (INode dec : declist)
-            declCode += dec.codeGeneration();
-        return "push 0\n" +
-                declCode +
-                exp.codeGeneration() + "halt\n";
-    }
-
 }

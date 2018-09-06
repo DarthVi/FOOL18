@@ -32,7 +32,10 @@ public class DivNode implements INode {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-        return null; //TO DO
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        errors.addAll(left.checkSemantics(env));
+        errors.addAll(right.checkSemantics(env));
+        return errors;
     }
 
     @Override
@@ -40,5 +43,11 @@ public class DivNode implements INode {
         return left.codeGeneration() +
                 right.codeGeneration() +
                 "div\n";
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Div" + left.toString() + right.toString();
     }
 }

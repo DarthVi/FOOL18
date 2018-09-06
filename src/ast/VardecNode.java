@@ -58,7 +58,10 @@ public class VardecNode implements INode
     @Override
     public String codeGeneration()
     {
-        return "";
+        if(expression != null)
+            return expression.codeGeneration();
+        else
+            return "push 0"; //TODO: check if it produces desired behaviour
     }
 
     /**

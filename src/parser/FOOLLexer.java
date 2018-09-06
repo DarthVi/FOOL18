@@ -1,8 +1,7 @@
 // Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/FOOL.g4 by ANTLR 4.7
 package parser;
 
-    import java.util.ArrayList;
-
+import java.util.ArrayList;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

@@ -57,7 +57,15 @@ public class GreaterNode implements INode{
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        //TODO
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        errors.addAll(left.checkSemantics(env));
+        errors.addAll(right.checkSemantics(env));
+        return errors;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Greater" + left.toString() + right.toString();
     }
 }

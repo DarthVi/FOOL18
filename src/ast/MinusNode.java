@@ -35,7 +35,10 @@ public class MinusNode implements INode {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-        return null; //TO DO
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        errors.addAll(left.checkSemantics(env));
+        errors.addAll(right.checkSemantics(env));
+        return errors;
     }
 
     @Override
@@ -45,4 +48,9 @@ public class MinusNode implements INode {
                 "sub\n";
     }
 
+    @Override
+    public String toString()
+    {
+        return "Minus" + left.toString() + right.toString();
+    }
 }

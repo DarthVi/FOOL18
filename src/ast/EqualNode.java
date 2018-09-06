@@ -36,7 +36,10 @@ public class EqualNode implements INode{
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        errors.addAll(left.checkSemantics(env));
+        errors.addAll(right.checkSemantics(env));
+        return errors;
     }
 
     @Override
@@ -51,5 +54,11 @@ public class EqualNode implements INode{
                 l1 + ":\n" +
                 "push 1\n" +
                 l2 + ":\n";
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Equal" + left.toString() + right.toString();
     }
 }

@@ -3,7 +3,7 @@ package ast;
 import parser.FOOLBaseVisitor;
 import parser.FOOLParser;
 
-public class FollVisitorImpl extends FOOLBaseVisitor<INode>
+public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 {
 
     @Override
