@@ -38,8 +38,6 @@ public class LetNode implements INode{
         String declCode = "";
         for (INode dec : declist)
             declCode += dec.codeGeneration();
-	//TODO: LorenzoMass, controlla che sia corretto
-	//ho tolto exp, dovremmo gestirle lato vardec e varasm
         return "push 0\n" +
                 declCode +
                 "halt\n";

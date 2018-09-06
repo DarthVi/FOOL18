@@ -2,7 +2,6 @@ package ast;
 
 import exception.TypeException;
 import exception.UndeclaredVariableException;
-import org.antlr.runtime.CommonToken;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
 import util.SemanticError;
