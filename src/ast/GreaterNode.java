@@ -31,7 +31,7 @@ public class GreaterNode implements INode{
 
         if(!(l.isSubtypeOf(new IntType()) && r.isSubtypeOf(new IntType())))
         {
-            throw new TypeException("Type error: > operator allowed only on int", ctx);
+            throw new TypeException("> operator allowed only on int", ctx);
         }
 
         return new BoolType();

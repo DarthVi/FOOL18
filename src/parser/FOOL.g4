@@ -28,7 +28,7 @@ funlet  : LET (vardec SEMIC)+ IN ;
 varasm     : ID ASM exp ;
 
 // funlet serve ad evitare di usare let, il quale permetterebbe di avere funzioni annidate
-fun    : type ID LPAR ( argdec ( COMMA argdec)* )? RPAR (funlet)? (exp | stats)* ;
+fun    : type ID LPAR ( argdec ( COMMA argdec)* )? RPAR (funlet)? (exp | stats) ;
 
 dec   : vardec           #varDeclaration
       | fun              #funDeclaration
@@ -67,7 +67,7 @@ value  :  INTEGER                                     #intVal
       ;
 
 
-stats:  stat (SEMIC stat)* ;
+stats:  stat SEMIC (stats)* ;
 
 stat:   varasm  #varasmStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat

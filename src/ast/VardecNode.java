@@ -51,7 +51,7 @@ public class VardecNode implements INode
         }
         catch (TypeException e)
         {
-            throw new TypeException("Error during assignment: " + e.getMessage(), ctx);
+            throw new TypeException("error during assignment; " + e.getMessage(), ctx);
         }
     }
 
@@ -61,7 +61,7 @@ public class VardecNode implements INode
         if(expression != null)
             return expression.codeGeneration();
         else
-            return "push 0"; //TODO: check if it produces desired behaviour
+            return "push 0\n"; //TODO: check if it produces desired behaviour
     }
 
     /**
@@ -81,7 +81,7 @@ public class VardecNode implements INode
 
         res.addAll(this.type.checkSemantics(env));
 
-        //expressions are not mandatory in the grammar we have defined
+        //in declarations expressions are not mandatory in the grammar we have defined
         if(expression != null)
             res.addAll(this.expression.checkSemantics(env));
 
@@ -96,5 +96,14 @@ public class VardecNode implements INode
         }
 
         return res;
+    }
+
+    @Override
+    public String toString()
+    {
+        String expStr = (this.expression == null) ? "0" : this.expression.toString();
+        return "Vardec: " + id + "\n"
+                + type.toString()
+                + expStr;
     }
 }
