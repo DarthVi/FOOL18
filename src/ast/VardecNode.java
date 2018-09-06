@@ -61,7 +61,7 @@ public class VardecNode implements INode
         if(expression != null)
             return expression.codeGeneration();
         else
-            return "push 0"; //TODO: check if it produces desired behaviour
+            return "push 0\n"; //TODO: check if it produces desired behaviour
     }
 
     /**
@@ -81,7 +81,7 @@ public class VardecNode implements INode
 
         res.addAll(this.type.checkSemantics(env));
 
-        //expressions are not mandatory in the grammar we have defined
+        //in declarations expressions are not mandatory in the grammar we have defined
         if(expression != null)
             res.addAll(this.expression.checkSemantics(env));
 
