@@ -73,4 +73,6 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         return new BoolNode(value);
     }
+
+    //TODO: altri visitor
 }

@@ -25,8 +25,9 @@ public class NullNode implements INode
     @Override
     public String codeGeneration()
     {
-        //TODO: is 0 a good value for null?
-        return "push 0";
+        //TODO: is -1 a good value for null? Supposedly yes, we cannot have negative addresses for objects, but
+        //we can have objects stored in the memory starting from address 0
+        return "push -1";
     }
 
     @Override

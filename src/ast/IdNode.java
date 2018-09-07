@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class IdNode implements INode
 {
-    //TODO: completare questa classe
+    //TODO: aggiornarla per farla funzionare con classi e oggetti
 
     private String varName;
     private STentry entry;
@@ -58,7 +58,6 @@ public class IdNode implements INode
 
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        //TODO: valutare le alternative e leggere il seguente commento
         /*
          * Se facciamo in modo che in una classe non si possano dichiarare variabili con lo stesso nome dei membri
          * (idem per i metodi), possiamo evitare l'uso di "this" e semplicemente cercare l'ultimo simbolo

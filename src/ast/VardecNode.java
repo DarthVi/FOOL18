@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class VardecNode implements INode
 {
+    //TODO: controllare che funzioni con le classi/oggetti e nel caso aggiornarla
+
     private TypeNode type;
     private String id;
     private INode expression;
