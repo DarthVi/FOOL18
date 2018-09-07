@@ -41,8 +41,7 @@ public class VarNode implements INode{
     @Override
     public String codeGeneration()
     {
-        //TODO
-        return null;
+            return exp.codeGeneration();
     }
 
     @Override

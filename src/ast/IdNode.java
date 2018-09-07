@@ -1,16 +1,10 @@
 package ast;
 
 import exception.TypeException;
-import exception.UndeclaredVariableException;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.Token;
-import parser.FOOLParser;
-import type.FunctionType;
 import type.IType;
 import util.Environment;
 import util.STentry;
 import util.SemanticError;
-import parser.FOOLParser.VarExpContext;
 
 import java.util.ArrayList;
 
@@ -42,7 +36,13 @@ public class IdNode implements INode
     @Override
     public String codeGeneration()
     {
-        return null;
+        String getAR="";
+        for (int i=0; i<nestingLevel-entry.getNestingLevel(); i++)
+            getAR+="lw\n";
+        return "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
+                "lfp\n"+getAR+ //risalgo la catena statica
+                "add\n"+
+                "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
     }
 
     @Override
