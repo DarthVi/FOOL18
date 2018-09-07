@@ -1,6 +1,11 @@
 package ast;
 
 import exception.TypeException;
+import exception.UndeclaredVariableException;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
+import parser.FOOLParser;
+import type.FunctionType;
 import type.IType;
 import util.Environment;
 import util.STentry;
@@ -14,7 +19,7 @@ public class IdNode implements INode
 
     private String varName;
     private STentry entry;
-    //private int nestingLevel;
+    private int nestingLevel;
     ParserRuleContext ctx;
 
     public IdNode(String varName, ParserRuleContext ctx)
@@ -68,6 +73,7 @@ public class IdNode implements INode
         try
         {
             entry = env.getEntry(token);
+            this.nestingLevel = env.getNestingLevel();
         }
         catch (UndeclaredVariableException e)
         {
