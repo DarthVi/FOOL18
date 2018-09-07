@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLLexer;
 import parser.FOOLParser;
-import parser.FOOLVisitorImpl;
+import parser.DebuggingVisitorImpl;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
@@ -47,7 +47,7 @@ public class Main {
 
             //SEMANTIC
             System.out.println("BEGIN SEMANTIC ANALYSIS...\n");
-            FOOLVisitorImpl visitor = new FOOLVisitorImpl();
+            DebuggingVisitorImpl visitor = new DebuggingVisitorImpl();
             INode ast = (INode) visitor.visit(progContext);
             Environment env = new Environment();
             ArrayList<SemanticError> errors = ast.checkSemantics(env);
