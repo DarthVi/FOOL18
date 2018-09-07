@@ -1,6 +1,8 @@
 package ast;
 
 import exception.TypeException;
+import org.antlr.v4.runtime.ParserRuleContext;
+import type.FunctionType;
 import type.IType;
 import util.Environment;
 import util.STentry;
