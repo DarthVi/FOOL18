@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class VarNode implements INode{
 
+    //TODO: controllare che funzioni con le classi/oggetti e nel caso aggiornarla
+
     private String id;
     private IType type;
     private INode exp;
@@ -60,7 +62,7 @@ public class VarNode implements INode{
         }
         catch (UndeclaredVariableException e)
         {
-            res.add(new SemanticError("Error: undeclared variable"));
+            res.add(new SemanticError(e.getMessage()));
         }
 
         return res;

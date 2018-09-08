@@ -53,7 +53,13 @@ public class IfNode implements INode {
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env) {
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        errors.addAll(cond.checkSemantics(env));
+        errors.addAll(th.checkSemantics(env));
+        if (el != null) {
+            errors.addAll(el.checkSemantics(env));
+        }
+        return errors;
     }
 
     public String codeGeneration() {

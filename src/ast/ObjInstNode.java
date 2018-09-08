@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 public class ObjInstNode implements INode
 {
+    //TODO
     private String objectName;
     private ClassType classType;
     private VTableEntry virtualFunctionTable;

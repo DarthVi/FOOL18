@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class VardecNode implements INode
 {
+    //TODO: controllare che funzioni con le classi/oggetti e nel caso aggiornarla
+
     private TypeNode type;
     private String id;
     private INode expression;
@@ -92,7 +94,7 @@ public class VardecNode implements INode
         }
         catch (VariableAlreadyDefinedException e)
         {
-            res.add(new SemanticError("Variable already defined: " + e.getMessage()));
+            res.add(new SemanticError(e.getMessage()));
         }
 
         return res;

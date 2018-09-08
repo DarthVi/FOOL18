@@ -10,13 +10,12 @@ import type.IType;
 import util.Environment;
 import util.STentry;
 import util.SemanticError;
-import parser.FOOLParser.VarExpContext;
 
 import java.util.ArrayList;
 
 public class IdNode implements INode
 {
-    //TODO: completare questa classe
+    //TODO: aggiornarla per farla funzionare con classi e oggetti
 
     private String varName;
     private STentry entry;
@@ -51,7 +50,6 @@ public class IdNode implements INode
                 "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
     }
 
-
     @Override
     public String toString(){
         return null;
@@ -60,7 +58,6 @@ public class IdNode implements INode
 
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        //TODO: valutare le alternative e leggere il seguente commento
         /*
          * Se facciamo in modo che in una classe non si possano dichiarare variabili con lo stesso nome dei membri
          * (idem per i metodi), possiamo evitare l'uso di "this" e semplicemente cercare l'ultimo simbolo
@@ -75,10 +72,11 @@ public class IdNode implements INode
         try
         {
             entry = env.getEntry(token);
+            this.nestingLevel = env.getNestingLevel();
         }
         catch (UndeclaredVariableException e)
         {
-            res.add(new SemanticError("Error: undeclared variable"));
+            res.add(new SemanticError(e.getMessage()));
         }
 
         return res;

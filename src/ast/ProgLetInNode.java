@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class ProgLetInNode implements INode
 {
+    private INode letPart;
+    private INode dxPar;
 
     @Override
     public IType typeCheck() throws TypeException
