@@ -55,7 +55,7 @@ public class TypeNode implements INode {
                 this.type = env.getEntry(this.token).getType();
             } catch (UndeclaredVariableException e)
             {
-                res.add(new SemanticError("Class '" + declaredType + "' does not exist"));
+                res.add(new SemanticError(e.getMessage() +" Class '" + declaredType + "' does not exist"));
             }
         }
 

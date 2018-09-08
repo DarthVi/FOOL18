@@ -94,7 +94,7 @@ public class VardecNode implements INode
         }
         catch (VariableAlreadyDefinedException e)
         {
-            res.add(new SemanticError("Variable already defined: " + e.getMessage()));
+            res.add(new SemanticError(e.getMessage()));
         }
 
         return res;

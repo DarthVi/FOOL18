@@ -76,7 +76,7 @@ public class IdNode implements INode
         }
         catch (UndeclaredVariableException e)
         {
-            res.add(new SemanticError("Error: undeclared variable"));
+            res.add(new SemanticError(e.getMessage()));
         }
 
         return res;
