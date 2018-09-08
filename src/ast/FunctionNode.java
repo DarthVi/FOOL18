@@ -1,6 +1,7 @@
 package ast;
 
 import exception.TypeException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.IType;
 import util.Environment;
@@ -46,7 +47,35 @@ public class FunctionNode implements INode
     @Override
     public String codeGeneration()
     {
-        return null;
+        StringBuilder decsCode = new StringBuilder();
+        StringBuilder decsPop = new StringBuilder();
+        if (decs != null) {
+            for (INode dec : decs) {
+                decsCode.append(dec.codeGeneration());
+                decsPop.append("pop\n");
+            }
+        }
+
+        StringBuilder paramsPop = new StringBuilder();
+        if (params != null) {
+            for (INode par : params)
+                paramsPop.append("pop\n");
+        }
+
+        return "push\n" +
+                FOOLlib.freshFunLabel() + "\n" +
+                "cfp\n" + //setta $fp a $sp
+                "lra\n" + //inserimento return address
+                decsCode + //inserimento dichiarazioni locali
+                body.codeGeneration() +
+                "srv\n" + //pop del return value
+                decsPop +
+                "sra\n" + // pop del return address
+                "pop\n" + // pop di AL
+                paramsPop +
+                "sfp\n" +  // setto $fp a valore del CL
+                "lrv\n" + // risultato della funzione sullo stack
+                "lra\n" + "js\n";  // salta a $ra
     }
 
     @Override

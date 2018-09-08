@@ -68,4 +68,10 @@ public class ActualParamsNode implements INode
 
         return str.toString();
     }
+
+    public int size() {return actualArguments.size(); }
+
+    public INode get(int index) {
+        return actualArguments.get(index);
+    }
 }

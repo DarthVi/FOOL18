@@ -33,9 +33,24 @@ public class FunCallNode implements INode
     }
 
     @Override
-    public String codeGeneration()
-    {
-        return null;
+    public String codeGeneration() {
+        StringBuilder parCode = new StringBuilder();
+        for (int i = actualArgs.size() - 1; i >= 0; i--)
+            parCode.append(actualArgs.get(i).codeGeneration());
+
+        StringBuilder getAR = new StringBuilder();
+        for (int i = 0; i < nestingLevel - entry.getNestingLevel(); i++)
+            getAR.append("lw\n");
+
+        return "lfp\n" + //CL
+                parCode +
+                "lfp\n" + getAR + //setto AL risalendo la catena statica
+                // ora recupero l'indirizzo a cui saltare e lo metto sullo stack
+                "push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                "lfp\n" + getAR + //risalgo la catena statica
+                "add\n" +
+                "lw\n" + //carico sullo stack il valore all'indirizzo ottenuto
+                "js\n";
     }
 
     @Override
