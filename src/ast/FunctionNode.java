@@ -3,6 +3,8 @@ package ast;
 import exception.TypeException;
 import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
+import parser.FOOLParser;
+import type.FunctionType;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
@@ -13,7 +15,7 @@ public class FunctionNode implements INode
 {
 
     private String id;
-    private IType type;
+    private IType decReturnType;
     private ArrayList<FormalParamNode> params = new ArrayList<FormalParamNode>();
     private ArrayList<INode> decs;
     private INode body;
@@ -22,7 +24,7 @@ public class FunctionNode implements INode
     public FunctionNode(String id, IType type, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
     {
         this.id = id;
-        this.type = type;
+        this.decReturnType = type;
         this.decs = decs;
         this.body = body;
         this.ctx = ctx;
@@ -31,7 +33,7 @@ public class FunctionNode implements INode
     public FunctionNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
     {
         this.id = id;
-        this.type = type;
+        this.decReturnType = type;
         this.params = params;
         this.decs = decs;
         this.body = body;
@@ -41,7 +43,31 @@ public class FunctionNode implements INode
     @Override
     public IType typeCheck() throws TypeException
     {
-        return null;
+        if(decs != null)
+        {
+            for(INode dec : decs)
+            {
+                dec.typeCheck(); //no need to try..catch this, we are in a function that throws TypeException
+            }
+        }
+
+        IType bodyReturnType = body.typeCheck();
+
+        if(!bodyReturnType.isSubtypeOf(decReturnType))
+        {
+            throw new TypeException("Body return type is incompatible with declared return type.", ctx);
+        }
+
+        //we need this to build the FunctionType class
+        ArrayList<IType> paramTypes = new ArrayList<>();
+
+        for (FormalParamNode param : params)
+        {
+            paramTypes.add(param.typeCheck());
+        }
+
+        return new FunctionType(decReturnType, paramTypes);
+
     }
 
     @Override
@@ -82,6 +108,30 @@ public class FunctionNode implements INode
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         ArrayList<SemanticError> errors = new ArrayList<>();
+        FunctionType funType = null;
+
+        ArrayList<IType> paramTypes = new ArrayList<>();
+
+        //this is needed to build the symbol table entry for the function ID
+        try
+        {
+            for (FormalParamNode param : params)
+            {
+                paramTypes.add(param.typeCheck());
+            }
+        }
+        catch (TypeException e)
+        {
+            //do nothing
+            //it's never going to happen, see FormalParamNode.typeCheck()
+        }
+
+        funType = new FunctionType(decReturnType, paramTypes);
+
+        //let's add symbol table entry for the function ID
+        //TODO: check if offset 0 is ok
+        env.addEntry(((FOOLParser.FunContext) ctx).ID().getSymbol(), funType, 0, false);
+
         env.addHashMap();
         // Parametri formali
         for (FormalParamNode param : params) {
@@ -94,7 +144,7 @@ public class FunctionNode implements INode
         // Body della funzione
         errors.addAll(body.checkSemantics(env));
         env.removeLastHashMap();
-        // TODO da completare
+        // TODO da completare aggiungendo roba necessaria nel caso si restituisca un'istanza di classe
         return errors;
     }
 }
