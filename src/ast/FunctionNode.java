@@ -52,6 +52,20 @@ public class FunctionNode implements INode
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<>();
+        env.addHashMap();
+        // Parametri formali
+        for (FormalParamNode param : params) {
+            errors.addAll(param.checkSemantics(env));
+        }
+        // Variabili locali
+        for (INode dec : decs){
+            errors.addAll(dec.checkSemantics(env));
+        }
+        // Body della funzione
+        errors.addAll(body.checkSemantics(env));
+        env.removeLastHashMap();
+        // TODO da completare
+        return errors;
     }
 }

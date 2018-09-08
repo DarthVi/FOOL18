@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import exception.UndeclaredVariableException;
+import exception.UndefinedFunctionException;
 import exception.VariableAlreadyDefinedException;
 import org.antlr.v4.runtime.Token;
 import type.IType;
@@ -103,6 +104,29 @@ public class Environment
 
         if(entry == null)
             throw new UndeclaredVariableException(token);
+
+        return entry;
+    }
+
+    /**
+     * Returns the latest entry corresponding to the token searched
+     * @param token
+     * @return
+     * @throws UndefinedFunctionException
+     */
+    public STentry getFunEntry(Token token) throws UndefinedFunctionException
+    {
+        String id = token.getText();
+        STentry entry = null;
+
+        for(HashMap<String, STentry> map : symTable)
+        {
+            if((entry = map.get(id)) != null)
+                break;
+        }
+
+        if(entry == null)
+            throw new UndefinedFunctionException(token);
 
         return entry;
     }
