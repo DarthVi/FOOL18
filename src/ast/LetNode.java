@@ -41,13 +41,18 @@ public class LetNode implements INode{
 	//TODO: LorenzoMass, controlla che sia corretto
 	//ho tolto exp, dovremmo gestirle lato vardec e varasm
         return "push 0\n" +
-                declCode +
-                "halt\n";
+                declCode;
+        // "halt\n"; goes at the end of ProgLetIn, after the "in part" (body) codegen, the end of the program
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-        return null;
+        ArrayList<SemanticError> errors = new ArrayList<>();
+
+        for(INode dec : declist)
+            errors.addAll(dec.checkSemantics(env));
+
+        return errors;
     }
 }
