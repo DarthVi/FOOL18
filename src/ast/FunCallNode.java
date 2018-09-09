@@ -2,7 +2,10 @@ package ast;
 
 import exception.TypeException;
 import exception.UndefinedFunctionException;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
+import parser.FOOLParser;
+import type.FunctionType;
 import type.IType;
 import util.Environment;
 import util.STentry;
@@ -17,19 +20,44 @@ public class FunCallNode implements INode
     private ActualParamsNode actualArgs;
     private STentry entry;
     private int nestingLevel;
+    private ParserRuleContext ctx;
 
-    public FunCallNode(Token token, ActualParamsNode actualArgs, STentry entry)
+    public FunCallNode(Token token, ActualParamsNode actualArgs, STentry entry, ParserRuleContext ctx)
     {
         this.token = token;
         this.id = token.getText();
         this.actualArgs = actualArgs;
-        this.entry = entry;
+        this.entry = null;
+        this.ctx = ctx;
     }
 
     @Override
     public IType typeCheck() throws TypeException
     {
-        return null;
+        FunctionType funType;
+        //we must check that we are actually calling a function
+        if(!(entry.getType() instanceof FunctionType))
+        {
+            throw new TypeException("The object called is not a function.", ctx);
+        }
+        else
+        {
+            funType = (FunctionType) entry.getType();
+
+            actualArgs.typeCheck();
+
+            //we must check that the actual arguments are of the right type
+            //(the one that follows the function declaration)
+            for(int i = 0; i < actualArgs.size(); i++)
+            {
+                INode arg = actualArgs.get(i);
+
+                if(!arg.typeCheck().isSubtypeOf(funType.getArgumentType(i)))
+                    throw new TypeException("Argument " + (i + 1) + " has an incorrect type.",ctx);
+            }
+        }
+
+        return funType.getReturnType();
     }
 
     @Override
@@ -58,7 +86,7 @@ public class FunCallNode implements INode
     {
         ArrayList<SemanticError> errors = new ArrayList<>();
         try {
-            STentry entry = env.getFunEntry(token);
+            entry = env.getFunEntry(token);
         } catch (UndefinedFunctionException e) {
             errors.add(new SemanticError(e.getMessage()));
         }

@@ -16,19 +16,10 @@ public class FunctionNode implements INode
 
     private String id;
     private IType decReturnType;
-    private ArrayList<FormalParamNode> params = new ArrayList<FormalParamNode>();
+    private ArrayList<FormalParamNode> params;
     private ArrayList<INode> decs;
     private INode body;
     private ParserRuleContext ctx;
-
-    public FunctionNode(String id, IType type, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
-    {
-        this.id = id;
-        this.decReturnType = type;
-        this.decs = decs;
-        this.body = body;
-        this.ctx = ctx;
-    }
 
     public FunctionNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
     {
@@ -43,7 +34,7 @@ public class FunctionNode implements INode
     @Override
     public IType typeCheck() throws TypeException
     {
-        if(decs != null)
+        if(!decs.isEmpty())
         {
             for(INode dec : decs)
             {

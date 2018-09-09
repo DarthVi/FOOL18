@@ -1,7 +1,11 @@
 package ast;
 
+import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLBaseVisitor;
 import parser.FOOLParser;
+import type.IType;
+
+import java.util.ArrayList;
 
 public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 {
@@ -72,6 +76,95 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
             value = !ctx.booleanVal.getText().equals(FOOLParser.VOCABULARY.getLiteralName(FOOLParser.TRUE));
 
         return new BoolNode(value);
+    }
+
+    private INode visitIf(ParserRuleContext ctx)
+    {
+        IfNode res;
+        INode condExp;
+        INode thenBranch;
+        INode elseBranch;
+
+
+        if(ctx instanceof FOOLParser.IfExpContext)
+        {
+            condExp = visit (((FOOLParser.IfExpContext) ctx).cond);
+
+            thenBranch = visit (((FOOLParser.IfExpContext) ctx).thenBranch);
+
+            elseBranch = visit (((FOOLParser.IfExpContext) ctx).elseBranch);
+        }
+        else //FOOLParser.IfStatContext
+        {
+            condExp = visit (((FOOLParser.IfStatContext) ctx).cond);
+
+            thenBranch = visit (((FOOLParser.IfStatContext) ctx).thenBranch);
+
+            elseBranch = visit (((FOOLParser.IfStatContext) ctx).elseBranch);
+        }
+
+        res = new IfNode(condExp, thenBranch, elseBranch, ctx);
+
+        return res;
+    }
+
+    @Override
+    public INode visitIfExp(FOOLParser.IfExpContext ctx)
+    {
+        return visitIf(ctx);
+    }
+
+    @Override
+    public INode visitIfStat(FOOLParser.IfStatContext ctx)
+    {
+        return visitIf(ctx);
+    }
+
+    @Override
+    public INode visitArgdec(FOOLParser.ArgdecContext ctx)
+    {
+        FormalParamNode param;
+
+        TypeNode typeNode = (TypeNode) visitType(ctx.type());
+
+        //offset -2 in the AR (same as variable declared inside the function scope)
+        //isAttribute = false because it is not relevant in this case to discriminate variables from members
+        //TODO: controllare che questo offset funzioni
+        return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(), -2,
+                false, ctx);
+    }
+
+    @Override
+    public INode visitFun(FOOLParser.FunContext ctx)
+    {
+        INode type = visitType(ctx.type());
+        IType retType = ((TypeNode) type).getType();
+
+        String funName= ctx.ID().getSymbol().getText();
+        ArrayList<FormalParamNode> params = new ArrayList<>();
+        ArrayList<INode> declarations = new ArrayList<>();
+
+        for(FOOLParser.ArgdecContext argdecContext : ctx.argdec())
+        {
+            FormalParamNode param = (FormalParamNode) visitArgdec(argdecContext);
+            params.add(param);
+        }
+
+        for(FOOLParser.VardecContext vc : ctx.funlet().vardec())
+        {
+            INode param = visitVardec(vc);
+            declarations.add(param);
+        }
+
+        INode body;
+
+        if(ctx.exp().isEmpty())
+            body = visitStats(ctx.stats());
+        else
+            body = visitExp(ctx.exp());
+
+        return new FunctionNode(funName, retType, params, declarations, body, ctx);
+
     }
 
     //TODO: altri visitor
