@@ -129,10 +129,12 @@ public class FunctionNode implements INode
         funType = new FunctionType(decReturnType, paramTypes);
 
         //let's add symbol table entry for the function ID
-        //TODO: check if offset 0 is ok
-        env.addEntry(((FOOLParser.FunContext) ctx).ID().getSymbol(), funType, 0, false);
+        //TODO: check if this offset is ok
+        env.addEntry(((FOOLParser.FunContext) ctx).ID().getSymbol(), funType, env.offset, false);
 
         env.addHashMap();
+        env.offset = -2;
+
         // Parametri formali
         for (FormalParamNode param : params) {
             errors.addAll(param.checkSemantics(env));
@@ -144,7 +146,8 @@ public class FunctionNode implements INode
         // Body della funzione
         errors.addAll(body.checkSemantics(env));
         env.removeLastHashMap();
-        // TODO da completare aggiungendo roba necessaria nel caso si restituisca un'istanza di classe
+
+        // TODO controllare che funzioni per classi e oggetti
         return errors;
     }
 }
