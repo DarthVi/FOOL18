@@ -18,6 +18,11 @@ public class ActualParamsNode implements INode
 {
     private ArrayList<INode>  actualArguments;
 
+    public ActualParamsNode(ArrayList<INode> actualArguments)
+    {
+        this.actualArguments = actualArguments;
+    }
+
     @Override
     public IType typeCheck() throws TypeException
     {
