@@ -26,7 +26,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         INode expression = null;
         boolean isAttribute = false;
 
-        if(!ctx.exp().isEmpty())
+        if(ctx.exp() != null)
             expression = visit(ctx.exp());
 
         //if the variable declaration is inside a class, it is a member declaration,
@@ -160,9 +160,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         INode body;
 
         if(ctx.exp().isEmpty())
-            body = visitStats(ctx.stats());
+            body = visit(ctx.stats());
         else
-            body = visitExp(ctx.exp());
+            body = visit(ctx.exp());
 
         return new FunctionNode(funName, retType, params, declarations, body, ctx);
 
@@ -272,6 +272,31 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
        INode exp = visit(ctx.exp());
 
        return new VarNode(varName, exp, ctx);
+    }
+
+    @Override
+    public INode visitLetInExp(FOOLParser.LetInExpContext ctx)
+    {
+        ProgLetInNode res;
+
+        ArrayList<INode> declarations = new ArrayList<>();
+
+        for(FOOLParser.DecContext dc : ctx.let().dec())
+        {
+            declarations.add(visit(dc));
+        }
+
+        LetNode letNode = new LetNode(declarations, ctx);
+        INode dxPart;
+
+        if(ctx.exp() != null)
+            dxPart = visit(ctx.exp());
+        else
+            dxPart = visit(ctx.stats());
+
+        res = new ProgLetInNode(letNode, dxPart);
+
+        return res;
     }
 
     //TODO: altri visitor
