@@ -2,6 +2,7 @@ package ast;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLBaseVisitor;
+import parser.FOOLLexer;
 import parser.FOOLParser;
 import type.IType;
 
@@ -166,6 +167,104 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         return new FunctionNode(funName, retType, params, declarations, body, ctx);
 
     }
+
+
+    @Override
+    public INode visitFuncall(FOOLParser.FunExpContext ctx) {
+        //this corresponds to a function invocation
+        //        //declare the result
+        INode res;
+        String functionID;
+        //get the invocation arguments
+        ArrayList<INode> args = new ArrayList<INode>();
+
+        for (FOOLParser.ExpContext exp : ctx.exp())
+            args.add(visit(exp));
+
+        functionID = ctx.ID().getText();
+
+
+        //TODO: add tokens to FunCallNode
+        res = new FunCallNode(token, new ActualParamsNode(args), functionID, ctx);
+
+        return res;
+    }
+
+
+    @Override
+    public INode visitFactor(FOOLParser.FactorContext ctx) {
+        try {
+            if (ctx.right == null) {
+                //it is a simple expression
+                return visit(ctx.left);
+            } else {
+                //it is a binary expression, you should visit left and right
+                INode left = visit(ctx.left);
+                INode right = visit(ctx.right);
+
+                switch (ctx.operator.getType()) {
+                    case FOOLLexer.EQ:
+                        return new EqualNode(left, right, ctx);
+                    case FOOLLexer.LQ:
+                        return new LessEqualNode(left, right, ctx);
+                    case FOOLLexer.GQ:
+                        return new GreaterEqualNode(left, right, ctx);
+                    case FOOLLexer.AND:
+                        return new AndNode(left, right, ctx);
+                    case FOOLLexer.GREATER:
+                        return new GreaterNode(left, right, ctx);
+                    case FOOLLexer.LESS:
+                        return new LessNode(left, right, ctx);
+                    case FOOLLexer.OR:
+                        return new OrNode(left, right, ctx);
+                    case FOOLLexer.DEQ:
+                        return new DiseqNode(left, right, ctx);
+                    default:
+                        throw new Exception("Invalid operator");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    @Override
+    public INode visitVarExp(FOOLParser.VarExpContext ctx) {
+        return new IdNode(ctx.ID().getText(), ctx);
+    }
+
+    @Override
+    public INode visitExp(FOOLParser.ExpContext ctx) {
+        if (ctx.right == null) {
+            return visit(ctx.left);
+        } else {
+            INode left = visit(ctx.left);
+            INode right = visit(ctx.right);
+            if (ctx.operator.getType() == FOOLLexer.PLUS) {
+                return new PlusNode(left, right, ctx);
+            } else {
+                return new MinusNode(left, right, ctx);
+            }
+        }
+    }
+
+    @Override
+    public INode visitTerm(FOOLParser.TermContext ctx) {
+        if (ctx.right == null) {
+            return visit(ctx.left);
+        } else {
+            INode left = visit(ctx.left);
+            INode right = visit(ctx.right);
+            if (ctx.operator.getType() == FOOLLexer.TIMES) {
+                return new TimesNode(left, right, ctx);
+            } else {
+                return new DivNode(left, right, ctx);
+            }
+        }
+    }
+
 
     //TODO: altri visitor
 }
