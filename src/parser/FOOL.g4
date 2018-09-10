@@ -13,8 +13,8 @@ grammar FOOL;
  *------------------------------------------------------------------*/
 
 prog   : exp SEMIC                                  #singleExp
-       | let (exp | stats) SEMIC                    #letInExp
-       | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
+       | let (exp SEMIC | stats)                    #letInExp
+       | classdec+ (let? (exp SEMIC | stats))?      #classdecExp
        ;
 
 let       : LET (dec SEMIC)+ IN ;
