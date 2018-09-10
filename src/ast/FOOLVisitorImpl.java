@@ -184,7 +184,6 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         functionID = ctx.ID().getText();
 
 
-        //TODO: add tokens to FunCallNode
         res = new FunCallNode(ctx.ID().getSymbol(), new ActualParamsNode(args), ctx);
 
         return res;
