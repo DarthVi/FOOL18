@@ -98,6 +98,6 @@ public class FunCallNode implements INode
     @Override
     public String toString()
     {
-        return super.toString();
+        return "Called " + entry.getType().toString() + "\n";
     }
 }

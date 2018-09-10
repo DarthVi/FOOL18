@@ -19,6 +19,7 @@ public class FunctionNode implements INode
     private ArrayList<FormalParamNode> params;
     private ArrayList<INode> decs;
     private INode body;
+    private FunctionType fType;
     private ParserRuleContext ctx;
 
     public FunctionNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
@@ -28,6 +29,7 @@ public class FunctionNode implements INode
         this.params = params;
         this.decs = decs;
         this.body = body;
+        this.fType = null;
         this.ctx = ctx;
     }
 
@@ -119,6 +121,8 @@ public class FunctionNode implements INode
 
         funType = new FunctionType(decReturnType, paramTypes);
 
+        this.fType = funType;
+
         //let's add symbol table entry for the function ID
         //TODO: check if this offset is ok
         env.addEntry(((FOOLParser.FunContext) ctx).ID().getSymbol(), funType, env.offset, false);
@@ -140,5 +144,11 @@ public class FunctionNode implements INode
 
         // TODO controllare che funzioni per classi e oggetti
         return errors;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.id + this.fType.toString() + "\n";
     }
 }
