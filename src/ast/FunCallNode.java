@@ -22,7 +22,7 @@ public class FunCallNode implements INode
     private int nestingLevel;
     private ParserRuleContext ctx;
 
-    public FunCallNode(Token token, ActualParamsNode actualArgs, STentry entry, ParserRuleContext ctx)
+    public FunCallNode(Token token, ActualParamsNode actualArgs, ParserRuleContext ctx)
     {
         this.token = token;
         this.id = token.getText();

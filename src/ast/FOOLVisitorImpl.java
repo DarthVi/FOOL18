@@ -170,7 +170,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
 
     @Override
-    public INode visitFuncall(FOOLParser.FunExpContext ctx) {
+    public INode visitFunExp(FOOLParser.FunExpContext ctx) {
         //this corresponds to a function invocation
         //        //declare the result
         INode res;
@@ -185,7 +185,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
 
         //TODO: add tokens to FunCallNode
-        res = new FunCallNode(token, new ActualParamsNode(args), functionID, ctx);
+        res = new FunCallNode(ctx.ID().getSymbol(), new ActualParamsNode(args), ctx);
 
         return res;
     }
