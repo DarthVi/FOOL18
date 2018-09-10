@@ -22,10 +22,10 @@ public class VarNode implements INode{
     private INode exp;
     private ParserRuleContext ctx;
 
-    public VarNode(String id, IType type, INode exp, ParserRuleContext ctx)
+    public VarNode(String id, INode exp, ParserRuleContext ctx)
     {
         this.id = id;
-        this.type = type;
+        this.type = null;
         this.exp = exp;
         this.ctx = ctx;
     }

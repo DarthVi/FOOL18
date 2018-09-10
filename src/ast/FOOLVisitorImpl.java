@@ -264,6 +264,15 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         }
     }
 
+    @Override
+    public INode visitVarasm(FOOLParser.VarasmContext ctx)
+    {
+       String varName = ctx.ID().getSymbol().getText();
+
+       INode exp = visit(ctx.exp());
+
+       return new VarNode(varName, exp, ctx);
+    }
 
     //TODO: altri visitor
 }
