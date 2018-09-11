@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Map;
 
 import exception.FunctionAlreadyDefinedException;
@@ -126,10 +127,13 @@ public class Environment
     public STentry getEntry(Token token) throws UndeclaredVariableException
     {
         String id = token.getText();
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
         STentry entry = null;
 
-        for(HashMap<String, STentry> map : symTable)
+        while(li.hasPrevious())
         {
+            HashMap<String, STentry> map = li.previous();
+
             if((entry = map.get(id)) != null)
                 break;
         }
@@ -149,10 +153,13 @@ public class Environment
     public STentry getFunEntry(Token token) throws UndefinedFunctionException
     {
         String id = token.getText();
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
         STentry entry = null;
 
-        for(HashMap<String, STentry> map : symTable)
+        while(li.hasPrevious())
         {
+            HashMap<String, STentry> map = li.previous();
+
             if((entry = map.get(id)) != null)
                 break;
         }
