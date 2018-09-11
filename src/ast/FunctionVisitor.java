@@ -6,6 +6,7 @@ import parser.FOOLParser;
 import type.FunctionType;
 import type.IType;
 import util.Environment;
+import util.SemanticError;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
 {
 
     private Environment environment = new Environment();
-    private ArrayList<FunctionAlreadyDefinedException> errors;
+    private ArrayList<SemanticError> errors = new ArrayList<>();
 
     @Override
     public INode visitType(FOOLParser.TypeContext ctx)
@@ -57,7 +58,7 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
         }
         catch(FunctionAlreadyDefinedException e)
         {
-            errors.add(e);
+            errors.add(new SemanticError(e.getMessage()));
         }
 
         return type;
@@ -68,7 +69,7 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
         return environment;
     }
 
-    public ArrayList<FunctionAlreadyDefinedException> getErrors()
+    public ArrayList<SemanticError> getErrors()
     {
         return errors;
     }
@@ -78,7 +79,7 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
         return errors.size();
     }
 
-    public FunctionAlreadyDefinedException getError(int index)
+    public SemanticError getError(int index)
     {
         return errors.get(index);
     }

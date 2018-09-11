@@ -1,6 +1,7 @@
 package unitTestCovella;
 
 import ast.FOOLVisitorImpl;
+import ast.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
 import exception.ParserException;
@@ -19,7 +20,9 @@ import java.util.ArrayList;
 
 public class MockCompilerSteps
 {
-    public static INode buildAST(String code) throws LexerException, ParserException
+    private Environment environment;
+
+    public INode buildAST(String code) throws LexerException, ParserException, SemanticException
     {
         CharStream input = CharStreams.fromString(code);
 
@@ -35,15 +38,28 @@ public class MockCompilerSteps
         if (parser.getNumberOfSyntaxErrors() > 0)
             throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
 
-        //Semantic Analysis
+        //building AST
+
+        //1st pass to get function definition
+        FunctionVisitor funVisitor = new FunctionVisitor();
+        funVisitor.visit(progContext);
+
+        //we do a little bit of semantic analysis even here, considering however
+        //only function definitions
+        if(funVisitor.getErrorsSize() > 0)
+            throw new SemanticException(funVisitor.getErrors());
+
+        environment = funVisitor.getEnvironment();
+
+        //2nd pass
         FOOLVisitorImpl visitor = new FOOLVisitorImpl();
 
         return (INode) visitor.visit(progContext);
     }
 
-    public static ArrayList<SemanticError> checkSemantics(INode node, Environment env) throws SemanticException
+    public ArrayList<SemanticError> checkSemantics(INode node, Environment env) throws SemanticException
     {
-        ArrayList<SemanticError> errors = node.checkSemantics(env);
+        ArrayList<SemanticError> errors = node.checkSemantics(environment);
 
         if (errors.size() > 0)
             throw new SemanticException(errors);
@@ -51,8 +67,13 @@ public class MockCompilerSteps
         return errors;
     }
 
-    public static IType typeCheck(INode node) throws TypeException
+    public IType typeCheck(INode node) throws TypeException
     {
         return node.typeCheck();
+    }
+
+    public Environment getEnvironment()
+    {
+        return environment;
     }
 }

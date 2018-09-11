@@ -17,14 +17,14 @@ import static junit.framework.TestCase.fail;
 
 public class TestSemantics
 {
-    private Environment env;
     private INode root;
     ArrayList<SemanticError> errors;
+    private MockCompilerSteps compiler;
 
     @Before
     public void setUp() throws Exception
     {
-        this.env = new Environment();
+        this.compiler = new MockCompilerSteps();
         this.root = null;
         errors = null;
     }
@@ -34,8 +34,8 @@ public class TestSemantics
     {
         try
         {
-            root = MockCompilerSteps.buildAST("let int pippo; in paperino + 2;");
-            errors = MockCompilerSteps.checkSemantics(root, this.env);
+            root = compiler.buildAST("let int pippo; in paperino + 2;");
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
         } catch (LexerException e)
         {
             fail("LexerException thrown with valid code");
