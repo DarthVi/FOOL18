@@ -123,9 +123,9 @@ public class FunctionNode implements INode
 
         this.fType = funType;
 
-        //let's add symbol table entry for the function ID
-        //TODO: check if this offset is ok
-        env.addEntry(((FOOLParser.FunContext) ctx).ID().getSymbol(), funType, env.offset, false);
+        //we already have functions' signature entries because of the first pass done in order
+        //to allow mutual recursion. We only need to add infos about formal parameters
+        //and declarations
 
         env.addHashMap();
         env.offset = -2;
@@ -141,6 +141,9 @@ public class FunctionNode implements INode
         // Body della funzione
         errors.addAll(body.checkSemantics(env));
         env.removeLastHashMap();
+
+        //TODO: check if we need to reset the offset of the environment
+        //env.offset = 0;
 
         // TODO controllare che funzioni per classi e oggetti
         return errors;
