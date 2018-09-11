@@ -29,6 +29,7 @@ public class TypeNode implements INode {
                 break;
             case "void":
                 this.type = new VoidType();
+                break;
             default:
                 this.type = new ClassType(ctx.getText());
                 this.token = ctx.getToken(FOOLParser.ID, 0).getSymbol();
