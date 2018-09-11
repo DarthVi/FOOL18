@@ -14,6 +14,12 @@ public class ProgLetInNode implements INode
     //this could be exp or stats according to the grammar
     private INode dxPar;
 
+    public ProgLetInNode(INode letPart, INode dxPar)
+    {
+        this.letPart = letPart;
+        this.dxPar = dxPar;
+    }
+
     @Override
     public IType typeCheck() throws TypeException
     {

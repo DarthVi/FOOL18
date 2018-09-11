@@ -30,6 +30,8 @@ public class IntNode implements INode {
  	public ArrayList<SemanticError> checkSemantics(Environment env) {
 
  	  return new ArrayList<SemanticError>();
+
+
  	}
   
   public String codeGeneration() {

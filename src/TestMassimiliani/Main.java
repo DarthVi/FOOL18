@@ -1,3 +1,6 @@
+package TestMassimiliani;
+
+import ast.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
 import exception.ParserException;
@@ -22,36 +25,42 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String fileName = "src/test/test2.fool";
+            String fileName = "TestMassimiliani/test.fool";
             CharStream input = CharStreams.fromFileName(fileName);
 
             //LEXER
-            System.out.println("BEGIN LEXICAL ANALYSIS...");
             FOOLLexer lexer = new FOOLLexer(input);
             if (lexer.errors.size() > 0)
                 throw new LexerException(lexer.errors);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
-            for (int i = 0; i < tokens.getNumberOfOnChannelTokens(); i++) {
-                Token token = tokens.get(i);
-                System.out.println(token.getTokenIndex() + " " + token.getText());
-            }
-            System.out.println("...END LEXICAL ANALYSIS\n");
 
-            //PARSER
-            System.out.println("BEGIN SYNTAX ANALYSIS...");
+            //PARSING - Syntax analysis
             FOOLParser parser = new FOOLParser(tokens);
             FOOLParser.ProgContext progContext = parser.prog();
             if (parser.getNumberOfSyntaxErrors() > 0)
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
-            System.out.println("...END SYNTAX ANALYSIS\n");
 
-            //SEMANTIC
-            System.out.println("BEGIN SEMANTIC ANALYSIS...\n");
-            DebuggingVisitorImpl visitor = new DebuggingVisitorImpl();
+
+            FunctionVisitor funVisitor = new FunctionVisitor();
+
+            funVisitor.visit(progContext);
+
+            //we do a little bit of semantic analysis even here, considering however
+            //only function definitions
+            if(funVisitor.getErrorsSize() > 0)
+                throw new SemanticException(funVisitor.getErrors());
+
+            Environment env = funVisitor.getEnvironment();
+
+
+
+            FOOLVisitorImpl visitor = new FOOLVisitorImpl();
+
             INode ast = (INode) visitor.visit(progContext);
-            Environment env = new Environment();
+
+
             ArrayList<SemanticError> errors = ast.checkSemantics(env);
-                if (errors.size() > 0) throw new SemanticException(errors);
+            if (errors.size() > 0) throw new SemanticException(errors);
             System.out.println("\n...END SEMANTIC ANALYSIS");
 
             //TYPE CHECKING
@@ -66,7 +75,7 @@ public class Main {
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-        } catch (IOException | LexerException | ParserException | SemanticException | TypeException e) {
+        } catch (IOException | LexerException | ParserException | SemanticException | TypeException  e ) {
             System.out.println(e.getMessage());
         }
     }

@@ -1,12 +1,19 @@
-package ast;
+package TestMassimiliani;
 
+import ast.*;
+import exception.FunctionAlreadyDefinedException;
+import org.antlr.runtime.tree.Tree;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTree;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
 import parser.FOOLParser;
+import type.FunctionType;
 import type.IType;
+import util.SemanticError;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 {
@@ -14,6 +21,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitType(FOOLParser.TypeContext ctx)
     {
+        System.out.println("TypeNode   (" + ctx.getText() + ")");
         return new TypeNode(ctx, ctx.getText());
     }
 
@@ -21,6 +29,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     public INode visitVardec(FOOLParser.VardecContext ctx)
     {
         VardecNode vardecNode;
+        System.out.println("VarDecNode   (" + ctx.getText() + ")");
 
         TypeNode typeNode = (TypeNode) visit(ctx.type());
         INode expression = null;
@@ -43,18 +52,21 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         // notice that this method is not actually a rule but a named production #intVal
 
         //there is no need to perform a check here, the lexer ensures this text is an int
+        System.out.println("IntNode   (" + ctx.getText() + ")");
         return new IntNode(Integer.parseInt(ctx.INTEGER().getText()));
     }
 
     @Override
     public INode visitNullVal(FOOLParser.NullValContext ctx)
     {
+        System.out.println("NullNode   (" + ctx.getText() + ")");
         return new NullNode();
     }
 
     @Override
     public INode visitVoidExp(FOOLParser.VoidExpContext ctx)
     {
+        System.out.println("VoidNode (" + ctx.getText() + ")");
         return new VoidNode();
     }
 
@@ -76,6 +88,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         else
             value = !ctx.booleanVal.getText().equals(FOOLParser.VOCABULARY.getLiteralName(FOOLParser.TRUE));
 
+        System.out.println("BoolNode   (" + ctx.getText() + ")");
         return new BoolNode(value);
     }
 
@@ -85,6 +98,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         INode condExp;
         INode thenBranch;
         INode elseBranch;
+
+        System.out.println("IfNode   (" + ctx.getText() + ")");
 
 
         if(ctx instanceof FOOLParser.IfExpContext)
@@ -103,6 +118,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
             elseBranch = visit (((FOOLParser.IfStatContext) ctx).elseBranch);
         }
+
 
         res = new IfNode(condExp, thenBranch, elseBranch, ctx);
 
@@ -125,19 +141,28 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     public INode visitArgdec(FOOLParser.ArgdecContext ctx)
     {
         FormalParamNode param;
-
+        System.out.println("FormalParamNode   (" + ctx.getText() + ")");
         TypeNode typeNode = (TypeNode) visitType(ctx.type());
 
         //offset -2 in the AR (same as variable declared inside the function scope)
         //isAttribute = false because it is not relevant in this case to discriminate variables from members
         //TODO: controllare che questo offset funzioni
+
         return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(), -2,
                 false, ctx);
     }
 
+
+
+
+
     @Override
     public INode visitFun(FOOLParser.FunContext ctx)
     {
+      System.out.println("FunctionNode   (" + ctx.getText() + ")");
+
+
+
         INode type = visitType(ctx.type());
         IType retType = ((TypeNode) type).getType();
 
@@ -164,6 +189,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         else
             body = visit(ctx.exp());
 
+
         return new FunctionNode(funName, retType, params, declarations, body, ctx);
 
     }
@@ -171,6 +197,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitFunExp(FOOLParser.FunExpContext ctx) {
+
+        System.out.println("FunCallNode   (" + ctx.getText() + ")");
         //this corresponds to a function invocation
         //        //declare the result
         INode res;
@@ -198,25 +226,48 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
                 return visit(ctx.left);
             } else {
                 //it is a binary expression, you should visit left and right
-                INode left = visit(ctx.left);
-                INode right = visit(ctx.right);
+                INode left, right;
 
                 switch (ctx.operator.getType()) {
                     case FOOLLexer.EQ:
+                        System.out.println("EqualNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new EqualNode(left, right, ctx);
                     case FOOLLexer.LQ:
+                        System.out.println("LessEqualNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new LessEqualNode(left, right, ctx);
                     case FOOLLexer.GQ:
+                        System.out.println("GreaterEqualNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new GreaterEqualNode(left, right, ctx);
                     case FOOLLexer.AND:
+                        System.out.println("AndNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new AndNode(left, right, ctx);
                     case FOOLLexer.GREATER:
+                        System.out.println("GreaterNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new GreaterNode(left, right, ctx);
                     case FOOLLexer.LESS:
+                        System.out.println("LessNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new LessNode(left, right, ctx);
                     case FOOLLexer.OR:
+                        System.out.println("OrNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new OrNode(left, right, ctx);
                     case FOOLLexer.DEQ:
+                        System.out.println("DiseqNode   (" + ctx.getText() + ")");
+                        left = visit(ctx.left);
+                        right = visit(ctx.right);
                         return new DiseqNode(left, right, ctx);
                     default:
                         throw new Exception("Invalid operator");
@@ -231,6 +282,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitVarExp(FOOLParser.VarExpContext ctx) {
+        System.out.println("IdNode   (" + ctx.getText() + ")");
         return new IdNode(ctx.ID().getText(), ctx);
     }
 
@@ -239,11 +291,16 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         if (ctx.right == null) {
             return visit(ctx.left);
         } else {
-            INode left = visit(ctx.left);
-            INode right = visit(ctx.right);
+            INode left, right;
             if (ctx.operator.getType() == FOOLLexer.PLUS) {
+                System.out.println("PlusNode   (" + ctx.getText() + ")");
+                left = visit(ctx.left);
+                right = visit(ctx.right);
                 return new PlusNode(left, right, ctx);
             } else {
+                System.out.println("MinusNode   (" + ctx.getText() + ")");
+                left = visit(ctx.left);
+                right = visit(ctx.right);
                 return new MinusNode(left, right, ctx);
             }
         }
@@ -254,11 +311,16 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         if (ctx.right == null) {
             return visit(ctx.left);
         } else {
-            INode left = visit(ctx.left);
-            INode right = visit(ctx.right);
+            INode left, right;
             if (ctx.operator.getType() == FOOLLexer.TIMES) {
+                System.out.println("TimesNode   (" + ctx.getText() + ")");
+                left = visit(ctx.left);
+                right = visit(ctx.right);
                 return new TimesNode(left, right, ctx);
             } else {
+                System.out.println("DivNode   (" + ctx.getText() + ")");
+                left = visit(ctx.left);
+                right = visit(ctx.right);
                 return new DivNode(left, right, ctx);
             }
         }
@@ -267,9 +329,11 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitVarasm(FOOLParser.VarasmContext ctx)
     {
+        System.out.println("VarNode   (" + ctx.getText() + ")");
        String varName = ctx.ID().getSymbol().getText();
 
        INode exp = visit(ctx.exp());
+
 
        return new VarNode(varName, exp, ctx);
     }
@@ -277,27 +341,41 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitLetInExp(FOOLParser.LetInExpContext ctx)
     {
+        System.out.println("LetInExp   (" + ctx.getText() + ")");
+
+
+
         ProgLetInNode res;
 
         ArrayList<INode> declarations = new ArrayList<>();
 
         for(FOOLParser.DecContext dc : ctx.let().dec())
         {
+
             declarations.add(visit(dc));
         }
 
         LetNode letNode = new LetNode(declarations, ctx);
         INode dxPart;
 
-        if(ctx.exp() != null)
+        if(ctx.exp() != null) {
+
             dxPart = visit(ctx.exp());
+        }
         else
             dxPart = visit(ctx.stats());
 
         res = new ProgLetInNode(letNode, dxPart);
 
+
         return res;
     }
 
+    @Override
+    public INode visitSingleExp(FOOLParser.SingleExpContext ctx) {
+        return visit(ctx.exp());
+    }
+
     //TODO: altri visitor
+
 }

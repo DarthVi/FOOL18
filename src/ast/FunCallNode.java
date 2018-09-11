@@ -22,7 +22,7 @@ public class FunCallNode implements INode
     private int nestingLevel;
     private ParserRuleContext ctx;
 
-    public FunCallNode(Token token, ActualParamsNode actualArgs, STentry entry, ParserRuleContext ctx)
+    public FunCallNode(Token token, ActualParamsNode actualArgs, ParserRuleContext ctx)
     {
         this.token = token;
         this.id = token.getText();
@@ -34,6 +34,7 @@ public class FunCallNode implements INode
     @Override
     public IType typeCheck() throws TypeException
     {
+
         FunctionType funType;
         //we must check that we are actually calling a function
         if(!(entry.getType() instanceof FunctionType))
@@ -84,6 +85,7 @@ public class FunCallNode implements INode
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
+
         ArrayList<SemanticError> errors = new ArrayList<>();
         try {
             entry = env.getFunEntry(token);
@@ -98,6 +100,6 @@ public class FunCallNode implements INode
     @Override
     public String toString()
     {
-        return super.toString();
+        return "Called " + entry.getType().toString() + "\n";
     }
 }

@@ -2,12 +2,15 @@ package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ListIterator;
 import java.util.Map;
 
+import exception.FunctionAlreadyDefinedException;
 import exception.UndeclaredVariableException;
 import exception.UndefinedFunctionException;
 import exception.VariableAlreadyDefinedException;
 import org.antlr.v4.runtime.Token;
+import type.FunctionType;
 import type.IType;
 import vm.VTableEntry;
 
@@ -55,12 +58,51 @@ public class Environment
     {
         String id = variableNameToken.getText();
         STentry newEntry = new STentry(getNestingLevel(), type, offset, isAttribute);
-        STentry checkEntry = symTable.get(symTable.size() - 1).put(id, newEntry);
+        STentry checkEntry;
 
-        if(checkEntry != null)
-        {
-            throw new VariableAlreadyDefinedException(variableNameToken);
+
+
+        if(symTable.size()<=0) {
+            symTable = new ArrayList<HashMap<String,STentry>>();
+            virtualTables = new HashMap<>();
+            symTable.add(new HashMap<>());
         }
+
+
+
+            checkEntry = symTable.get(symTable.size() - 1).put(id, newEntry);
+            if (checkEntry != null && !(checkEntry.getType() instanceof FunctionType)) {
+                throw new VariableAlreadyDefinedException(variableNameToken);
+            } else if (checkEntry != null) {
+
+                throw new FunctionAlreadyDefinedException(variableNameToken);
+
+                //old code to support overloading, which however may create ambiguous situations
+                //when we have the same parameter numbers and return type, but different
+                //class in parameters
+
+            /*FunctionType typeWeWantToAdd = (FunctionType) type;
+            FunctionType typeFound = (FunctionType) checkEntry.getType();
+
+            //we must check for function overloading
+            if(!typeWeWantToAdd.isOverloading(typeFound))
+                throw new FunctionAlreadyDefinedException(variableNameToken);
+            else
+            {
+
+                //we add overloaded function adding an integer/index to the function name
+                //this way we are able to put new overloaded function in the symbol table
+                int i = 1;
+
+                do
+                {
+                    id += i;
+                    checkEntry = symTable.get(symTable.size() - 1).put(id, newEntry);
+                    i++;
+                }while(checkEntry != null);
+            }*/
+            }
+
 
         return this;
     }
@@ -81,7 +123,7 @@ public class Environment
      */
     public Environment removeLastHashMap()
     {
-        this.symTable.remove(this.symTable.size() - 1);
+//        this.symTable.remove(this.symTable.size() - 1);
         return this;
     }
 
@@ -94,10 +136,13 @@ public class Environment
     public STentry getEntry(Token token) throws UndeclaredVariableException
     {
         String id = token.getText();
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
         STentry entry = null;
 
-        for(HashMap<String, STentry> map : symTable)
+        while(li.hasPrevious())
         {
+            HashMap<String, STentry> map = li.previous();
+
             if((entry = map.get(id)) != null)
                 break;
         }
@@ -117,10 +162,13 @@ public class Environment
     public STentry getFunEntry(Token token) throws UndefinedFunctionException
     {
         String id = token.getText();
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
         STentry entry = null;
 
-        for(HashMap<String, STentry> map : symTable)
+        while(li.hasPrevious())
         {
+            HashMap<String, STentry> map = li.previous();
+
             if((entry = map.get(id)) != null)
                 break;
         }

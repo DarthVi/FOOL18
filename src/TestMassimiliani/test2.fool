@@ -2,10 +2,10 @@ let
     int y = 5+2;
     bool f(int n, int m)
 
-let
-    int x = m;
-in
-    x==y;
+    let
+        int x = m;
+    in
+        x==y;
 
 in
     print(
