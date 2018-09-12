@@ -4,8 +4,10 @@ import ast.INode;
 import exception.LexerException;
 import exception.ParserException;
 import exception.SemanticException;
+import exception.TypeException;
 import org.junit.Before;
 import org.junit.Test;
+import type.IType;
 import util.Environment;
 import util.SemanticError;
 
@@ -132,7 +134,7 @@ public class TestSemantics
 
     @SuppressWarnings("Duplicates")
     @Test
-    public void testFunctionDefinitionSemantics()
+    public void testFunctionDefinitionAndCallSemantics()
     {
         String code = "let" +
                 "   int foo(int a) let bool flag; in a + 2;" +
@@ -144,6 +146,7 @@ public class TestSemantics
         {
             root = compiler.buildAST(code);
             errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
         } catch (LexerException e)
         {
             fail("LexerException thrown with valid code");
@@ -153,6 +156,9 @@ public class TestSemantics
         } catch (SemanticException e)
         {
             fail("SemanticException thrown with valid code");
+        } catch (TypeException e)
+        {
+            fail("TypeException thrown without type errors");
         }
     }
 
@@ -179,6 +185,66 @@ public class TestSemantics
         } catch (SemanticException e)
         {
             fail("SemanticException thrown with valid code");
+        }
+    }
+
+    @Test
+    public void functionCallWrongArgumentsTypecheck()
+    {
+        String code = "let\n" +
+                "   int foo(int a) a + 2;\n" +
+                "   bool c = false;\n" +
+                "in\n" +
+                "   foo(c);";
+
+        try
+        {
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("Incorrect exception thrown, should be TypeException");
+        } catch (TypeException e)
+        {
+            assertEquals("Type error: \"Argument 1 has an incorrect type.\" at line 5, column 3.",
+                    e.getMessage());
+        }
+    }
+
+    @Test
+    public void functionCallWrongArgumentSize()
+    {
+        String code = "let\n" +
+                "   int foo(int a, int b) a + 2;\n" +
+                "   int c = 1;\n" +
+                "in\n" +
+                "   foo(c);";
+
+        try
+        {
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("Incorrect exception thrown, should be TypeException");
+        } catch (TypeException e)
+        {
+            assertEquals("Type error: \"Wrong number of arguments.\" at line 5, column 3.",
+                    e.getMessage());
         }
     }
 }

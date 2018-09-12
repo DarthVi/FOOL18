@@ -46,6 +46,9 @@ public class FunCallNode implements INode
 
             actualArgs.typeCheck();
 
+            if(actualArgs.size() != funType.getArgumentListSize())
+                throw new TypeException("Wrong number of arguments.", ctx);
+
             //we must check that the actual arguments are of the right type
             //(the one that follows the function declaration)
             for(int i = 0; i < actualArgs.size(); i++)
