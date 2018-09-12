@@ -156,11 +156,12 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
             params.add(param);
         }
 
-        for(FOOLParser.VardecContext vc : ctx.funlet().vardec())
-        {
-            INode param = visitVardec(vc);
-            declarations.add(param);
-        }
+        if(ctx.funlet() != null)
+            for(FOOLParser.VardecContext vc : ctx.funlet().vardec())
+            {
+                INode param = visitVardec(vc);
+                declarations.add(param);
+            }
 
         INode body;
 

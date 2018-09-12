@@ -91,6 +91,47 @@ public class TestSemantics
     }
 
     @Test
+    public void testVariableReferenceInExp()
+    {
+        try
+        {
+            root = compiler.buildAST("let int pippo; int paperino; in paperino + pippo;");
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testVariableReferenceInStat()
+    {
+        try
+        {
+            root = compiler.buildAST("let " +
+                    "int pippo = 1; int paperino = 3; int paperoga; " +
+                    "in paperino = pippo; paperoga = paperino;");
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException thrown with valid code");
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
     public void testFunctionDefinitionSemantics()
     {
         String code = "let" +
@@ -98,6 +139,32 @@ public class TestSemantics
                 "   int c;" +
                 "in" +
                 "   foo(2);";
+
+        try
+        {
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException thrown with valid code");
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
+    public void testMutualRecursionSemantics()
+    {
+        String code = "let" +
+                "   int foo() g();" +
+                "   int g() foo();" +
+                "in" +
+                "   foo();";
 
         try
         {
