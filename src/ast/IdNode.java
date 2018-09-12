@@ -66,12 +66,11 @@ public class IdNode implements INode
 
 
         ArrayList<SemanticError> res = new ArrayList<>();
-        STentry entry = null;
         Token token = ((FOOLParser.VarExpContext) ctx).ID().getSymbol();
 
         try
         {
-            entry = env.getEntry(token);
+            this.entry = env.getEntry(token);
             this.nestingLevel = env.getNestingLevel();
         }
         catch (UndeclaredVariableException e)

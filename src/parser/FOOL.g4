@@ -67,7 +67,7 @@ value  :  INTEGER                                     #intVal
       ;
 
 
-stats:  stat SEMIC (stats)* ;
+stats:  (stat SEMIC)+ ;
 
 stat:   varasm  #varasmStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat

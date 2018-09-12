@@ -12,6 +12,6 @@ public class UndefinedFunctionException extends CompileException {
 	
 	@Override
 	public String getMessage() {
-		return line + ":" + column + " call to undefined function: <" + functionName + ">";
+		return line + ":" + column + " call to undefined function <" + functionName + ">";
 	}
 }

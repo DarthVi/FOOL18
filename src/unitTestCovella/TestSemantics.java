@@ -48,4 +48,45 @@ public class TestSemantics
             assertEquals("1:18 undeclared variable <paperino>", e.errors.get(0).msg);
         }
     }
+
+    @Test
+    public void testUndefinedFunction()
+    {
+        try
+        {
+            root = compiler.buildAST("let int pippo; in paperino();");
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        }
+        catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            assertEquals(1, e.errors.size());
+            assertEquals("1:18 call to undefined function <paperino>", e.errors.get(0).msg);
+        }
+    }
+
+    @Test
+    public void testUndeclaredVariableAssignment()
+    {
+        try
+        {
+            root = compiler.buildAST("let int pippo; in paperino = 2;");
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            assertEquals(1, e.errors.size());
+            assertEquals("1:18 undeclared variable <paperino>", e.errors.get(0).msg);
+        }
+    }
 }
