@@ -89,4 +89,29 @@ public class TestSemantics
             assertEquals("1:18 undeclared variable <paperino>", e.errors.get(0).msg);
         }
     }
+
+    @Test
+    public void testFunctionDefinitionSemantics()
+    {
+        String code = "let" +
+                "   int foo(int a) let bool flag; in a + 2;" +
+                "   int c;" +
+                "in" +
+                "   foo(2);";
+
+        try
+        {
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException thrown with valid code");
+        }
+    }
 }
