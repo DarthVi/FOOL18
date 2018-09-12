@@ -52,6 +52,9 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
 
         try
         {
+            if(environment.getNestingLevel() == -1) //symtable empty
+                environment.addHashMap();
+
             //let's add symbol table entry for the function ID
             //TODO: check if this offset is ok
             environment.addEntry(ctx.ID().getSymbol(), funType, environment.offset, false);
