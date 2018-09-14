@@ -247,4 +247,33 @@ public class TestSemantics
                     e.getMessage());
         }
     }
+
+    //TODO: testare lo shadowing
+
+    @SuppressWarnings("Duplicates")
+    @Test
+    public void outerScopeVariableReferenceInFunctionDefinition()
+    {
+        String code = "let\n" +
+                "   int x;\n" +
+                "   int y;\n" +
+                "   int pippo() let int p = 4; in y;\n" +
+                "   int paperino() let int g = 5; in x;" +
+                "in\n"+
+                "   pippo();";
+        try
+        {
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException thrown with valid code");
+        }
+    }
 }
