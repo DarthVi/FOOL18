@@ -78,7 +78,7 @@ public class ProgLetInNode implements INode
 
         if(exp != null)
             errors.addAll(exp.checkSemantics(env));
-        {
+        else {
             for(INode stat : stats)
                 errors.addAll(stat.checkSemantics(env));
         }

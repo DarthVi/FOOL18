@@ -65,6 +65,8 @@ public class VarNode implements INode{
             res.add(new SemanticError(e.getMessage()));
         }
 
+        res.addAll(exp.checkSemantics(env));
+
         return res;
     }
 

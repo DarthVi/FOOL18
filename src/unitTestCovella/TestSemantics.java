@@ -132,6 +132,31 @@ public class TestSemantics
         }
     }
 
+    @Test
+    public void testVariableReferenceInStatWithTypechecking()
+    {
+        try
+        {
+            root = compiler.buildAST("let\n" +
+                    "int x = 1; int y = 2\n;" +
+                    "in y = x;");
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        } catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException thrown with valid code");
+        } catch (TypeException e)
+        {
+            fail("TypeException thrown with valid code");
+        }
+    }
+
     @SuppressWarnings("Duplicates")
     @Test
     public void testFunctionDefinitionAndCallSemantics()
