@@ -55,4 +55,13 @@ public class LetNode implements INode{
 
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        String string = "LetNode\n";
+        for (INode dec : declist)
+            string += dec.toString();
+        return string;
+    }
 }

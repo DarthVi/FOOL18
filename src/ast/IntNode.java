@@ -18,7 +18,7 @@ public class IntNode implements INode {
 
   @Override
   public String toString() {
-    return "Int:" + Integer.toString(val) +"\n";
+    return "Int: " + Integer.toString(val) +"\n";
   }
   
   public IType typeCheck() throws TypeException

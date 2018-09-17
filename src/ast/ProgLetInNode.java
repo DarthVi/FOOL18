@@ -88,4 +88,18 @@ public class ProgLetInNode implements INode
 
         return errors;
     }
+
+    @Override
+    public String toString()
+    {
+        String string = "ProgLetInNode\n" +
+                letPart.toString() + "\n";
+        if (exp != null){
+            string += exp.toString();
+        }
+        for(INode stat : stats) {
+            string += stat.toString();
+        }
+        return string;
+    }
 }

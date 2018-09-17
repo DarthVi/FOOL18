@@ -59,10 +59,10 @@ public class MemoryManager
      */
     public void push(int value, VirtualMachine vm) throws StackOverflowException
     {
-        if(vm.sp - 1 < 0 || vm.sp - 1 < vm.hp)
+        if(vm.stackPointer - 1 < 0 || vm.stackPointer - 1 < vm.heapPointer)
             throw new StackOverflowException();
 
-        memory[vm.sp--] = value;
+        memory[vm.stackPointer--] = value;
     }
 
     /**
@@ -73,10 +73,10 @@ public class MemoryManager
      */
     public void pop(int value, VirtualMachine vm) throws StackUnderflowException
     {
-        if (vm.sp + 1 > this.memorySize)
+        if (vm.stackPointer + 1 > this.memorySize)
             throw new StackUnderflowException();
 
-        vm.sp++;
+        vm.stackPointer++;
     }
 
     /**
@@ -94,7 +94,7 @@ public class MemoryManager
 
 
         //object size + 1 for the virtual function table address
-        if(freeHeapMemory.size() < size + 1 || vm.hp + 1 > vm.sp)
+        if(freeHeapMemory.size() < size + 1 || vm.heapPointer + 1 > vm.heapPointer)
             throw new VMOutOfMemoryException();
 
         int startIndex = freeHeapMemory.get(0);
@@ -109,7 +109,7 @@ public class MemoryManager
         for(int i = startIndex + 1, j = 0; i < startIndex + size; i++, j++)
             memory[i] = args[j];
 
-        vm.hp += size + 1;
+        vm.heapPointer += size + 1;
 
 
         return objinfo;
@@ -131,7 +131,7 @@ public class MemoryManager
             freeHeapMemory.add(i);
         }
 
-        vm.hp -= size + 1;
+        vm.heapPointer -= size + 1;
 
         Collections.sort(freeHeapMemory);
     }
