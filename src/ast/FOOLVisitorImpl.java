@@ -12,6 +12,11 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 {
 
     @Override
+    public INode visitSingleExp(FOOLParser.SingleExpContext ctx) {
+        return visit(ctx.exp());
+    }
+
+    @Override
     public INode visitType(FOOLParser.TypeContext ctx)
     {
         return new TypeNode(ctx, ctx.getText());
@@ -151,11 +156,12 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
             params.add(param);
         }
 
-        for(FOOLParser.VardecContext vc : ctx.funlet().vardec())
-        {
-            INode param = visitVardec(vc);
-            declarations.add(param);
-        }
+        if(ctx.funlet() != null)
+            for(FOOLParser.VardecContext vc : ctx.funlet().vardec())
+            {
+                INode param = visitVardec(vc);
+                declarations.add(param);
+            }
 
         INode body;
 
@@ -287,16 +293,29 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         }
 
         LetNode letNode = new LetNode(declarations, ctx);
-        INode dxPart;
+        INode exp = null;
+        ArrayList<INode> statements = new ArrayList<>();
 
         if(ctx.exp() != null)
-            dxPart = visit(ctx.exp());
+            exp = visit(ctx.exp());
         else
-            dxPart = visit(ctx.stats());
+        {
+            for(FOOLParser.StatContext sc : ctx.stats().stat())
+            {
+                INode stat = visit(sc);
+                statements.add(stat);
+            }
+        }
 
-        res = new ProgLetInNode(letNode, dxPart);
+        res = new ProgLetInNode(letNode, exp, statements);
 
         return res;
+    }
+
+    @Override
+    public INode visitVarasmStat(FOOLParser.VarasmStatContext ctx)
+    {
+        return visit(ctx.varasm());
     }
 
     //TODO: altri visitor

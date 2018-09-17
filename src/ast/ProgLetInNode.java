@@ -2,6 +2,7 @@ package ast;
 
 import exception.TypeException;
 import type.IType;
+import type.VoidType;
 import util.Environment;
 import util.SemanticError;
 
@@ -11,13 +12,15 @@ public class ProgLetInNode implements INode
 {
     //LetNode, which contains declarations
     private INode letPart;
-    //this could be exp or stats according to the grammar
-    private INode dxPar;
+    //according to the grammar we can either have exp or stast
+    private INode exp;
+    private ArrayList<INode> stats;
 
-    public ProgLetInNode(INode letPart, INode dxPar)
+    public ProgLetInNode(INode letPart, INode exp, ArrayList<INode> stats)
     {
         this.letPart = letPart;
-        this.dxPar = dxPar;
+        this.exp = exp;
+        this.stats = stats;
     }
 
     @Override
@@ -25,15 +28,37 @@ public class ProgLetInNode implements INode
     {
         letPart.typeCheck();
 
-        return dxPar.typeCheck();
+        if(exp != null)
+            return exp.typeCheck();
+        else
+        {
+            for(INode stat : stats)
+            {
+                stat.typeCheck();
+            }
+
+            return new VoidType();
+        }
     }
 
     @Override
     public String codeGeneration()
     {
-        String code;
+        String code = letPart.codeGeneration();
 
-        code = letPart.codeGeneration() + dxPar.codeGeneration() + "halt\n";
+        if(exp != null)
+            code += exp.codeGeneration() + "halt\n";
+        else
+        {
+            StringBuilder statsCode = new StringBuilder();
+
+            for(INode stat : stats)
+            {
+                statsCode.append(stat.codeGeneration());
+            }
+
+            code += statsCode.toString() + "halt\n";
+        }
 
         return code;
     }
@@ -50,7 +75,13 @@ public class ProgLetInNode implements INode
         //semantic check for the let part
         errors.addAll(((LetNode) letPart).checkSemantics(env));
         //semantic check for the body (exp or stats)
-        errors.addAll(dxPar.checkSemantics(env));
+
+        if(exp != null)
+            errors.addAll(exp.checkSemantics(env));
+        {
+            for(INode stat : stats)
+                errors.addAll(stat.checkSemantics(env));
+        }
 
         //exiting the scope
         env.removeLastHashMap();

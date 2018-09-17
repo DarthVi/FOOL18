@@ -1,4 +1,4 @@
-// Generated from C:/Users/Lorenzo/Desktop/src/parser\FOOL.g4 by ANTLR 4.6
+// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/FOOL.g4 by ANTLR 4.7
 package parser;
 
     import java.util.ArrayList;

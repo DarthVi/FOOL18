@@ -14,10 +14,10 @@ grammar FOOL;
 
 prog   : exp SEMIC                                  #singleExp
        | let (exp SEMIC | stats)                    #letInExp
-       | classdec+ (let? (exp | stats) SEMIC)?      #classdecExp
+       | classdec+ (let? (exp SEMIC | stats))?      #classdecExp
        ;
 
-let     : LET (dec SEMIC)+ IN ;
+let       : LET (dec SEMIC)+ IN ;
 
 vardec  : type ID (ASM exp)?;
 
@@ -67,7 +67,7 @@ value  :  INTEGER                                     #intVal
       ;
 
 
-stats:  stat SEMIC (stats)*;
+stats:  (stat SEMIC)+ ;
 
 stat:   varasm  #varasmStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat

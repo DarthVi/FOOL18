@@ -34,7 +34,6 @@ public class FunCallNode implements INode
     @Override
     public IType typeCheck() throws TypeException
     {
-
         FunctionType funType;
         //we must check that we are actually calling a function
         if(!(entry.getType() instanceof FunctionType))
@@ -46,6 +45,9 @@ public class FunCallNode implements INode
             funType = (FunctionType) entry.getType();
 
             actualArgs.typeCheck();
+
+            if(actualArgs.size() != funType.getArgumentListSize())
+                throw new TypeException("Wrong number of arguments.", ctx);
 
             //we must check that the actual arguments are of the right type
             //(the one that follows the function declaration)
@@ -85,7 +87,6 @@ public class FunCallNode implements INode
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-
         ArrayList<SemanticError> errors = new ArrayList<>();
         try {
             entry = env.getFunEntry(token);

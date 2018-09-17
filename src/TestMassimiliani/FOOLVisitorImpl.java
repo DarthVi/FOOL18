@@ -365,8 +365,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         else
             dxPart = visit(ctx.stats());
 
-        res = new ProgLetInNode(letNode, dxPart);
-
+        res = new ProgLetInNode(letNode, dxPart, new ArrayList<>());
 
         return res;
     }

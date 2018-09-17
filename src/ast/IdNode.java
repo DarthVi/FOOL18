@@ -7,7 +7,6 @@ import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
 import type.FunctionType;
 import type.IType;
-import type.IntType;
 import util.Environment;
 import util.STentry;
 import util.SemanticError;
@@ -28,7 +27,6 @@ public class IdNode implements INode
         this.varName = varName;
         this.entry = null;
         this.ctx = ctx;
-
     }
 
     @Override
@@ -66,6 +64,7 @@ public class IdNode implements INode
          * con la stringa id nella tabella dei simboli relativa allo scope corrente
          */
 
+
         ArrayList<SemanticError> res = new ArrayList<>();
         Token token = ((FOOLParser.VarExpContext) ctx).ID().getSymbol();
 
@@ -76,7 +75,6 @@ public class IdNode implements INode
         }
         catch (UndeclaredVariableException e)
         {
-
             res.add(new SemanticError(e.getMessage()));
         }
 

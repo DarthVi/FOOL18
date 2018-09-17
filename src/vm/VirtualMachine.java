@@ -4,6 +4,9 @@ import util.VMConfigReader;
 
 public class VirtualMachine
 {
+    public static final int CODESIZE = 10000;
+    public static final int MEMSIZE = 10000;
+    public int[] memory = new int[MEMSIZE];
 
     int hp;
     int sp;
@@ -12,6 +15,7 @@ public class VirtualMachine
     int ra;
     int rv;
 
+
     int[] code;
 
     public VirtualMachine(int[] code)
@@ -19,7 +23,7 @@ public class VirtualMachine
         hp = 0;
         sp = 0;
         ip = 0;
-        fp = 0;
+        fp = MEMSIZE;
 
         this.code = code;
     }

@@ -42,7 +42,6 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
         String funName= ctx.ID().getSymbol().getText();
         ArrayList<IType> paramsType = new ArrayList<>();
 
-
         for(FOOLParser.ArgdecContext argdecContext : ctx.argdec())
         {
             TypeNode param = (TypeNode) visit(argdecContext);
@@ -53,10 +52,12 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
 
         try
         {
+            if(environment.getNestingLevel() == -1) //symtable empty
+                environment.addHashMap();
+
             //let's add symbol table entry for the function ID
             //TODO: check if this offset is ok
-            System.out.println(funType);
-            environment.addEntry((ctx).ID().getSymbol(), funType, environment.offset, false);
+            environment.addEntry(ctx.ID().getSymbol(), funType, environment.offset, false);
         }
         catch(FunctionAlreadyDefinedException e)
         {

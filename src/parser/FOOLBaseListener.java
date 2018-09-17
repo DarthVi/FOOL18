@@ -1,8 +1,6 @@
 // Generated from C:/Users/Lorenzo/Desktop/src/parser\FOOL.g4 by ANTLR 4.6
 package parser;
 
-    import java.util.ArrayList;
-
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

@@ -58,28 +58,20 @@ public class Environment
     {
         String id = variableNameToken.getText();
         STentry newEntry = new STentry(getNestingLevel(), type, offset, isAttribute);
-        STentry checkEntry;
+        STentry checkEntry = symTable.get(symTable.size() - 1).put(id, newEntry);
 
-
-
-        if(symTable.size()<=0) {
-            symTable = new ArrayList<HashMap<String,STentry>>();
-            virtualTables = new HashMap<>();
-            symTable.add(new HashMap<>());
+        if(checkEntry != null && !(checkEntry.getType() instanceof FunctionType))
+        {
+            throw new VariableAlreadyDefinedException(variableNameToken);
         }
+        else if(checkEntry != null)
+        {
 
+            throw new FunctionAlreadyDefinedException(variableNameToken);
 
-
-            checkEntry = symTable.get(symTable.size() - 1).put(id, newEntry);
-            if (checkEntry != null && !(checkEntry.getType() instanceof FunctionType)) {
-                throw new VariableAlreadyDefinedException(variableNameToken);
-            } else if (checkEntry != null) {
-
-                throw new FunctionAlreadyDefinedException(variableNameToken);
-
-                //old code to support overloading, which however may create ambiguous situations
-                //when we have the same parameter numbers and return type, but different
-                //class in parameters
+            //old code to support overloading, which however may create ambiguous situations
+            //when we have the same parameter numbers and return type, but different
+            //class in parameters
 
             /*FunctionType typeWeWantToAdd = (FunctionType) type;
             FunctionType typeFound = (FunctionType) checkEntry.getType();
@@ -101,8 +93,7 @@ public class Environment
                     i++;
                 }while(checkEntry != null);
             }*/
-            }
-
+        }
 
         return this;
     }
@@ -123,7 +114,7 @@ public class Environment
      */
     public Environment removeLastHashMap()
     {
-//        this.symTable.remove(this.symTable.size() - 1);
+        this.symTable.remove(this.symTable.size() - 1);
         return this;
     }
 
