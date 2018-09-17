@@ -21,8 +21,8 @@ public class VirtualMachine
     public VirtualMachine(int[] code)
     {
         hp = 0;
-        sp = 0;
         ip = 0;
+        sp = MEMSIZE;
         fp = MEMSIZE;
 
         this.code = code;

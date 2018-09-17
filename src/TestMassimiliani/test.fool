@@ -1,6 +1,5 @@
 let
-    int x = 1;
-    int y = 2;
-
+    int x= 12;
+    int y=
 in
-    x;
+    f();

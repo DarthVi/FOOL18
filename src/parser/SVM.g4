@@ -63,11 +63,11 @@ assembly:
  * LEXER RULES
  *------------------------------------------------------------------*/
 
-PUSH  	 : 'push' ; 	// pushes constant in the stack
+PUSH  : 'push' ; 	// pushes constant in the stack
 POP	 : 'pop' ; 	// pops from stack
 ADD	 : 'add' ;  	// add two values from the stack
 SUB	 : 'sub' ;	// add two values from the stack
-MULT	 : 'mult' ;  	// add two values from the stack
+MULT : 'mult' ;  	// add two values from the stack
 DIV	 : 'div' ;	// add two values from the stack
 STOREW	 : 'sw' ; 	// store in the memory cell pointed by top the value next
 LOADW	 : 'lw' ;	// load a value from the memory cell pointed by top

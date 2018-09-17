@@ -6,19 +6,18 @@ import vm.VirtualMachine;
 public class ExecuteVM {
 
     private  VirtualMachine virtualMachine ;
-    int [] code;
 
     public ExecuteVM(int[] code) {
-     this.code = code;
-
+        virtualMachine = new VirtualMachine(code);
     }
 
     public void cpu() {
+
         while ( true ) {
-            virtualMachine = new VirtualMachine(code);
             int bytecode = virtualMachine.code[virtualMachine.ip++]; // fetch
             int v1,v2;
             int address;
+
             switch ( bytecode ) {
                 case SVMParser.PUSH:
                     push( virtualMachine.code[virtualMachine.ip++] );

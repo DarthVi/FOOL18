@@ -6,22 +6,26 @@ import exception.LexerException;
 import exception.ParserException;
 import exception.SemanticException;
 import exception.TypeException;
-import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.Token;
-import parser.*;
+import org.antlr.v4.runtime.*;
+import parser.FOOLLexer;
+import parser.FOOLParser;
+import parser.SVMLexer;
+import parser.SVMParser;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
 import vm.ExecuteVM;
-
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import ast.FOOLVisitorImpl;
+
 
 public class Main {
 
@@ -75,21 +79,30 @@ public class Main {
             //CODE GENERATION
             System.out.println("BEGIN CODE GENERATION...");
             String code = ast.codeGeneration();
+            code += "halt";                                            //to stop execution
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            SVMLexer lexerASM = new SVMLexer(input);
+            BufferedWriter out = new BufferedWriter(new FileWriter(fileName+".asm"));
+
+            out.write(code);
+            out.close();
+
+            //CODE EXECUTION
+            CharStream isASM = CharStreams.fromFileName(fileName+".asm");
+            SVMLexer lexerASM = new SVMLexer( isASM);
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
             SVMParser parserASM = new SVMParser(tokensASM);
             parserASM.assembly();
-            System.out.println("Starting Virtual Machine...");
-            ExecuteVM vm = new ExecuteVM(parserASM.code);
-            vm.cpu();
 
+            ExecuteVM vm = new ExecuteVM(parserASM.code);
+            System.out.println();
+            vm.cpu();
 
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException  e ) {
             System.out.println(e.getMessage());
         }
+
     }
 }
