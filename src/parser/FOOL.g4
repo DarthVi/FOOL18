@@ -70,6 +70,7 @@ value  :  INTEGER                                     #intVal
 stats:  (stat SEMIC)+ ;
 
 stat:   varasm  #varasmStat
+        | PRINT LPAR exp RPAR #printStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat
         ;
 
@@ -103,7 +104,7 @@ CRPAR  : '}' ;
 IF        : 'if' ;
 THEN   : 'then' ;
 ELSE   : 'else' ;
-//PRINT : 'print' ;
+PRINT : 'print' ;
 LET    : 'let' ;
 IN     : 'in' ;
 VAR    : 'var' ;

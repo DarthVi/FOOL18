@@ -318,5 +318,13 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         return visit(ctx.varasm());
     }
 
+    @Override
+    public INode visitPrintStat(FOOLParser.PrintStatContext ctx)
+    {
+        INode exp = visit(ctx.exp());
+
+        return new PrintNode(exp, ctx);
+    }
+
     //TODO: altri visitor
 }
