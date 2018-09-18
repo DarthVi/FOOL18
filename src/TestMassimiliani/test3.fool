@@ -1,0 +1,10 @@
+let
+    int x = 1;
+    int y = 2;
+    int z = 3;
+    void f ()
+        let int x = 12;
+        in x+y;
+in
+    y;
+
