@@ -35,7 +35,7 @@ public class SVMVisitor extends SVMBaseVisitor
         addCode(SVMParser.PUSH);
         code[i++] = Integer.parseInt(ctx.n.getText());
 
-        return code;
+        return null;
     }
 
     @Override
@@ -44,63 +44,63 @@ public class SVMVisitor extends SVMBaseVisitor
         addCode(SVMParser.PUSH);
         labelRef.put(i++, ctx.l.getText());
 
-        return code;
+        return null;
     }
 
     @Override
     public Object visitPop(SVMParser.PopContext ctx)
     {
         addCode(SVMParser.POP);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitAdd(SVMParser.AddContext ctx)
     {
         addCode(SVMParser.ADD);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitSub(SVMParser.SubContext ctx)
     {
         addCode(SVMParser.SUB);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitMult(SVMParser.MultContext ctx)
     {
         addCode(SVMParser.MULT);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitDiv(SVMParser.DivContext ctx)
     {
         addCode(SVMParser.DIV);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitStorew(SVMParser.StorewContext ctx)
     {
         addCode(SVMParser.STOREW);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitLoadw(SVMParser.LoadwContext ctx)
     {
         addCode(SVMParser.LOADW);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitLabelCol(SVMParser.LabelColContext ctx)
     {
         labelAdd.put(ctx.l.getText(), i);
-        return code;
+        return null;
     }
 
     @Override
@@ -108,7 +108,7 @@ public class SVMVisitor extends SVMBaseVisitor
     {
         addCode(SVMParser.BRANCH);
         labelRef.put(i++, ctx.l.getText());
-        return code;
+        return null;
     }
 
     @Override
@@ -116,7 +116,7 @@ public class SVMVisitor extends SVMBaseVisitor
     {
         addCode(SVMParser.BRANCHEQ);
         labelRef.put(i++, ctx.l.getText());
-        return code;
+        return null;
     }
 
     @Override
@@ -124,91 +124,91 @@ public class SVMVisitor extends SVMBaseVisitor
     {
         addCode(SVMParser.BRANCHLESSEQ);
         labelRef.put(i++, ctx.l.getText());
-        return code;
+        return null;
     }
 
     @Override
     public Object visitJs(SVMParser.JsContext ctx)
     {
         addCode(SVMParser.JS);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitLoadRa(SVMParser.LoadRaContext ctx)
     {
         addCode(SVMParser.LOADRA);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitStoreRa(SVMParser.StoreRaContext ctx)
     {
         addCode(SVMParser.STORERA);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitLoadRv(SVMParser.LoadRvContext ctx)
     {
         addCode(SVMParser.LOADRV);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitStoreRv(SVMParser.StoreRvContext ctx)
     {
         addCode(SVMParser.STORERV);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitLoadFp(SVMParser.LoadFpContext ctx)
     {
         addCode(SVMParser.LOADFP);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitStoreFp(SVMParser.StoreFpContext ctx)
     {
         addCode(SVMParser.STOREFP);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitCopyFp(SVMParser.CopyFpContext ctx)
     {
         addCode(SVMParser.COPYFP);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitLoadHp(SVMParser.LoadHpContext ctx)
     {
         addCode(SVMParser.LOADHP);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitStoreHp(SVMParser.StoreHpContext ctx)
     {
         addCode(SVMParser.STOREHP);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitPrint(SVMParser.PrintContext ctx)
     {
         addCode(SVMParser.PRINT);
-        return code;
+        return null;
     }
 
     @Override
     public Object visitHalt(SVMParser.HaltContext ctx)
     {
         addCode(SVMParser.HALT);
-        return code;
+        return null;
     }
 
     /**
