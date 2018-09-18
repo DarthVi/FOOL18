@@ -104,8 +104,7 @@ public class VardecNode implements INode
     public String toString()
     {
         String expStr = (this.expression == null) ? "0" : this.expression.toString();
-        return "Vardec: " + id + "\n"
-                + type.toString()
+        return "VarDec: " + id + " -> " + type.toString() + "\n"
                 + expStr;
     }
 }

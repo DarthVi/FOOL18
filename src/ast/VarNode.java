@@ -73,8 +73,7 @@ public class VarNode implements INode{
     @Override
     public String toString()
     {
-        return "Var: " + id + "\n"
-                + type.toString()
+        return "Var: " + id + " -> " + type.toString() + "\n"
                 + exp.toString();
     }
 }
