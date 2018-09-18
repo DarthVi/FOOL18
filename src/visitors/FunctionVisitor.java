@@ -1,5 +1,7 @@
-package ast;
+package visitors;
 
+import ast.INode;
+import ast.TypeNode;
 import exception.FunctionAlreadyDefinedException;
 import parser.FOOLBaseVisitor;
 import parser.FOOLParser;

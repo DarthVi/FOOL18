@@ -41,8 +41,8 @@ public class LetNode implements INode{
 	//TODO: LorenzoMass, controlla che sia corretto
 	//ho tolto exp, dovremmo gestirle lato vardec e varasm
         return "push 0\n" +
-                declCode +
-                "halt\n"; // goes at the end of ProgLetIn, after the "in part" (body) codegen, the end of the program
+                declCode;
+        // "halt\n"; goes at the end of ProgLetIn, after the "in part" (body) codegen, the end of the program
     }
 
     @Override
@@ -54,5 +54,14 @@ public class LetNode implements INode{
             errors.addAll(dec.checkSemantics(env));
 
         return errors;
+    }
+
+    @Override
+    public String toString()
+    {
+        String string = "LetNode\n";
+        for (INode dec : declist)
+            string += dec.toString();
+        return string;
     }
 }

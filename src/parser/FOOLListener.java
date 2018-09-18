@@ -323,6 +323,18 @@ public interface FOOLListener extends ParseTreeListener {
 	 */
 	void exitVarasmStat(FOOLParser.VarasmStatContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code printStat}
+	 * labeled alternative in {@link FOOLParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStat(FOOLParser.PrintStatContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code printStat}
+	 * labeled alternative in {@link FOOLParser#stat}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStat(FOOLParser.PrintStatContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code ifStat}
 	 * labeled alternative in {@link FOOLParser#stat}.
 	 * @param ctx the parse tree

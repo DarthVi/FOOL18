@@ -33,6 +33,14 @@ public class MemoryManager
     //table of break records used by the table-compaction algorithm
     Map<Integer, BreakRecord> breakRecords;
 
+    public static int readCodeSizeFromConfig()
+    {
+        VMConfigReader configReader = new VMConfigReader("vm/vmconfig.properties");
+        int codesize = configReader.getCodeSize();
+        configReader.closePropFile();
+        return codesize;
+    }
+
     public MemoryManager()
     {
         VMConfigReader configReader = new VMConfigReader("vmconfig.properties");

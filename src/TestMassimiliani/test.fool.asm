@@ -1,19 +1,17 @@
 push 0
-push 12
+push 1
+push 4
 push
 function0
 cfp
 lra
-push 3
-push -2
-lfp
-add
-lw
+push 10
 push -2
 lfp
 lw
 add
 lw
+push 20
 mult
 srv
 pop
@@ -23,7 +21,6 @@ sfp
 lrv
 lra
 js
-halt
 lfp
 lfp
 lw

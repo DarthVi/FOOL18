@@ -1,5 +1,6 @@
-package ast;
+package visitors;
 
+import ast.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
@@ -316,6 +317,14 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     public INode visitVarasmStat(FOOLParser.VarasmStatContext ctx)
     {
         return visit(ctx.varasm());
+    }
+
+    @Override
+    public INode visitPrintStat(FOOLParser.PrintStatContext ctx)
+    {
+        INode exp = visit(ctx.exp());
+
+        return new PrintNode(exp, ctx);
     }
 
     //TODO: altri visitor

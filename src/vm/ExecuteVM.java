@@ -8,11 +8,10 @@ public class ExecuteVM {
     private  VirtualMachine virtualMachine ;
 
     public ExecuteVM(int[] code) {
-        virtualMachine = new VirtualMachine(code);
+        this.virtualMachine = new VirtualMachine(code);
     }
 
     public void cpu() {
-
         while ( true ) {
             int bytecode = virtualMachine.code[virtualMachine.ip++]; // fetch
             int v1,v2;
@@ -105,6 +104,7 @@ public class ExecuteVM {
                     break;
                 case SVMParser.HALT :
                     return;
+
             }
         }
     }

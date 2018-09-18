@@ -65,14 +65,15 @@ public class VarNode implements INode{
             res.add(new SemanticError(e.getMessage()));
         }
 
+        res.addAll(exp.checkSemantics(env));
+
         return res;
     }
 
     @Override
     public String toString()
     {
-        return "Var: " + id + "\n"
-                + type.toString()
+        return "Var: " + id + " -> " + type.toString() + "\n"
                 + exp.toString();
     }
 }

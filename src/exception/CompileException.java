@@ -2,6 +2,7 @@ package exception;
 import org.antlr.v4.runtime.Token;
 
 public class CompileException extends RuntimeException {
+
     protected int line;
     protected int column;
 

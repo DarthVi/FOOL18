@@ -78,7 +78,7 @@ public class ProgLetInNode implements INode
 
         if(exp != null)
             errors.addAll(exp.checkSemantics(env));
-        {
+        else {
             for(INode stat : stats)
                 errors.addAll(stat.checkSemantics(env));
         }
@@ -87,5 +87,19 @@ public class ProgLetInNode implements INode
         env.removeLastHashMap();
 
         return errors;
+    }
+
+    @Override
+    public String toString()
+    {
+        String string = "ProgLetInNode\n" +
+                letPart.toString() + "\n";
+        if (exp != null){
+            string += exp.toString();
+        }
+        for(INode stat : stats) {
+            string += stat.toString();
+        }
+        return string;
     }
 }
