@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
 
-import exception.FunctionAlreadyDefinedException;
-import exception.UndeclaredVariableException;
-import exception.UndefinedFunctionException;
-import exception.VariableAlreadyDefinedException;
+import exception.*;
 import org.antlr.v4.runtime.Token;
+import type.ClassType;
 import type.FunctionType;
 import type.IType;
 import vm.VTableEntry;
@@ -19,13 +17,18 @@ public class Environment
     public int offset = 0;
     private ArrayList<HashMap<String,STentry>> symTable;
 
+    //map from string to defined class declarations
+    private HashMap<String, ClassType> symClassTypes;
+
     //virtual table
     Map<Integer, ArrayList<VTableEntry>> virtualTables;
 
-    public Environment(ArrayList<HashMap<String, STentry>> symTable, Map<Integer, ArrayList<VTableEntry>> vtable)
+    public Environment(ArrayList<HashMap<String, STentry>> symTable, HashMap<String, ClassType> symClassTypes,
+                       Map<Integer, ArrayList<VTableEntry>> vtable)
     {
 
         this.symTable = symTable;
+        this.symClassTypes = symClassTypes;
         this.virtualTables = vtable;
     }
 
@@ -33,6 +36,7 @@ public class Environment
     {
         symTable = new ArrayList<HashMap<String,STentry>>();
         virtualTables = new HashMap<>();
+        symClassTypes = new HashMap<>();
     }
 
     /**
@@ -168,6 +172,38 @@ public class Environment
             throw new UndefinedFunctionException(token);
 
         return entry;
+    }
+
+    public void addClassType(Token name, ClassType classType) throws ClassAlreadyDefinedException
+    {
+        ClassType current = symClassTypes.put(name.getText(), classType);
+
+        if(current != null)
+            throw new ClassAlreadyDefinedException(name);
+    }
+
+    public void addClassType(Token name, Token parent, ClassType classType) throws ClassAlreadyDefinedException,
+            UndeclaredClassException
+    {
+        ClassType checkParent = symClassTypes.get(parent.getText());
+
+        if(checkParent == null)
+            throw new UndeclaredClassException(parent);
+
+        ClassType current = symClassTypes.put(name.getText(), classType);
+
+        if(current != null)
+            throw new ClassAlreadyDefinedException(name);
+    }
+
+    public ClassType getClassType(Token name) throws UndeclaredClassException
+    {
+        ClassType type = symClassTypes.get(name.getText());
+
+        if(type == null)
+            throw new UndeclaredClassException(name);
+
+        return type;
     }
 
     public IType getTypeOf(Token token)
