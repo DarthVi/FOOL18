@@ -26,7 +26,10 @@ public class SVMVisitor extends SVMBaseVisitor
     @Override
     public Object visitCode(SVMParser.CodeContext ctx)
     {
-        return visit(ctx);
+        for(SVMParser.AssemblyContext ac : ctx.assembly())
+            visit(ac);
+
+        return null;
     }
 
     @Override

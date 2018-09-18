@@ -85,6 +85,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         return new BoolNode(value);
     }
 
+    @SuppressWarnings("Duplicates")
     private INode visitIf(ParserRuleContext ctx)
     {
         IfNode res;

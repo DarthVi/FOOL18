@@ -35,7 +35,7 @@ public class MemoryManager
 
     public static int readCodeSizeFromConfig()
     {
-        VMConfigReader configReader = new VMConfigReader("vmconfig.properties");
+        VMConfigReader configReader = new VMConfigReader("src/vm/vmconfig.properties");
         int codesize = configReader.getCodeSize();
         configReader.closePropFile();
         return codesize;
@@ -43,7 +43,7 @@ public class MemoryManager
 
     public MemoryManager()
     {
-        VMConfigReader configReader = new VMConfigReader("vmconfig.properties");
+        VMConfigReader configReader = new VMConfigReader("src/vm/vmconfig.properties");
         memorySize = configReader.getMemorySize();
         codeSize = configReader.getCodeSize();
         heapstart = configReader.getHeapStart();

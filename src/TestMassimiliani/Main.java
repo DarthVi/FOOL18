@@ -1,5 +1,8 @@
 package TestMassimiliani;
 
+import org.antlr.v4.runtime.tree.ParseTree;
+import parser.SVMLexer;
+import parser.SVMParser;
 import visitors.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
@@ -11,17 +14,18 @@ import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.FOOLLexer;
 import parser.FOOLParser;
-import parser.SVMLexer;
-import parser.SVMParser;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
-import vm.ExecuteVM;
+//import visitors.SVMVisitorImpl;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import visitors.FOOLVisitorImpl;
+import visitors.SVMVisitor;
+import vm.ExecuteVM;
 
 
 public class Main {
@@ -29,7 +33,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String fileName = "TestMassimiliani/test.fool";
+            String fileName = "src/TestMassimiliani/test4.fool";
             CharStream input = CharStreams.fromFileName(fileName);
 
             //LEXER
@@ -37,6 +41,7 @@ public class Main {
             if (lexer.errors.size() > 0)
                 throw new LexerException(lexer.errors);
             CommonTokenStream tokens = new CommonTokenStream(lexer);
+
 
             //PARSING - Syntax analysis
             FOOLParser parser = new FOOLParser(tokens);
@@ -80,22 +85,37 @@ public class Main {
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            BufferedWriter out = new BufferedWriter(new FileWriter(fileName+".asm"));
 
+
+            BufferedWriter out = new BufferedWriter(new FileWriter("src/TestMassimiliani/test.fool.asm"));
             out.write(code);
             out.close();
 
+
             //CODE EXECUTION
-            CharStream isASM = CharStreams.fromFileName(fileName+".asm");
-            SVMLexer lexerASM = new SVMLexer( isASM);
+            CharStream isASM = CharStreams.fromFileName("src/TestMassimiliani/test.fool.asm");
+            SVMLexer lexerASM = new SVMLexer(isASM);
+            System.out.println(isASM);
+
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
             SVMParser parserASM = new SVMParser(tokensASM);
-            parserASM.assembly();
+            SVMParser.CodeContext codeContext = parserASM.code() ;
 
-            ExecuteVM vm = new ExecuteVM(parserASM.code);
+            SVMVisitor svmVisitor = new SVMVisitor();
+            svmVisitor.visit(codeContext);
+            ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             System.out.println();
             vm.cpu();
 
+
+
+
+
+
+          //  ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
+            //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);
+          //  System.out.println();
+            // vm.cpu();
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException  e ) {
             System.out.println(e.getMessage());
