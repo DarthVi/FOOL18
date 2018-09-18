@@ -7,6 +7,9 @@ import vm.MemoryManager;
 
 import java.util.HashMap;
 
+/**
+ * Visits the SVM tree and populates the code array appropriately.
+ */
 public class SVMVisitor extends SVMBaseVisitor
 {
     private int[] code = new int[MemoryManager.readCodeSizeFromConfig()];
@@ -108,5 +111,119 @@ public class SVMVisitor extends SVMBaseVisitor
         return code;
     }
 
-    //TODO: other visits MUST be coded and overridden
+    @Override
+    public Object visitBranchEqLabel(SVMParser.BranchEqLabelContext ctx)
+    {
+        addCode(SVMParser.BRANCHEQ);
+        labelRef.put(i++, ctx.l.getText());
+        return code;
+    }
+
+    @Override
+    public Object visitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx)
+    {
+        addCode(SVMParser.BRANCHLESSEQ);
+        labelRef.put(i++, ctx.l.getText());
+        return code;
+    }
+
+    @Override
+    public Object visitJs(SVMParser.JsContext ctx)
+    {
+        addCode(SVMParser.JS);
+        return code;
+    }
+
+    @Override
+    public Object visitLoadRa(SVMParser.LoadRaContext ctx)
+    {
+        addCode(SVMParser.LOADRA);
+        return code;
+    }
+
+    @Override
+    public Object visitStoreRa(SVMParser.StoreRaContext ctx)
+    {
+        addCode(SVMParser.STORERA);
+        return code;
+    }
+
+    @Override
+    public Object visitLoadRv(SVMParser.LoadRvContext ctx)
+    {
+        addCode(SVMParser.LOADRV);
+        return code;
+    }
+
+    @Override
+    public Object visitStoreRv(SVMParser.StoreRvContext ctx)
+    {
+        addCode(SVMParser.STORERV);
+        return code;
+    }
+
+    @Override
+    public Object visitLoadFp(SVMParser.LoadFpContext ctx)
+    {
+        addCode(SVMParser.LOADFP);
+        return code;
+    }
+
+    @Override
+    public Object visitStoreFp(SVMParser.StoreFpContext ctx)
+    {
+        addCode(SVMParser.STOREFP);
+        return code;
+    }
+
+    @Override
+    public Object visitCopyFp(SVMParser.CopyFpContext ctx)
+    {
+        addCode(SVMParser.COPYFP);
+        return code;
+    }
+
+    @Override
+    public Object visitLoadHp(SVMParser.LoadHpContext ctx)
+    {
+        addCode(SVMParser.LOADHP);
+        return code;
+    }
+
+    @Override
+    public Object visitStoreHp(SVMParser.StoreHpContext ctx)
+    {
+        addCode(SVMParser.STOREHP);
+        return code;
+    }
+
+    @Override
+    public Object visitPrint(SVMParser.PrintContext ctx)
+    {
+        addCode(SVMParser.PRINT);
+        return code;
+    }
+
+    @Override
+    public Object visitHalt(SVMParser.HaltContext ctx)
+    {
+        addCode(SVMParser.HALT);
+        return code;
+    }
+
+    /**
+     * After having collected references, we must put them them where needed in order
+     * to be used appropriately in the VM code.
+     */
+    public void patchCodeWithIndexes()
+    {
+        for(Integer refAdd : labelRef.keySet())
+            code[refAdd] = labelAdd.get(labelRef.get(refAdd));
+    }
+
+    public int[] getCode()
+    {
+        return code;
+    }
+
 }
