@@ -1,7 +1,7 @@
 package unitTestCovella;
 
-import ast.FOOLVisitorImpl;
-import ast.FunctionVisitor;
+import visitors.FOOLVisitorImpl;
+import visitors.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
 import exception.ParserException;

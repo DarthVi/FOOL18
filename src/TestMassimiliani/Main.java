@@ -1,16 +1,14 @@
 package TestMassimiliani;
 
-import ast.FunctionVisitor;
+import visitors.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
 import exception.ParserException;
 import exception.SemanticException;
 import exception.TypeException;
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.*;
 import parser.FOOLLexer;
 import parser.FOOLParser;
 import parser.SVMLexer;
@@ -20,11 +18,10 @@ import util.Environment;
 import util.SemanticError;
 import vm.ExecuteVM;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import ast.FOOLVisitorImpl;
+import visitors.FOOLVisitorImpl;
 
 
 public class Main {

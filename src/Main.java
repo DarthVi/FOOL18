@@ -1,4 +1,4 @@
-import ast.FOOLVisitorImpl;
+import visitors.FOOLVisitorImpl;
 import ast.INode;
 import exception.LexerException;
 import exception.ParserException;
@@ -15,9 +15,6 @@ import type.IType;
 import util.Environment;
 import util.SemanticError;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 

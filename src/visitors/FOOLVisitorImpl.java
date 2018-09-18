@@ -1,5 +1,6 @@
-package ast;
+package visitors;
 
+import ast.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLBaseVisitor;
 import parser.FOOLLexer;
