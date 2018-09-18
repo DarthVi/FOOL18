@@ -2,22 +2,25 @@ package vm;
 
 import util.VMConfigReader;
 
-public class VirtualMachine {
+public class VirtualMachine
+{
 
-    public int heapPointer;
-    public int stackPointer;
-    private int instructionPointer;
-    private int framePointer;
-    private int returnAddress;
-    private int returnValue;
+    int hp;
+    int sp;
+    int ip;
+    int fp;
+    int ra;
+    int rv;
 
-    private int[] code;
+    int[] code;
 
-    public VirtualMachine(int[] code) {
-        heapPointer = 0;
-        stackPointer = 0;
-        instructionPointer = 0;
-        framePointer = 0;
+    public VirtualMachine(int[] code)
+    {
+        hp = 0;
+        sp = 0;
+        ip = 0;
+        fp = 0;
+
         this.code = code;
     }
 
