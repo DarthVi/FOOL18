@@ -19,15 +19,13 @@ public class FormalParamNode implements INode
 {
     protected String id;
     protected IType type;
-    private int offset;
     private boolean isAttribute;
     protected ParserRuleContext ctx;
 
-    public FormalParamNode(String id, IType type, int offset, boolean isAttribute, ParserRuleContext ctx)
+    public FormalParamNode(String id, IType type, boolean isAttribute, ParserRuleContext ctx)
     {
         this.id = id;
         this.type = type;
-        this.offset = offset;
         this.isAttribute = isAttribute;
         this.ctx = ctx;
     }
@@ -56,7 +54,7 @@ public class FormalParamNode implements INode
 
         try
         {
-            env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, offset, isAttribute );
+            env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset--, isAttribute );
         }
         catch (VariableAlreadyDefinedException e)
         {

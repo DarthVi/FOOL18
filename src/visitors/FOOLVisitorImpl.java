@@ -135,10 +135,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         TypeNode typeNode = (TypeNode) visitType(ctx.type());
 
-        //offset -2 in the AR (same as variable declared inside the function scope)
         //isAttribute = false because it is not relevant in this case to discriminate variables from members
-        //TODO: controllare che questo offset funzioni
-        return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(), -2,
+        return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(),
                 false, ctx);
     }
 

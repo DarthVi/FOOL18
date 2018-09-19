@@ -90,7 +90,7 @@ public class VardecNode implements INode
         //we try to add entries to the symbol table
         try
         {
-            env.addEntry(ctx.ID().getSymbol(), type.getType(), env.offset, isAttribute);
+            env.addEntry(ctx.ID().getSymbol(), type.getType(), env.offset--, isAttribute);
         }
         catch (VariableAlreadyDefinedException e)
         {
