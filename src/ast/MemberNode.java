@@ -8,7 +8,7 @@ public class MemberNode extends FormalParamNode
 {
     public MemberNode(String id, IType type, int offset, ParserRuleContext ctx)
     {
-        super(id, type, offset, true, ctx);
+        super(id, type, true, ctx);
     }
 
     @Override
