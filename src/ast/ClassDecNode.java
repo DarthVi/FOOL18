@@ -23,8 +23,6 @@ public class ClassDecNode implements INode
     }
 
 
-    //TODO: completare questo codice
-
     @Override
     public IType typeCheck() throws TypeException
     {
@@ -104,6 +102,12 @@ public class ClassDecNode implements INode
         }
 
 
-        return null;
+        return errors;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ClassDecNode: " + classType.toString();
     }
 }
