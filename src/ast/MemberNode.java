@@ -6,7 +6,7 @@ import type.IType;
 
 public class MemberNode extends FormalParamNode
 {
-    public MemberNode(String id, IType type, int offset, ParserRuleContext ctx)
+    public MemberNode(String id, IType type, ParserRuleContext ctx)
     {
         super(id, type, true, ctx);
     }
