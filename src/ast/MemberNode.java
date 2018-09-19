@@ -14,7 +14,7 @@ public class MemberNode extends FormalParamNode
     @Override
     public String toString()
     {
-        return "Function parameter " + super.type + " " + super.id;
+        return "Class attribute " + super.type + " " + super.id;
     }
 
     public FOOLParser.ArgdecContext getCtx()
