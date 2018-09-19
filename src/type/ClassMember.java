@@ -47,7 +47,7 @@ public class ClassMember
     @Override
     public boolean equals(Object o)
     {
-        return this.memberID.equals( ( (ClassMember) o).memberID );
+        return ((o instanceof ClassMember) && this.memberID.equals( ( (ClassMember) o).memberID ));
     }
 
     //This is gonna be useful when we will use an hashmap of members to store their values
