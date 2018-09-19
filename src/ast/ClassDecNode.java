@@ -106,8 +106,7 @@ public class ClassDecNode implements INode
                         {
                             ClassMember cm = (ClassMember) o;
 
-                            MemberNode memberNode = new MemberNode(cm.getMemberID(), cm.getType(),
-                                    -2, (FOOLParser.ArgdecContext) cm.getCtx());
+                            MemberNode memberNode = new MemberNode(cm.getMemberID(), cm.getType(),  (FOOLParser.ArgdecContext) cm.getCtx());
 
                             allMembers.add(memberNode);
                         }
