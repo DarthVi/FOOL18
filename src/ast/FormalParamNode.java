@@ -17,11 +17,11 @@ import java.util.ArrayList;
  */
 public class FormalParamNode implements INode
 {
-    private String id;
-    private IType type;
+    protected String id;
+    protected IType type;
     private int offset;
     private boolean isAttribute;
-    private ParserRuleContext ctx;
+    protected ParserRuleContext ctx;
 
     public FormalParamNode(String id, IType type, int offset, boolean isAttribute, ParserRuleContext ctx)
     {

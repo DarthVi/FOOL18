@@ -1,16 +1,20 @@
 package type;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+
 import java.util.Objects;
 
 public class ClassMember
 {
     private String memberID;
     private IType type;
+    private ParserRuleContext ctx;
 
-    public ClassMember(String memberID, IType type)
+    public ClassMember(String memberID, IType type, ParserRuleContext ctx)
     {
         this.memberID = memberID;
         this.type = type;
+        this.ctx = ctx;
     }
 
     public ClassMember(String memberID, IType type, int value)
@@ -61,5 +65,10 @@ public class ClassMember
     {
 
         return this.memberID.hashCode();
+    }
+
+    public ParserRuleContext getCtx()
+    {
+        return ctx;
     }
 }
