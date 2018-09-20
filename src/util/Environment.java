@@ -3,14 +3,13 @@ package util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
-import java.util.Map;
 
 import exception.*;
 import org.antlr.v4.runtime.Token;
 import type.ClassType;
 import type.FunctionType;
 import type.IType;
-import vm.VTableEntry;
+import vm.DTableEntry;
 
 public class Environment
 {
@@ -20,22 +19,22 @@ public class Environment
     //map from string to defined class declarations
     private HashMap<String, ClassType> symClassTypes;
 
-    //virtual table
-    Map<Integer, ArrayList<VTableEntry>> virtualTables;
+    //dispatch function table
+    ArrayList<HashMap<String, DTableEntry>> dispatchTables;
 
     public Environment(ArrayList<HashMap<String, STentry>> symTable, HashMap<String, ClassType> symClassTypes,
-                       Map<Integer, ArrayList<VTableEntry>> vtable)
+                       ArrayList<HashMap<String, DTableEntry>> vtable)
     {
 
         this.symTable = symTable;
         this.symClassTypes = symClassTypes;
-        this.virtualTables = vtable;
+        this.dispatchTables = vtable;
     }
 
     public Environment()
     {
         symTable = new ArrayList<HashMap<String,STentry>>();
-        virtualTables = new HashMap<>();
+        dispatchTables = new ArrayList<>();
         symClassTypes = new HashMap<>();
     }
 
@@ -210,5 +209,19 @@ public class Environment
     {
         return this.getEntry(token).getType();
     }
-    //TODO: check if using Tokens instead of Strings is ok
+
+    public int getDftSize()
+    {
+        return dispatchTables.size();
+    }
+
+    public HashMap<String, DTableEntry> getDftTable(int index)
+    {
+        return this.dispatchTables.get(index);
+    }
+
+    public void addDftTable(HashMap<String, DTableEntry> table)
+    {
+        this.dispatchTables.add(table);
+    }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class FunctionNode implements INode
 {
 
-    private String id;
+    protected String id;
     private IType decReturnType;
     private ArrayList<FormalParamNode> params;
     private ArrayList<INode> decs;

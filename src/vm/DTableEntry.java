@@ -4,19 +4,25 @@ package vm;
  * Virtual function table entry (a.k.a. dispatch table entry), we
  * need it to allow dynamic dispatch
  */
-public class VTableEntry
+public class DTableEntry
 {
-    private String methodAddress;
+    private String methodId;
     private String methodLabel;
 
-    public String getMethodAddress()
+    public DTableEntry(String methodId, String methodLabel)
     {
-        return methodAddress;
+        this.methodId = methodId;
+        this.methodLabel = methodLabel;
     }
 
-    public void setMethodAddress(String methodAddress)
+    public String getMethodId()
     {
-        this.methodAddress = methodAddress;
+        return methodId;
+    }
+
+    public void setMethodId(String methodId)
+    {
+        this.methodId = methodId;
     }
 
     public String getMethodLabel()

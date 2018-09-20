@@ -1,6 +1,5 @@
 package type;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +7,7 @@ public class ClassType implements IType
 {
     private String className;
     private ClassType parent;
+    private int dftIndex; //index to retrieve the appropriate index dispatch table
     private Map<String, ClassMember> classMembers;
     private Map<String, ClassMethod> classMethods;
 
@@ -101,6 +101,16 @@ public class ClassType implements IType
     public void setClassMethods(Map classMethods)
     {
         this.classMethods = classMethods;
+    }
+
+    public int getDftIndex()
+    {
+        return dftIndex;
+    }
+
+    public void setDftIndex(int dftIndex)
+    {
+        this.dftIndex = dftIndex;
     }
 
     @Override

@@ -37,8 +37,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         //if the variable declaration is inside a class, it is a member declaration,
         //so we must set the isAttribute property
-        if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
-            isAttribute = true;
+        //if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
+        //    isAttribute = true;
 
         return new VardecNode(typeNode, ctx.ID().getSymbol().getText(), expression, ctx, isAttribute);
     }
@@ -132,12 +132,18 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     public INode visitArgdec(FOOLParser.ArgdecContext ctx)
     {
         FormalParamNode param;
+        boolean isAttribute = false;
 
         TypeNode typeNode = (TypeNode) visitType(ctx.type());
 
+        //if the variable declaration is inside a class, it is a member declaration,
+        //so we must set the isAttribute property
+        if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
+            isAttribute = true;
+
         //isAttribute = false because it is not relevant in this case to discriminate variables from members
         return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(),
-                false, ctx);
+                isAttribute, ctx);
     }
 
     @Override
