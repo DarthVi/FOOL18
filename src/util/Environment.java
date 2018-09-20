@@ -9,7 +9,6 @@ import org.antlr.v4.runtime.Token;
 import type.ClassType;
 import type.FunctionType;
 import type.IType;
-import vm.DTableEntry;
 
 public class Environment
 {

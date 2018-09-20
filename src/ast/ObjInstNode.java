@@ -5,7 +5,7 @@ import type.ClassType;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
-import vm.DTableEntry;
+import util.DTableEntry;
 
 import java.util.ArrayList;
 

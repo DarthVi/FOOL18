@@ -7,7 +7,7 @@ import parser.FOOLParser;
 import type.*;
 import util.Environment;
 import util.SemanticError;
-import vm.DTableEntry;
+import util.DTableEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;

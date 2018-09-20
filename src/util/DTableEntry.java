@@ -1,4 +1,4 @@
-package vm;
+package util;
 
 /**
  * Virtual function table entry (a.k.a. dispatch table entry), we
