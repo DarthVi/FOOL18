@@ -74,7 +74,7 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
 
                 //let's add symbol table entry for the function ID
                 //TODO: check if this offset is ok
-                environment.addEntry(ctx.ID().getSymbol(), funType, environment.offset, false);
+                environment.addEntry(ctx.ID().getSymbol(), funType, environment.offset--, false);
             } catch (FunctionAlreadyDefinedException e)
             {
                 errors.add(new SemanticError(e.getMessage()));
