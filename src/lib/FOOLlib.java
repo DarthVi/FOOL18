@@ -5,9 +5,7 @@ import ast.*;
 public class FOOLlib {
 
     private static int labCount=0;
-
     private static int funLabCount=0;
-
     private static String funCode="";
 
     public static String freshLabel() {
@@ -18,11 +16,15 @@ public class FOOLlib {
         return "function"+(funLabCount++);
     }
 
-    public static void putCode(String c) {
-        funCode+="\n"+c; //aggiunge una linea vuota di separazione prima di funzione
-    }
     public static String getCode() {
         return funCode;
     }
+
+    public static void insertfun(String c) { funCode += "\n" + c; }
+
+    public static String getfun() {
+        return funCode;
+    }
+
 
 }

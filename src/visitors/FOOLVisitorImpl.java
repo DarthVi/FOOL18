@@ -332,5 +332,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         return new PrintNode(exp, ctx);
     }
 
-    //TODO: altri visitor
+    @Override
+    public INode visitBaseExp(FOOLParser.BaseExpContext ctx)
+    {
+        return visit(ctx.exp());
+    }
 }
