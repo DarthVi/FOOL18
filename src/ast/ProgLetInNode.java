@@ -1,6 +1,7 @@
 package ast;
 
 import exception.TypeException;
+import lib.FOOLlib;
 import type.IType;
 import type.VoidType;
 import util.Environment;
@@ -60,7 +61,7 @@ public class ProgLetInNode implements INode
             code += statsCode.toString() + "halt\n";
         }
 
-        return code;
+        return code + FOOLlib.getfun();
     }
 
     @Override

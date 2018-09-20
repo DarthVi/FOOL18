@@ -1,8 +1,7 @@
 package TestMassimiliani;
 
-import org.antlr.v4.runtime.tree.ParseTree;
-import parser.SVMLexer;
-import parser.SVMParser;
+import org.antlr.v4.runtime.CodePointCharStream;
+import parser.*;
 import visitors.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
@@ -12,8 +11,6 @@ import exception.TypeException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import parser.FOOLLexer;
-import parser.FOOLParser;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
@@ -24,7 +21,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import visitors.FOOLVisitorImpl;
-import visitors.SVMVisitorImpl;
+import visitors.SVMVisitor;
 import vm.ExecuteVM;
 
 
@@ -35,6 +32,7 @@ public class Main {
 
             String fileName = "TestMassimiliani/test.fool";
             CharStream input = CharStreams.fromFileName(fileName);
+
 
             //LEXER
             FOOLLexer lexer = new FOOLLexer(input);
@@ -61,9 +59,7 @@ public class Main {
 
             Environment env = funVisitor.getEnvironment();
 
-
-
-            FOOLVisitorImpl visitor = new FOOLVisitorImpl();
+            FOOLVisitor<INode> visitor = new FOOLVisitorImpl();
 
             INode ast = (INode) visitor.visit(progContext);
 
@@ -81,41 +77,32 @@ public class Main {
             //CODE GENERATION
             System.out.println("BEGIN CODE GENERATION...");
             String code = ast.codeGeneration();
-            code += "halt";                                            //to stop execution
+          //  code += "halt";                                            //to stop execution
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
-
-
 
             BufferedWriter out = new BufferedWriter(new FileWriter("TestMassimiliani/test.fool.asm"));
             out.write(code);
             out.close();
 
-
             //CODE EXECUTION
-            CharStream isASM = CharStreams.fromFileName(fileName+".asm");
+            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("TestMassimiliani/test.fool.asm");
             SVMLexer lexerASM = new SVMLexer(isASM);
-            System.out.println(isASM);
 
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
             SVMParser parserASM = new SVMParser(tokensASM);
-            parserASM.assembly();
+            SVMParser.CodeContext codeContext = parserASM.code() ;
 
-            visitors.SVMVisitorImpl svmVisitor = new SVMVisitorImpl();
-            svmVisitor.visit(parserASM.code());
+            SVMVisitor svmVisitor = new SVMVisitor();
+            svmVisitor.visit(codeContext);
             ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             System.out.println();
             vm.cpu();
 
-
-
-
-
-
-          //  ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
+            //ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);
-          //  System.out.println();
-            // vm.cpu();
+            //System.out.println();
+            //vm.cpu();
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException  e ) {
             System.out.println(e.getMessage());

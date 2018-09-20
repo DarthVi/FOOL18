@@ -17,7 +17,7 @@ prog   : exp SEMIC                                  #singleExp
        | classdec+ (let? (exp SEMIC | stats))?      #classdecExp
        ;
 
-let       : LET (dec SEMIC)+ IN ;
+let    : LET (dec SEMIC)+ IN ;
 
 vardec  : type ID (ASM exp)?;
 

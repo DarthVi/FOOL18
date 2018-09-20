@@ -70,7 +70,7 @@ public class FunCallNode implements INode
             parCode.append(actualArgs.get(i).codeGeneration());
 
         StringBuilder getAR = new StringBuilder();
-        for (int i = 0; i < nestingLevel - entry.getNestingLevel(); i++)
+        for (int i = 0; i < nestingLevel - entry.getNestingLevel()-1; i++)
             getAR.append("lw\n");
 
         return "lfp\n" + //CL

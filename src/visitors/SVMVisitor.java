@@ -5,13 +5,12 @@ import parser.SVMBaseVisitor;
 import parser.SVMParser;
 import vm.MemoryManager;
 
-import java.awt.desktop.SystemSleepEvent;
 import java.util.HashMap;
 
 /**
  * Visits the SVM tree and populates the code array appropriately.
  */
-public class SVMVisitorImpl extends SVMBaseVisitor
+public class SVMVisitor extends SVMBaseVisitor
 {
     private int[] code = new int[MemoryManager.readCodeSizeFromConfig()];
     private int i = 0;
@@ -24,7 +23,14 @@ public class SVMVisitorImpl extends SVMBaseVisitor
         code[i++] = c;
     }
 
+    @Override
+    public Object visitCode(SVMParser.CodeContext ctx)
+    {
+        for(SVMParser.AssemblyContext ac : ctx.assembly())
+            visit(ac);
 
+        return null;
+    }
 
     @Override
     public Object visitPushNumber(SVMParser.PushNumberContext ctx)
@@ -204,7 +210,6 @@ public class SVMVisitorImpl extends SVMBaseVisitor
     @Override
     public Object visitHalt(SVMParser.HaltContext ctx)
     {
-        addCode(SVMParser.PRINT); //debug
         addCode(SVMParser.HALT);
         return null;
     }

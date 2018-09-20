@@ -43,7 +43,7 @@ public class MemoryManager
 
     public MemoryManager()
     {
-        VMConfigReader configReader = new VMConfigReader("vmconfig.properties");
+        VMConfigReader configReader = new VMConfigReader("vm/vmconfig.properties");
         memorySize = configReader.getMemorySize();
         codeSize = configReader.getCodeSize();
         heapstart = configReader.getHeapStart();

@@ -1,34 +1,72 @@
 push 0
+push 12
+push function0
+push 0
+push function1
+push function2
+push 0
 push 1
-push 4
-push
-function0
-cfp
-lra
-push 10
-push -2
 lfp
-lw
+lfp
+push -6
+lfp
 add
 lw
-push 20
-mult
+js
+push 1
+add
+halt
+
+function0:
+cfp
+lra
+push 2
 srv
-pop
 sra
 pop
 sfp
 lrv
 lra
 js
+
+function1:
+cfp
+lra
+push 3
+srv
+sra
+pop
+sfp
+lrv
+lra
+js
+
+function2:
+cfp
+lra
 lfp
 lfp
 lw
-push 0
+push -5
 lfp
 lw
 add
 lw
 js
-halt
-halt
+lfp
+lfp
+lw
+push -3
+lfp
+lw
+add
+lw
+js
+add
+srv
+sra
+pop
+sfp
+lrv
+lra
+js

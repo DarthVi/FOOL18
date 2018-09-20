@@ -1,12 +1,11 @@
 let
-    int x = 1;
-    int y = 4;
-
-    int g()
-        let
-            int =10;
-        in
-            y*20;
-
+    int x = 12;
+    int f() 2;
+    int a;
+    int g() 3;
+    int h()
+      g() + f();
+    bool k;
+    int p = 1;
 in
-   g();
+    h() + 1;

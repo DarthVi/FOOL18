@@ -8,10 +8,11 @@ public class ExecuteVM {
     private  VirtualMachine virtualMachine ;
 
     public ExecuteVM(int[] code) {
-        this.virtualMachine = new VirtualMachine(code);
+        virtualMachine = new VirtualMachine(code);
     }
 
     public void cpu() {
+
         while ( true ) {
             int bytecode = virtualMachine.code[virtualMachine.ip++]; // fetch
             int v1,v2;
@@ -103,8 +104,8 @@ public class ExecuteVM {
                     System.out.println((virtualMachine.sp<virtualMachine.MEMSIZE)?virtualMachine.memory[virtualMachine.sp]:"Empty stack!");
                     break;
                 case SVMParser.HALT :
+                    System.out.println((virtualMachine.sp<virtualMachine.MEMSIZE)?virtualMachine.memory[virtualMachine.sp]:"Empty stack!"); //only debug
                     return;
-
             }
         }
     }

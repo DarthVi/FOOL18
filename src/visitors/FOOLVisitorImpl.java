@@ -14,18 +14,24 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitSingleExp(FOOLParser.SingleExpContext ctx) {
+
+        System.out.println("SingleExpContext");
         return visit(ctx.exp());
     }
 
     @Override
     public INode visitType(FOOLParser.TypeContext ctx)
     {
+
+        System.out.println("type");
         return new TypeNode(ctx, ctx.getText());
     }
 
     @Override
     public INode visitVardec(FOOLParser.VardecContext ctx)
     {
+        System.out.println("vardec");
+
         VardecNode vardecNode;
 
         TypeNode typeNode = (TypeNode) visit(ctx.type());
@@ -37,8 +43,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         //if the variable declaration is inside a class, it is a member declaration,
         //so we must set the isAttribute property
-        if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
-            isAttribute = true;
+        //if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
+        //    isAttribute = true;
 
         return new VardecNode(typeNode, ctx.ID().getSymbol().getText(), expression, ctx, isAttribute);
     }
@@ -46,6 +52,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitIntVal(FOOLParser.IntValContext ctx)
     {
+        System.out.println("intval");
+
         // notice that this method is not actually a rule but a named production #intVal
 
         //there is no need to perform a check here, the lexer ensures this text is an int
@@ -55,18 +63,25 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitNullVal(FOOLParser.NullValContext ctx)
     {
+        System.out.println("nullval");
+
         return new NullNode();
     }
 
     @Override
     public INode visitVoidExp(FOOLParser.VoidExpContext ctx)
     {
+
+        System.out.println("voidexp");
+
         return new VoidNode();
     }
 
     @Override
     public INode visitBoolVal(FOOLParser.BoolValContext ctx)
     {
+        System.out.println("boolval");
+
         boolean value;
 
         /*
@@ -85,13 +100,16 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         return new BoolNode(value);
     }
 
+
     private INode visitIf(ParserRuleContext ctx)
     {
+
+        System.out.println("if");
+
         IfNode res;
         INode condExp;
         INode thenBranch;
         INode elseBranch;
-
 
         if(ctx instanceof FOOLParser.IfExpContext)
         {
@@ -101,49 +119,62 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
             elseBranch = visit (((FOOLParser.IfExpContext) ctx).elseBranch);
         }
+
         else //FOOLParser.IfStatContext
         {
+
             condExp = visit (((FOOLParser.IfStatContext) ctx).cond);
 
             thenBranch = visit (((FOOLParser.IfStatContext) ctx).thenBranch);
 
             elseBranch = visit (((FOOLParser.IfStatContext) ctx).elseBranch);
         }
-
         res = new IfNode(condExp, thenBranch, elseBranch, ctx);
-
         return res;
     }
+
 
     @Override
     public INode visitIfExp(FOOLParser.IfExpContext ctx)
     {
+        System.out.println("ifexp");
+
         return visitIf(ctx);
     }
 
     @Override
     public INode visitIfStat(FOOLParser.IfStatContext ctx)
     {
+        System.out.println("ifstat");
+
         return visitIf(ctx);
     }
 
     @Override
     public INode visitArgdec(FOOLParser.ArgdecContext ctx)
     {
+        System.out.println("argdec");
+
         FormalParamNode param;
+        boolean isAttribute = false;
 
         TypeNode typeNode = (TypeNode) visitType(ctx.type());
 
-        //offset -2 in the AR (same as variable declared inside the function scope)
+        //if the variable declaration is inside a class, it is a member declaration,
+        //so we must set the isAttribute property
+        if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
+            isAttribute = true;
+
         //isAttribute = false because it is not relevant in this case to discriminate variables from members
-        //TODO: controllare che questo offset funzioni
-        return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(), -2,
-                false, ctx);
+        return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(),
+                isAttribute, ctx);
     }
 
     @Override
     public INode visitFun(FOOLParser.FunContext ctx)
     {
+        System.out.println("fun");
+
         INode type = visitType(ctx.type());
         IType retType = ((TypeNode) type).getType();
 
@@ -178,6 +209,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitFunExp(FOOLParser.FunExpContext ctx) {
+        System.out.println("funexp");
+
         //this corresponds to a function invocation
         //        //declare the result
         INode res;
@@ -199,11 +232,14 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitFactor(FOOLParser.FactorContext ctx) {
+        System.out.println("factor");
+
         try {
             if (ctx.right == null) {
                 //it is a simple expression
                 return visit(ctx.left);
             } else {
+
                 //it is a binary expression, you should visit left and right
                 INode left = visit(ctx.left);
                 INode right = visit(ctx.right);
@@ -238,13 +274,17 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitVarExp(FOOLParser.VarExpContext ctx) {
+        System.out.println("varexp");
+
         return new IdNode(ctx.ID().getText(), ctx);
     }
 
     @Override
     public INode visitExp(FOOLParser.ExpContext ctx) {
+        System.out.println("exp");
+
         if (ctx.right == null) {
-            return visit(ctx.left);
+            return visit(ctx.term());
         } else {
             INode left = visit(ctx.left);
             INode right = visit(ctx.right);
@@ -258,6 +298,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitTerm(FOOLParser.TermContext ctx) {
+        System.out.println("term");
+
         if (ctx.right == null) {
             return visit(ctx.left);
         } else {
@@ -274,7 +316,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitVarasm(FOOLParser.VarasmContext ctx)
     {
-       String varName = ctx.ID().getSymbol().getText();
+        System.out.println("varasm");
+
+        String varName = ctx.ID().getSymbol().getText();
 
        INode exp = visit(ctx.exp());
 
@@ -284,6 +328,8 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitLetInExp(FOOLParser.LetInExpContext ctx)
     {
+        System.out.println("letinexp");
+
         ProgLetInNode res;
 
         ArrayList<INode> declarations = new ArrayList<>();
@@ -316,16 +362,27 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitVarasmStat(FOOLParser.VarasmStatContext ctx)
     {
+        System.out.println("varasmstat");
+
         return visit(ctx.varasm());
     }
 
     @Override
     public INode visitPrintStat(FOOLParser.PrintStatContext ctx)
     {
+        System.out.println("print");
+
         INode exp = visit(ctx.exp());
 
         return new PrintNode(exp, ctx);
     }
+
+    @Override
+    public INode visitBaseExp(FOOLParser.BaseExpContext ctx)
+    {
+        return visit(ctx.exp());
+    }
+
 
     //TODO: altri visitor
 }

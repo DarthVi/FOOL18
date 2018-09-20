@@ -1,3 +1,4 @@
+import visitors.FOOLVisitorImpl;
 import ast.INode;
 import exception.LexerException;
 import exception.ParserException;
@@ -22,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String fileName = "src/test/test2.fool";
+            String fileName = "src/test/test.fool";
             CharStream input = CharStreams.fromFileName(fileName);
 
             //LEXER
@@ -47,11 +48,15 @@ public class Main {
 
             //SEMANTIC
             System.out.println("BEGIN SEMANTIC ANALYSIS...\n");
-            DebuggingVisitorImpl visitor = new DebuggingVisitorImpl();
-            INode ast = (INode) visitor.visit(progContext);
+            DebuggingVisitorImpl debuggingVisitor = new DebuggingVisitorImpl();
+            INode debuggingAst = (INode) debuggingVisitor.visit(progContext);
+            FOOLVisitorImpl visitor = new FOOLVisitorImpl();
+            INode ast = visitor.visit(progContext);
             Environment env = new Environment();
             ArrayList<SemanticError> errors = ast.checkSemantics(env);
-                if (errors.size() > 0) throw new SemanticException(errors);
+            System.out.println(ast.toString());
+            if (errors.size() > 0)
+                throw new SemanticException(errors);
             System.out.println("\n...END SEMANTIC ANALYSIS");
 
             //TYPE CHECKING
@@ -63,7 +68,10 @@ public class Main {
             //CODE GENERATION
             System.out.println("BEGIN CODE GENERATION...");
             String code = ast.codeGeneration();
-            System.out.println(code);
+            /*File svmFile = new File("code.svm");
+            BufferedWriter svmWriter = new BufferedWriter(new FileWriter(svmFile.getAbsoluteFile()));
+            svmWriter.write(code);
+            svmWriter.close();*/
             System.out.println("END CODE GENERATION...\n");
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException e) {

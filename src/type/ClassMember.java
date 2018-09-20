@@ -1,23 +1,26 @@
 package type;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+
+import java.util.Objects;
+
 public class ClassMember
 {
     private String memberID;
     private IType type;
-    private int value;
+    private ParserRuleContext ctx;
 
-    public ClassMember(String memberID, IType type)
+    public ClassMember(String memberID, IType type, ParserRuleContext ctx)
     {
         this.memberID = memberID;
         this.type = type;
-        this.value = 0;
+        this.ctx = ctx;
     }
 
     public ClassMember(String memberID, IType type, int value)
     {
         this.memberID = memberID;
         this.type = type;
-        this.value =value;
     }
 
 
@@ -41,13 +44,31 @@ public class ClassMember
         this.type = type;
     }
 
-    public int getValue()
+    //This is gonna be useful when we will use an hashmap of members to store their values
+    //inside specific classes that encode instances.
+    //It is necessary to override this method in order to appropriately use this class
+    //as an hashmap key
+    @Override
+    public boolean equals(Object o)
     {
-        return value;
+        return ((o instanceof ClassMember) && this.memberID.equals( ( (ClassMember) o).memberID ));
     }
 
-    public void setValue(int value)
+    //This is gonna be useful when we will use an hashmap of members to store their values
+    //inside specific classes that encode instances.
+    /**
+     * The hash code of this class is the hashcode of its name, which is a string
+     * @return  an integer representing the hashcode
+     */
+    @Override
+    public int hashCode()
     {
-        this.value = value;
+
+        return this.memberID.hashCode();
+    }
+
+    public ParserRuleContext getCtx()
+    {
+        return ctx;
     }
 }

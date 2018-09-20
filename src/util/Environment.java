@@ -3,36 +3,38 @@ package util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
-import java.util.Map;
 
-import exception.FunctionAlreadyDefinedException;
-import exception.UndeclaredVariableException;
-import exception.UndefinedFunctionException;
-import exception.VariableAlreadyDefinedException;
+import exception.*;
 import org.antlr.v4.runtime.Token;
+import type.ClassType;
 import type.FunctionType;
 import type.IType;
-import vm.VTableEntry;
 
 public class Environment
 {
     public int offset = 0;
     private ArrayList<HashMap<String,STentry>> symTable;
 
-    //virtual table
-    Map<Integer, ArrayList<VTableEntry>> virtualTables;
+    //map from string to defined class declarations
+    private HashMap<String, ClassType> symClassTypes;
 
-    public Environment(ArrayList<HashMap<String, STentry>> symTable, Map<Integer, ArrayList<VTableEntry>> vtable)
+    //dispatch function table
+    ArrayList<HashMap<String, DTableEntry>> dispatchTables;
+
+    public Environment(ArrayList<HashMap<String, STentry>> symTable, HashMap<String, ClassType> symClassTypes,
+                       ArrayList<HashMap<String, DTableEntry>> vtable)
     {
 
         this.symTable = symTable;
-        this.virtualTables = vtable;
+        this.symClassTypes = symClassTypes;
+        this.dispatchTables = vtable;
     }
 
     public Environment()
     {
         symTable = new ArrayList<HashMap<String,STentry>>();
-        virtualTables = new HashMap<>();
+        dispatchTables = new ArrayList<>();
+        symClassTypes = new HashMap<>();
     }
 
     /**
@@ -170,9 +172,55 @@ public class Environment
         return entry;
     }
 
+    public void addClassType(Token name, ClassType classType) throws ClassAlreadyDefinedException
+    {
+        ClassType current = symClassTypes.put(name.getText(), classType);
+
+        if(current != null)
+            throw new ClassAlreadyDefinedException(name);
+    }
+
+    public void addClassType(Token name, Token parent, ClassType classType) throws ClassAlreadyDefinedException,
+            UndeclaredClassException
+    {
+        ClassType checkParent = symClassTypes.get(parent.getText());
+
+        if(checkParent == null)
+            throw new UndeclaredClassException(parent);
+
+        ClassType current = symClassTypes.put(name.getText(), classType);
+
+        if(current != null)
+            throw new ClassAlreadyDefinedException(name);
+    }
+
+    public ClassType getClassType(Token name) throws UndeclaredClassException
+    {
+        ClassType type = symClassTypes.get(name.getText());
+
+        if(type == null)
+            throw new UndeclaredClassException(name);
+
+        return type;
+    }
+
     public IType getTypeOf(Token token)
     {
         return this.getEntry(token).getType();
     }
-    //TODO: check if using Tokens instead of Strings is ok
+
+    public int getDftSize()
+    {
+        return dispatchTables.size();
+    }
+
+    public HashMap<String, DTableEntry> getDftTable(int index)
+    {
+        return this.dispatchTables.get(index);
+    }
+
+    public void addDftTable(HashMap<String, DTableEntry> table)
+    {
+        this.dispatchTables.add(table);
+    }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class FunctionNode implements INode
 {
 
-    private String id;
+    protected String id;
     private IType decReturnType;
     private ArrayList<FormalParamNode> params;
     private ArrayList<INode> decs;
@@ -81,8 +81,8 @@ public class FunctionNode implements INode
                 paramsPop.append("pop\n");
         }
 
-        return "push\n" +
-                FOOLlib.freshFunLabel() + "\n" +
+        String fun = FOOLlib.freshFunLabel();
+        FOOLlib.insertfun(fun + ":\n" +
                 "cfp\n" + //setta $fp a $sp
                 "lra\n" + //inserimento return address
                 decsCode + //inserimento dichiarazioni locali
@@ -94,7 +94,10 @@ public class FunctionNode implements INode
                 paramsPop +
                 "sfp\n" +  // setto $fp a valore del CL
                 "lrv\n" + // risultato della funzione sullo stack
-                "lra\n" + "js\n";  // salta a $ra
+                "lra\n" + "js\n" // salta a $ra
+        );
+
+        return "push " + fun + "\n";
     }
 
     @Override

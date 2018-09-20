@@ -5,7 +5,7 @@ import type.ClassType;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
-import vm.VTableEntry;
+import util.DTableEntry;
 
 import java.util.ArrayList;
 
@@ -14,9 +14,9 @@ public class ObjInstNode implements INode
     //TODO
     private String objectName;
     private ClassType classType;
-    private VTableEntry virtualFunctionTable;
+    private DTableEntry virtualFunctionTable;
 
-    public ObjInstNode(String objectName, ClassType classType, VTableEntry vft)
+    public ObjInstNode(String objectName, ClassType classType, DTableEntry vft)
     {
         this.objectName = objectName;
         this.classType = classType;

@@ -1,0 +1,29 @@
+push 0
+push 12
+push function0
+lfp
+lfp
+push -3
+lfp
+add
+lw
+js
+halt
+
+function0:
+cfp
+lra
+push -2
+lfp
+lw
+add
+lw
+push 12
+mult
+srv
+sra
+pop
+sfp
+lrv
+lra
+js
