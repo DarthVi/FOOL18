@@ -23,10 +23,23 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
     private Environment environment = new Environment();
     private ArrayList<SemanticError> errors = new ArrayList<>();
 
+    public FunctionVisitor()
+    {
+        environment.offset = -2;
+    }
+
     @Override
     public INode visitType(FOOLParser.TypeContext ctx)
     {
         return new TypeNode(ctx, ctx.getText());
+    }
+
+    @Override
+    public INode visitVardec(FOOLParser.VardecContext ctx)
+    {
+        environment.offset--;
+
+        return null;
     }
 
     @Override
