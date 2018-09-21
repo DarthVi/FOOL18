@@ -19,7 +19,7 @@ public class FormalParamNode implements INode
 {
     protected String id;
     protected IType type;
-    private boolean isAttribute;
+    protected boolean isAttribute;
     protected ParserRuleContext ctx;
 
     public FormalParamNode(String id, IType type, boolean isAttribute, ParserRuleContext ctx)
@@ -62,6 +62,11 @@ public class FormalParamNode implements INode
         }
 
         return res;
+    }
+
+    public IType getType()
+    {
+        return this.type;
     }
 
     @Override

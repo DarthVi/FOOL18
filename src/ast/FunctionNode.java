@@ -15,12 +15,12 @@ public class FunctionNode implements INode
 {
 
     protected String id;
-    private IType decReturnType;
-    private ArrayList<FormalParamNode> params;
-    private ArrayList<INode> decs;
-    private INode body;
-    private FunctionType fType;
-    private ParserRuleContext ctx;
+    protected IType decReturnType;
+    protected ArrayList<FormalParamNode> params;
+    protected ArrayList<INode> decs;
+    protected INode body;
+    protected FunctionType fType;
+    protected ParserRuleContext ctx;
 
     public FunctionNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
     {

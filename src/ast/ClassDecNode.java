@@ -17,6 +17,7 @@ import java.util.Map;
 public class ClassDecNode implements INode
 {
     private ClassType classType;
+    private String parentStr;
     private ParserRuleContext ctx;
     //members declared in this class
     private ArrayList<MemberNode> members;
@@ -25,10 +26,11 @@ public class ClassDecNode implements INode
     private ArrayList<MemberNode> allMembers;
     //private DTableEntry virtualFunctionTable;
 
-    public ClassDecNode(ClassType classType, ArrayList<MemberNode> members,
+    public ClassDecNode(ClassType classType, String parentStr, ArrayList<MemberNode> members,
                         ArrayList<MethodNode> methods, ParserRuleContext ctx)
     {
         this.classType = classType;
+        this.parentStr = parentStr;
         this.members = members;
         this.methods = methods;
         this.ctx = ctx;
@@ -103,8 +105,13 @@ public class ClassDecNode implements INode
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
             else
             {
+                ClassType parentType = null;
+
                 //we check if the declared parent exists, otherwise the method throws an exception
-                ClassType parentType = env.getClassType(((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol());
+                if(this.parentStr != null)
+                    parentType = env.getClassType(((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol());
+
+                this.classType.setParent(parentType);
 
                 //we set the current parent
                 ClassType currentParent = classType.getParent();
