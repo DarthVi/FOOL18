@@ -226,6 +226,7 @@ public class SVMVisitor extends SVMBaseVisitor
 
     public int[] getCode()
     {
+        patchCodeWithIndexes();
         return code;
     }
 
