@@ -2,6 +2,7 @@ package ast;
 
 import exception.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
+import parser.FOOLParser;
 import type.FunctionType;
 import type.IType;
 
@@ -48,6 +49,11 @@ public class MethodNode extends FunctionNode
         }
 
         return new FunctionType(decReturnType, paramTypes);
+    }
+
+    public ParserRuleContext getCtx()
+    {
+        return this.ctx;
     }
 
 

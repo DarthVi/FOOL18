@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.Token;
 
 public class FunctionAlreadyDefinedException extends CompileException {
 
-	private final String functionName;
+	protected final String functionName;
 	
 	public FunctionAlreadyDefinedException(Token functionNameToken) {
 		super(functionNameToken);

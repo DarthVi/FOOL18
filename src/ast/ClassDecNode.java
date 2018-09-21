@@ -9,10 +9,8 @@ import util.Environment;
 import util.SemanticError;
 import util.DTableEntry;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ClassDecNode implements INode
 {
@@ -119,7 +117,7 @@ public class ClassDecNode implements INode
                 ArrayList<MethodNode> tempMethods = new ArrayList<>();
                 Collections.copy(tempMethods, this.methods);
 
-                ArrayList<String> overriddenMethods = new ArrayList<>();
+                ArrayList<MethodNode> overriddenMethods = new ArrayList<>();
 
                 //we must retrieve the parent members going up through the parent chain
                 //we also must retrieve overridden methods
@@ -138,7 +136,7 @@ public class ClassDecNode implements INode
                     }
 
                     //get overridden methods
-                    overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent, env));
+                    overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
 
                     //overridden methods and new methods must have a new fresh label to be put
                     //inside this class' DFT
@@ -192,7 +190,8 @@ public class ClassDecNode implements INode
             }
         }catch (ClassAlreadyDefinedException
                 | UndeclaredClassException
-                | ClassMemberOverridingException e)
+                | ClassMemberOverridingException
+                | MethodAlreadyDefinedException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
@@ -210,12 +209,18 @@ public class ClassDecNode implements INode
      * @param parent
      * @param env
      */
-    public void buildDftTable(ArrayList<String> overriddenMethods, ArrayList<MethodNode> newMethods,
-                              ClassType parent, Environment env)
+    @SuppressWarnings("Duplicates")
+    public void buildDftTable(ArrayList<MethodNode> overriddenMethods, ArrayList<MethodNode> newMethods,
+                              ClassType parent, Environment env) throws MethodAlreadyDefinedException
     {
         //setting current class dft index to point appropriately to the new collection of dispatch tables
         int currentClassDftIndex = env.getDftSize();
         classType.setDftIndex(currentClassDftIndex);
+
+        //we need the collection made up of overriddenMethods string to ease up some operations
+        //in line 236
+        List<String> overriddenString =
+                overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
 
         //this class' dispatch table
         HashMap<String, DTableEntry> dTable = new HashMap<>();
@@ -230,24 +235,41 @@ public class ClassDecNode implements INode
         //simply by storing in the dTable the old function label previously set by the the parent
         for(Map.Entry<String, DTableEntry> entry : parentTable.entrySet())
         {
-            if(!overriddenMethods.contains(entry.getKey()))
+            if(!overriddenString.contains(entry.getKey()))
             {
-                dTable.put(entry.getKey(), entry.getValue());
+                DTableEntry check = dTable.put(entry.getKey(), entry.getValue());
+
+                //checking for invalid multiple entries for the same function name
+                if(check != null)
+                    throw new MethodAlreadyDefinedException(entry.getValue().getCtx().ID().getSymbol());
             }
         }
 
         //we generate a new label for each overridden method and store it in the dispatch table
-        for(String methodName : overriddenMethods)
+        for(MethodNode methodNode : overriddenMethods)
         {
-            DTableEntry dTableEntry = new DTableEntry(methodName, FOOLlib.freshFunLabel());
-            dTable.put(methodName, dTableEntry);
+            DTableEntry dTableEntry = new DTableEntry(methodNode.getId(), FOOLlib.freshFunLabel(),
+                    (FOOLParser.FunContext) methodNode.getCtx());
+
+            DTableEntry check = dTable.put(methodNode.getId(), dTableEntry);
+
+            //checking for invalid multiple entries for the same function name
+            if(check != null)
+                throw new MethodAlreadyDefinedException(
+                        ((FOOLParser.FunContext) methodNode.getCtx()).ID().getSymbol());
         }
 
         //generates new label for each new method, then stores it in the DFT
         for(MethodNode mn : newMethods)
         {
-            DTableEntry dTableEntry = new DTableEntry(mn.getId(), FOOLlib.freshFunLabel());
-            dTable.put(mn.getId(), dTableEntry);
+            DTableEntry dTableEntry = new DTableEntry(mn.getId(), FOOLlib.freshFunLabel(),
+                    (FOOLParser.FunContext) mn.getCtx());
+            DTableEntry check = dTable.put(mn.getId(), dTableEntry);
+
+            //checking for invalid multiple entries for the same function name
+            if(check != null)
+                throw new MethodAlreadyDefinedException(
+                        ((FOOLParser.FunContext) mn.getCtx()).ID().getSymbol());
         }
 
         //adds the DFT to the collection of DFTs
@@ -255,21 +277,26 @@ public class ClassDecNode implements INode
 
     }
 
-    public ArrayList<String> getOverriddenMethods(ArrayList<MethodNode> methods, ClassType parent, Environment env)
+    public ArrayList<MethodNode> getOverriddenMethods(ArrayList<MethodNode> methods,
+                                                      ClassType parent)
     {
-        ArrayList<String> overriddenMethods = new ArrayList<>();
-        for(MethodNode mn : methods)
+        ArrayList<MethodNode> overriddenMethods = new ArrayList<>();
+        ListIterator<MethodNode> iter = methods.listIterator();
+
+        while(iter.hasNext())
         {
+            MethodNode mn = iter.next();
             String mName = mn.getId();
 
             ClassMethod childMethod = (ClassMethod) classType.getClassMethods().get(mName);
 
             ClassMethod parentMethod = (ClassMethod) parent.getClassMethods().get(mName);
 
-            if (childMethod.getMethodType().isOverriding(parentMethod.getMethodType()))
+            if (parentMethod != null &&
+                    childMethod.getMethodType().isOverriding(parentMethod.getMethodType()))
             {
-                overriddenMethods.add(mn.getId());
-                methods.remove(mn);
+                overriddenMethods.add(mn);
+                iter.remove();
             }
         }
 
