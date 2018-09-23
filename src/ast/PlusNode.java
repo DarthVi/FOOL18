@@ -44,7 +44,9 @@ public class PlusNode implements INode {
 
     @Override
     public String codeGeneration() {
-        return left.codeGeneration() +
+
+
+        return  left.codeGeneration() +
                 right.codeGeneration() +
                 "add\n";
     }

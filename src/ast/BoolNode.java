@@ -1,5 +1,6 @@
 package ast;
 
+import parser.FOOLParser;
 import type.BoolType;
 import type.IType;
 import util.Environment;
@@ -10,10 +11,14 @@ import java.util.ArrayList;
 public class BoolNode implements INode {
 
   private boolean val;
-  
-  public BoolNode(boolean n) {
-    val=n;
-  }
+  private FOOLParser.BoolValContext ctx;
+
+    public BoolNode(boolean n, FOOLParser.BoolValContext ctx) {
+        val=n;
+        this.ctx = ctx;
+        if((ctx.getChild(0).toString().equalsIgnoreCase( "not"))) val = !val;
+
+    }
 
   @Override
   public String toString() {
@@ -30,8 +35,11 @@ public class BoolNode implements INode {
  	  return new ArrayList<SemanticError>();
  	}
   
-  public String codeGeneration() {
-		return "push "+(val?1:0)+"\n";
+  public String codeGeneration()
+
+
+        {
+      return "push "+(val?1:0)+"\n";
 	  }
          
 }  

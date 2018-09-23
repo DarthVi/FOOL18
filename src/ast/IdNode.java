@@ -5,8 +5,10 @@ import exception.UndeclaredVariableException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
+import type.BoolType;
 import type.FunctionType;
 import type.IType;
+import type.IntType;
 import util.Environment;
 import util.STentry;
 import util.SemanticError;
@@ -21,12 +23,17 @@ public class IdNode implements INode
     private STentry entry;
     private int nestingLevel;
     ParserRuleContext ctx;
+    int extra;                      // extra = 1 id preceded by '-', extra = 2 id preceded by 'not', extra = 0 there aren't both
 
     public IdNode(String varName, ParserRuleContext ctx)
     {
         this.varName = varName;
         this.entry = null;
         this.ctx = ctx;
+        System.out.println("\n\n\n B;" + ctx.getParent().getParent().getChild(0).getText());
+        if (ctx.getChild(0).toString().equalsIgnoreCase( "-")) extra = 1;
+        else if ((ctx.getChild(0).toString().equalsIgnoreCase( "not"))) extra = 2;
+        else extra = 0;
     }
 
     @Override
@@ -35,19 +42,49 @@ public class IdNode implements INode
         if(entry.getType() instanceof FunctionType)
             throw new TypeException("cannot call function without parentheses surrounding arguments (if any)", ctx);
 
-        return entry.getType();
+        if (extra == 1 &&!(entry.getType().isSubtypeOf(new IntType())))
+        {
+            throw new TypeException("- operator allowed only for int value", ctx);
+        }
+
+        if (extra == 2 &&!(entry.getType().isSubtypeOf(new BoolType())))
+        {
+            throw new TypeException("not operator allowed only for bool value", ctx);
+        }
+
+         return entry.getType();
     }
 
     @Override
     public String codeGeneration()
+
     {
+
+        String s;
+
         String getAR="";
-        for (int i=0; i<nestingLevel-entry.getNestingLevel(); i++)
-            getAR+="lw\n";
-        return "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
+        for (int i=0; i<nestingLevel-entry.getNestingLevel(); i++)  getAR+="lw\n";
+
+        s= "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
                 "lfp\n"+getAR+ //risalgo la catena statica
                 "add\n"+
                 "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
+
+        if(extra == 1) {
+            s ="push 0\n" +
+                s +
+                "sub \n" ;
+        }
+
+        else if(extra == 2)
+
+            s ="push 0\n" +
+                    s +
+                 "sub \n" ;
+
+
+
+        return s;
     }
 
     @Override

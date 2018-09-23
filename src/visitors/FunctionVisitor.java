@@ -26,6 +26,7 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
     public FunctionVisitor()
     {
         environment.offset = -2;
+
     }
 
     @Override

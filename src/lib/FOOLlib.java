@@ -4,6 +4,7 @@ import ast.*;
 
 public class FOOLlib {
 
+
     private static int labCount=0;
     private static int funLabCount=0;
     private static String funCode="";
@@ -25,6 +26,7 @@ public class FOOLlib {
     public static String getfun() {
         return funCode;
     }
+
 
 
 }

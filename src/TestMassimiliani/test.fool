@@ -1,11 +1,1 @@
-let
-    int x = 12;
-    int f() 2;
-    int a;
-    int g() 3;
-    int h()
-      g() + f();
-    bool k;
-    int p = 1;
-in
-    h() + 1;
+0-2;

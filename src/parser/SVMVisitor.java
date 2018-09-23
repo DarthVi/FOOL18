@@ -1,4 +1,4 @@
-// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/SVM.g4 by ANTLR 4.7
+// Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
 package parser;
 
 import java.util.HashMap;
@@ -110,6 +110,13 @@ public interface SVMVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code label}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLabel(SVMParser.LabelContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code js}
 	 * labeled alternative in {@link SVMParser#assembly}.

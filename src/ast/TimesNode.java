@@ -40,6 +40,7 @@ public class TimesNode implements INode {
 
     @Override
     public String codeGeneration() {
+
         return left.codeGeneration() +
                 right.codeGeneration() +
                 "mult\n";

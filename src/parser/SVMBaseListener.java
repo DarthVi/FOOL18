@@ -1,6 +1,8 @@
 // Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
 package parser;
 
+import java.util.HashMap;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -180,6 +182,18 @@ public class SVMBaseListener implements SVMListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLabel(SVMParser.LabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLabel(SVMParser.LabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

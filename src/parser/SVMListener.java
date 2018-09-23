@@ -177,6 +177,18 @@ public interface SVMListener extends ParseTreeListener {
 	 */
 	void exitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code label}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void enterLabel(SVMParser.LabelContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code label}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void exitLabel(SVMParser.LabelContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code js}
 	 * labeled alternative in {@link SVMParser#assembly}.
 	 * @param ctx the parse tree

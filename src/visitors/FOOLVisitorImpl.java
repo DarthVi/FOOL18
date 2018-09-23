@@ -14,9 +14,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitSingleExp(FOOLParser.SingleExpContext ctx) {
-
         System.out.println("SingleExpContext");
-        return visit(ctx.exp());
+        INode exp = visit(ctx.exp());
+        return new SingleExp(exp);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         // notice that this method is not actually a rule but a named production #intVal
 
         //there is no need to perform a check here, the lexer ensures this text is an int
-        return new IntNode(Integer.parseInt(ctx.INTEGER().getText()));
+        return new IntNode(Integer.parseInt(ctx.INTEGER().getText()), ctx);
     }
 
     @Override
@@ -92,12 +92,11 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
          * If that's the case, we have "not true", which must be transformed in false. Likewise if we have "not false",
          * we must transform it in true. For this reason the assignment expression in the else branch has a "!"
          */
-        if(ctx.optionalNot == null)
-            value = Boolean.parseBoolean(ctx.booleanVal.getText());
-        else
-            value = !ctx.booleanVal.getText().equals(FOOLParser.VOCABULARY.getLiteralName(FOOLParser.TRUE));
 
-        return new BoolNode(value);
+
+        value = Boolean.parseBoolean(ctx.booleanVal.getText());
+
+        return new BoolNode(value,ctx);
     }
 
 
@@ -294,6 +293,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
                 return new MinusNode(left, right, ctx);
             }
         }
+
+
+
     }
 
     @Override
@@ -321,6 +323,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         String varName = ctx.ID().getSymbol().getText();
 
        INode exp = visit(ctx.exp());
+
 
        return new VarNode(varName, exp, ctx);
     }
@@ -380,7 +383,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitBaseExp(FOOLParser.BaseExpContext ctx)
     {
-        return visit(ctx.exp());
+        return new BaseExpNode(ctx, visit(ctx.exp()));
     }
 
 

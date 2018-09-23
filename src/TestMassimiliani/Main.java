@@ -30,8 +30,9 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String fileName = "TestMassimiliani/test.fool";
-            CharStream input = CharStreams.fromFileName(fileName);
+
+            String fileName = "test1.fool";
+            CharStream input = CharStreams.fromFileName("TestMassimiliani/" +fileName);
 
 
             //LEXER
@@ -63,7 +64,6 @@ public class Main {
 
             INode ast = (INode) visitor.visit(progContext);
 
-
             ArrayList<SemanticError> errors = ast.checkSemantics(env);
             if (errors.size() > 0) throw new SemanticException(errors);
             System.out.println("\n...END SEMANTIC ANALYSIS");
@@ -81,23 +81,27 @@ public class Main {
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            BufferedWriter out = new BufferedWriter(new FileWriter("TestMassimiliani/test.fool.asm"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("TestMassimiliani/asm/" + fileName +".asm"));
             out.write(code);
             out.close();
 
             //CODE EXECUTION
-            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("TestMassimiliani/test.fool.asm");
+            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("TestMassimiliani/asm/" + fileName +".asm");
             SVMLexer lexerASM = new SVMLexer(isASM);
 
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
             SVMParser parserASM = new SVMParser(tokensASM);
-            SVMParser.CodeContext codeContext = parserASM.code() ;
+            SVMParser.CodeContext codeContext = parserASM.code();
+            System.out.println(parserASM.code());
 
             SVMVisitor svmVisitor = new SVMVisitor();
             svmVisitor.visit(codeContext);
+
+
+
             ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             System.out.println();
-            vm.cpu();
+             vm.cpu();
 
             //ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);

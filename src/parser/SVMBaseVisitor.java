@@ -1,4 +1,4 @@
-// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/SVM.g4 by ANTLR 4.7
+// Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
 package parser;
 
 import java.util.HashMap;
@@ -112,6 +112,13 @@ public class SVMBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SV
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitLabel(SVMParser.LabelContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
