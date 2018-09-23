@@ -161,7 +161,8 @@ public class FunctionNode implements INode
         env.removeLastHashMap();
 
         //TODO: check if we need to reset the offset of the environment
-        //env.offset = 0;
+
+        env.offset = savedOffset-1;
 
         // TODO controllare che funzioni per classi e oggetti
         return errors;
