@@ -3,13 +3,19 @@ package ast;
 import exception.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLParser;
+import type.ClassType;
 import type.FunctionType;
 import type.IType;
+import util.Environment;
+import util.SemanticError;
 
 import java.util.ArrayList;
 
 public class MethodNode extends FunctionNode
 {
+    //index to the dispatch function table in which this method is located
+    private ClassType classType;
+
     public MethodNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs,
                       INode body, ParserRuleContext ctx)
     {
@@ -54,6 +60,16 @@ public class MethodNode extends FunctionNode
     public ParserRuleContext getCtx()
     {
         return this.ctx;
+    }
+
+    public ClassType getClassType()
+    {
+        return classType;
+    }
+
+    public void setClassType(ClassType classType)
+    {
+        this.classType = classType;
     }
 
 

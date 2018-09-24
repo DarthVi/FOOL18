@@ -180,8 +180,25 @@ public class ClassDecNode implements INode
                 //and comments for details
                 buildDftTable(overriddenMethods, tempMethods, classType.getParent(), env);
 
-                //calling the checkSemantics on methods
+
+                //In order to be able tu use mutual recursion,
+                //we must add all the methods to the symbol table before calling each method's
+                //checkSemantics
                 for(MethodNode fn : methods)
+                {
+                    //setting the ClassType we must refer to for this MethodNode.
+                    //This way we can use this information inside MethodNode when needed.
+                    fn.setClassType(this.classType);
+                    FunctionType fnType = fn.getFunctionType();
+
+                    //lets add here the signature of the function to the symbol table,
+                    //in order to support mutual recursion
+                    env.addEntry(((FOOLParser.FunContext) (fn.getCtx())).ID().getSymbol(),
+                            fnType, env.offset--, true);
+                }
+
+                //calling the checkSemantics on methods
+                for(MethodNode fn: methods)
                     errors.addAll(fn.checkSemantics(env));
 
                 //exiting the scope
