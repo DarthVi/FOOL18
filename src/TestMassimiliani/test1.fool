@@ -40,4 +40,4 @@ int ric2(int c)
 
 
 in
-    ric1(5);
+    fattoriale(5);
