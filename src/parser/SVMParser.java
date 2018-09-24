@@ -325,6 +325,16 @@ public class SVMParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class LabelContext extends AssemblyContext {
+		public Token l;
+		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
+		public LabelContext(AssemblyContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLabel(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class HaltContext extends AssemblyContext {
 		public TerminalNode HALT() { return getToken(SVMParser.HALT, 0); }
 		public HaltContext(AssemblyContext ctx) { copyFrom(ctx); }
@@ -395,7 +405,7 @@ public class SVMParser extends Parser {
 		AssemblyContext _localctx = new AssemblyContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_assembly);
 		try {
-			setState(41);
+			setState(42);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
@@ -515,98 +525,106 @@ public class SVMParser extends Parser {
 				}
 				break;
 			case 14:
-				_localctx = new JsContext(_localctx);
+				_localctx = new LabelContext(_localctx);
 				enterOuterAlt(_localctx, 14);
 				{
 				setState(29);
-				match(JS);
+				((LabelContext)_localctx).l = match(LABEL);
 				}
 				break;
 			case 15:
-				_localctx = new LoadRaContext(_localctx);
+				_localctx = new JsContext(_localctx);
 				enterOuterAlt(_localctx, 15);
 				{
 				setState(30);
-				match(LOADRA);
+				match(JS);
 				}
 				break;
 			case 16:
-				_localctx = new StoreRaContext(_localctx);
+				_localctx = new LoadRaContext(_localctx);
 				enterOuterAlt(_localctx, 16);
 				{
 				setState(31);
-				match(STORERA);
+				match(LOADRA);
 				}
 				break;
 			case 17:
-				_localctx = new LoadRvContext(_localctx);
+				_localctx = new StoreRaContext(_localctx);
 				enterOuterAlt(_localctx, 17);
 				{
 				setState(32);
-				match(LOADRV);
+				match(STORERA);
 				}
 				break;
 			case 18:
-				_localctx = new StoreRvContext(_localctx);
+				_localctx = new LoadRvContext(_localctx);
 				enterOuterAlt(_localctx, 18);
 				{
 				setState(33);
-				match(STORERV);
+				match(LOADRV);
 				}
 				break;
 			case 19:
-				_localctx = new LoadFpContext(_localctx);
+				_localctx = new StoreRvContext(_localctx);
 				enterOuterAlt(_localctx, 19);
 				{
 				setState(34);
-				match(LOADFP);
+				match(STORERV);
 				}
 				break;
 			case 20:
-				_localctx = new StoreFpContext(_localctx);
+				_localctx = new LoadFpContext(_localctx);
 				enterOuterAlt(_localctx, 20);
 				{
 				setState(35);
-				match(STOREFP);
+				match(LOADFP);
 				}
 				break;
 			case 21:
-				_localctx = new CopyFpContext(_localctx);
+				_localctx = new StoreFpContext(_localctx);
 				enterOuterAlt(_localctx, 21);
 				{
 				setState(36);
-				match(COPYFP);
+				match(STOREFP);
 				}
 				break;
 			case 22:
-				_localctx = new LoadHpContext(_localctx);
+				_localctx = new CopyFpContext(_localctx);
 				enterOuterAlt(_localctx, 22);
 				{
 				setState(37);
-				match(LOADHP);
+				match(COPYFP);
 				}
 				break;
 			case 23:
-				_localctx = new StoreHpContext(_localctx);
+				_localctx = new LoadHpContext(_localctx);
 				enterOuterAlt(_localctx, 23);
 				{
 				setState(38);
-				match(STOREHP);
+				match(LOADHP);
 				}
 				break;
 			case 24:
-				_localctx = new PrintContext(_localctx);
+				_localctx = new StoreHpContext(_localctx);
 				enterOuterAlt(_localctx, 24);
 				{
 				setState(39);
-				match(PRINT);
+				match(STOREHP);
 				}
 				break;
 			case 25:
-				_localctx = new HaltContext(_localctx);
+				_localctx = new PrintContext(_localctx);
 				enterOuterAlt(_localctx, 25);
 				{
 				setState(40);
+				match(PRINT);
+				}
+				break;
+			case 26:
+				_localctx = new HaltContext(_localctx);
+				enterOuterAlt(_localctx, 26);
+				{
+				setState(41);
 				match(HALT);
 				}
 				break;
@@ -624,21 +642,22 @@ public class SVMParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\36.\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\36/\4\2\t\2\4\3\t"+
 		"\3\3\2\7\2\b\n\2\f\2\16\2\13\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
-		"\3\3\3\3\3\3\3\3\3\5\3,\n\3\3\3\2\2\4\2\4\2\2\2D\2\t\3\2\2\2\4+\3\2\2"+
-		"\2\6\b\5\4\3\2\7\6\3\2\2\2\b\13\3\2\2\2\t\7\3\2\2\2\t\n\3\2\2\2\n\3\3"+
-		"\2\2\2\13\t\3\2\2\2\f\r\7\3\2\2\r,\7\34\2\2\16\17\7\3\2\2\17,\7\33\2\2"+
-		"\20,\7\4\2\2\21,\7\5\2\2\22,\7\6\2\2\23,\7\7\2\2\24,\7\b\2\2\25,\7\t\2"+
-		"\2\26,\7\n\2\2\27\30\7\33\2\2\30,\7\32\2\2\31\32\7\13\2\2\32,\7\33\2\2"+
-		"\33\34\7\f\2\2\34,\7\33\2\2\35\36\7\r\2\2\36,\7\33\2\2\37,\7\16\2\2 ,"+
-		"\7\17\2\2!,\7\20\2\2\",\7\21\2\2#,\7\22\2\2$,\7\23\2\2%,\7\24\2\2&,\7"+
-		"\25\2\2\',\7\26\2\2(,\7\27\2\2),\7\30\2\2*,\7\31\2\2+\f\3\2\2\2+\16\3"+
-		"\2\2\2+\20\3\2\2\2+\21\3\2\2\2+\22\3\2\2\2+\23\3\2\2\2+\24\3\2\2\2+\25"+
-		"\3\2\2\2+\26\3\2\2\2+\27\3\2\2\2+\31\3\2\2\2+\33\3\2\2\2+\35\3\2\2\2+"+
-		"\37\3\2\2\2+ \3\2\2\2+!\3\2\2\2+\"\3\2\2\2+#\3\2\2\2+$\3\2\2\2+%\3\2\2"+
-		"\2+&\3\2\2\2+\'\3\2\2\2+(\3\2\2\2+)\3\2\2\2+*\3\2\2\2,\5\3\2\2\2\4\t+";
+		"\3\3\3\3\3\3\3\3\3\3\3\5\3-\n\3\3\3\2\2\4\2\4\2\2\2F\2\t\3\2\2\2\4,\3"+
+		"\2\2\2\6\b\5\4\3\2\7\6\3\2\2\2\b\13\3\2\2\2\t\7\3\2\2\2\t\n\3\2\2\2\n"+
+		"\3\3\2\2\2\13\t\3\2\2\2\f\r\7\3\2\2\r-\7\34\2\2\16\17\7\3\2\2\17-\7\33"+
+		"\2\2\20-\7\4\2\2\21-\7\5\2\2\22-\7\6\2\2\23-\7\7\2\2\24-\7\b\2\2\25-\7"+
+		"\t\2\2\26-\7\n\2\2\27\30\7\33\2\2\30-\7\32\2\2\31\32\7\13\2\2\32-\7\33"+
+		"\2\2\33\34\7\f\2\2\34-\7\33\2\2\35\36\7\r\2\2\36-\7\33\2\2\37-\7\33\2"+
+		"\2 -\7\16\2\2!-\7\17\2\2\"-\7\20\2\2#-\7\21\2\2$-\7\22\2\2%-\7\23\2\2"+
+		"&-\7\24\2\2\'-\7\25\2\2(-\7\26\2\2)-\7\27\2\2*-\7\30\2\2+-\7\31\2\2,\f"+
+		"\3\2\2\2,\16\3\2\2\2,\20\3\2\2\2,\21\3\2\2\2,\22\3\2\2\2,\23\3\2\2\2,"+
+		"\24\3\2\2\2,\25\3\2\2\2,\26\3\2\2\2,\27\3\2\2\2,\31\3\2\2\2,\33\3\2\2"+
+		"\2,\35\3\2\2\2,\37\3\2\2\2, \3\2\2\2,!\3\2\2\2,\"\3\2\2\2,#\3\2\2\2,$"+
+		"\3\2\2\2,%\3\2\2\2,&\3\2\2\2,\'\3\2\2\2,(\3\2\2\2,)\3\2\2\2,*\3\2\2\2"+
+		",+\3\2\2\2-\5\3\2\2\2\4\t,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

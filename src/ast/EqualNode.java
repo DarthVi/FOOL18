@@ -11,6 +11,7 @@ import util.SemanticError;
 import java.util.ArrayList;
 
 public class EqualNode implements INode{
+
     private INode left;
     private INode right;
     private ParserRuleContext ctx;

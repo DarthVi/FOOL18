@@ -1,7 +1,7 @@
-// Generated from C:/Users/Lorenzo/Desktop/src/parser\FOOL.g4 by ANTLR 4.6
+// Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
 package parser;
 
-    import java.util.ArrayList;
+import java.util.HashMap;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -9,371 +9,335 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link FOOLListener},
+ * This class provides an empty implementation of {@link SVMListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class FOOLBaseListener implements FOOLListener {
+public class SVMBaseListener implements SVMListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSingleExp(FOOLParser.SingleExpContext ctx) { }
+	@Override public void enterCode(SVMParser.CodeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSingleExp(FOOLParser.SingleExpContext ctx) { }
+	@Override public void exitCode(SVMParser.CodeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLetInExp(FOOLParser.LetInExpContext ctx) { }
+	@Override public void enterPushNumber(SVMParser.PushNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLetInExp(FOOLParser.LetInExpContext ctx) { }
+	@Override public void exitPushNumber(SVMParser.PushNumberContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassdecExp(FOOLParser.ClassdecExpContext ctx) { }
+	@Override public void enterPushLabel(SVMParser.PushLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassdecExp(FOOLParser.ClassdecExpContext ctx) { }
+	@Override public void exitPushLabel(SVMParser.PushLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLet(FOOLParser.LetContext ctx) { }
+	@Override public void enterPop(SVMParser.PopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLet(FOOLParser.LetContext ctx) { }
+	@Override public void exitPop(SVMParser.PopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVardec(FOOLParser.VardecContext ctx) { }
+	@Override public void enterAdd(SVMParser.AddContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVardec(FOOLParser.VardecContext ctx) { }
+	@Override public void exitAdd(SVMParser.AddContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterArgdec(FOOLParser.ArgdecContext ctx) { }
+	@Override public void enterSub(SVMParser.SubContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitArgdec(FOOLParser.ArgdecContext ctx) { }
+	@Override public void exitSub(SVMParser.SubContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunlet(FOOLParser.FunletContext ctx) { }
+	@Override public void enterMult(SVMParser.MultContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunlet(FOOLParser.FunletContext ctx) { }
+	@Override public void exitMult(SVMParser.MultContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarasm(FOOLParser.VarasmContext ctx) { }
+	@Override public void enterDiv(SVMParser.DivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarasm(FOOLParser.VarasmContext ctx) { }
+	@Override public void exitDiv(SVMParser.DivContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFun(FOOLParser.FunContext ctx) { }
+	@Override public void enterStorew(SVMParser.StorewContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFun(FOOLParser.FunContext ctx) { }
+	@Override public void exitStorew(SVMParser.StorewContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarDeclaration(FOOLParser.VarDeclarationContext ctx) { }
+	@Override public void enterLoadw(SVMParser.LoadwContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarDeclaration(FOOLParser.VarDeclarationContext ctx) { }
+	@Override public void exitLoadw(SVMParser.LoadwContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunDeclaration(FOOLParser.FunDeclarationContext ctx) { }
+	@Override public void enterLabelCol(SVMParser.LabelColContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunDeclaration(FOOLParser.FunDeclarationContext ctx) { }
+	@Override public void exitLabelCol(SVMParser.LabelColContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassdec(FOOLParser.ClassdecContext ctx) { }
+	@Override public void enterBranchLabel(SVMParser.BranchLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassdec(FOOLParser.ClassdecContext ctx) { }
+	@Override public void exitBranchLabel(SVMParser.BranchLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterType(FOOLParser.TypeContext ctx) { }
+	@Override public void enterBranchEqLabel(SVMParser.BranchEqLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitType(FOOLParser.TypeContext ctx) { }
+	@Override public void exitBranchEqLabel(SVMParser.BranchEqLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExp(FOOLParser.ExpContext ctx) { }
+	@Override public void enterBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExp(FOOLParser.ExpContext ctx) { }
+	@Override public void exitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTerm(FOOLParser.TermContext ctx) { }
+	@Override public void enterLabel(SVMParser.LabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTerm(FOOLParser.TermContext ctx) { }
+	@Override public void exitLabel(SVMParser.LabelContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFactor(FOOLParser.FactorContext ctx) { }
+	@Override public void enterJs(SVMParser.JsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFactor(FOOLParser.FactorContext ctx) { }
+	@Override public void exitJs(SVMParser.JsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIntVal(FOOLParser.IntValContext ctx) { }
+	@Override public void enterLoadRa(SVMParser.LoadRaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIntVal(FOOLParser.IntValContext ctx) { }
+	@Override public void exitLoadRa(SVMParser.LoadRaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBoolVal(FOOLParser.BoolValContext ctx) { }
+	@Override public void enterStoreRa(SVMParser.StoreRaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBoolVal(FOOLParser.BoolValContext ctx) { }
+	@Override public void exitStoreRa(SVMParser.StoreRaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNullVal(FOOLParser.NullValContext ctx) { }
+	@Override public void enterLoadRv(SVMParser.LoadRvContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNullVal(FOOLParser.NullValContext ctx) { }
+	@Override public void exitLoadRv(SVMParser.LoadRvContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVoidExp(FOOLParser.VoidExpContext ctx) { }
+	@Override public void enterStoreRv(SVMParser.StoreRvContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVoidExp(FOOLParser.VoidExpContext ctx) { }
+	@Override public void exitStoreRv(SVMParser.StoreRvContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBaseExp(FOOLParser.BaseExpContext ctx) { }
+	@Override public void enterLoadFp(SVMParser.LoadFpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBaseExp(FOOLParser.BaseExpContext ctx) { }
+	@Override public void exitLoadFp(SVMParser.LoadFpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfExp(FOOLParser.IfExpContext ctx) { }
+	@Override public void enterStoreFp(SVMParser.StoreFpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfExp(FOOLParser.IfExpContext ctx) { }
+	@Override public void exitStoreFp(SVMParser.StoreFpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarExp(FOOLParser.VarExpContext ctx) { }
+	@Override public void enterCopyFp(SVMParser.CopyFpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarExp(FOOLParser.VarExpContext ctx) { }
+	@Override public void exitCopyFp(SVMParser.CopyFpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunExp(FOOLParser.FunExpContext ctx) { }
+	@Override public void enterLoadHp(SVMParser.LoadHpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunExp(FOOLParser.FunExpContext ctx) { }
+	@Override public void exitLoadHp(SVMParser.LoadHpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObjInst(FOOLParser.ObjInstContext ctx) { }
+	@Override public void enterStoreHp(SVMParser.StoreHpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObjInst(FOOLParser.ObjInstContext ctx) { }
+	@Override public void exitStoreHp(SVMParser.StoreHpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObjCall(FOOLParser.ObjCallContext ctx) { }
+	@Override public void enterPrint(SVMParser.PrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObjCall(FOOLParser.ObjCallContext ctx) { }
+	@Override public void exitPrint(SVMParser.PrintContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStats(FOOLParser.StatsContext ctx) { }
+	@Override public void enterHalt(SVMParser.HaltContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitStats(FOOLParser.StatsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVarasmStat(FOOLParser.VarasmStatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVarasmStat(FOOLParser.VarasmStatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrintStat(FOOLParser.PrintStatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrintStat(FOOLParser.PrintStatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterIfStat(FOOLParser.IfStatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitIfStat(FOOLParser.IfStatContext ctx) { }
+	@Override public void exitHalt(SVMParser.HaltContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

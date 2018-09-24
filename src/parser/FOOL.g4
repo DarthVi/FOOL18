@@ -45,8 +45,8 @@ type   :  INT
         | ID
       ;
 
-exp    :  ('-')? left=term (operator=(PLUS | MINUS) right=exp)?
-      ;
+exp    : left=term (operator=(PLUS | MINUS) right=exp)? ;
+
 
 term   : left=factor (operator=(TIMES | DIV) right=term)?
       ;
@@ -54,16 +54,16 @@ term   : left=factor (operator=(TIMES | DIV) right=term)?
 factor : left=value (operator=(EQ | GREATER | LQ | GQ | AND | OR | DEQ) right=value)?
       ;
 
-value  :  INTEGER                                     #intVal
-      | optionalNot=NOT? booleanVal=( TRUE | FALSE )  #boolVal
-      | NULL                                          #nullVal
-      | VOID                                          #voidExp
-      | LPAR exp RPAR                                 #baseExp
+value  : (MINUS)?  INTEGER                                        #intVal
+      | optionalNot=NOT? booleanVal=( TRUE | FALSE )            #boolVal
+      | NULL                                                    #nullVal
+      | VOID                                                    #voidExp
+      | (MINUS | NOT)? LPAR exp RPAR                                    #baseExp
       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
-      | ID                                             #varExp
-      | ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
-      | NEW ID LPAR (ID (COMMA ID)* )? RPAR            #objInst
-      | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR          #objCall
+      | (MINUS| NOT)? ID                                             #varExp
+      | (MINUS| NOT)? ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
+      | NEW ID LPAR (ID (COMMA ID)* )? RPAR                        #objInst
+      | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR                      #objCall
       ;
 
 

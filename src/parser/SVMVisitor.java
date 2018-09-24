@@ -111,6 +111,13 @@ public interface SVMVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBranchLessEqLabel(SVMParser.BranchLessEqLabelContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code label}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLabel(SVMParser.LabelContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code js}
 	 * labeled alternative in {@link SVMParser#assembly}.
 	 * @param ctx the parse tree

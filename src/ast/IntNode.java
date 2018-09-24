@@ -1,6 +1,7 @@
 package ast;
 
 import exception.TypeException;
+import parser.FOOLParser;
 import type.IType;
 import type.IntType;
 import util.Environment;
@@ -11,9 +12,12 @@ import java.util.ArrayList;
 public class IntNode implements INode {
 
   private Integer val;
+  private FOOLParser.IntValContext ctx;
   
-  public IntNode(Integer n) {
-    val=n;
+  public IntNode(Integer n, FOOLParser.IntValContext ctx) {
+      val=n;
+      this.ctx = ctx;
+      if((ctx.getChild(0).toString().equalsIgnoreCase( "-"))) val=-val;         //if int value is preceded by "-"
   }
 
   @Override
@@ -33,7 +37,9 @@ public class IntNode implements INode {
  	}
   
   public String codeGeneration() {
-	return "push "+val+"\n";
+
+
+      return "push "+val+"\n";
   }
 
 }  

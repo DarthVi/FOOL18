@@ -40,6 +40,7 @@ public class DivNode implements INode {
 
     @Override
     public String codeGeneration() {
+
         return left.codeGeneration() +
                 right.codeGeneration() +
                 "div\n";

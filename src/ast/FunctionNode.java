@@ -82,6 +82,8 @@ public class FunctionNode implements INode
         }
 
         String fun = FOOLlib.freshFunLabel();
+
+
         FOOLlib.insertfun(fun + ":\n" +
                 "cfp\n" + //setta $fp a $sp
                 "lra\n" + //inserimento return address
@@ -96,6 +98,8 @@ public class FunctionNode implements INode
                 "lrv\n" + // risultato della funzione sullo stack
                 "lra\n" + "js\n" // salta a $ra
         );
+
+
 
         return "push " + fun + "\n";
     }
@@ -130,13 +134,22 @@ public class FunctionNode implements INode
         //to allow mutual recursion. We only need to add infos about formal parameters
         //and declarations
 
+
         env.addHashMap();
-        env.offset = -2;
+
+        int savedOffset = env.offset;  //salvato offset della dichiarazione di funzione, per ripristinarlo dopo
+        env.offset = 1;                //l'offset dei parametri formali inizia da 1.
+
+
 
         // Parametri formali
         for (FormalParamNode param : params) {
             errors.addAll(param.checkSemantics(env));
         }
+
+        env.offset=-2;                 // offset delle dichiarazioni locali
+
+
         // Variabili locali
         for (INode dec : decs){
             errors.addAll(dec.checkSemantics(env));
@@ -146,7 +159,8 @@ public class FunctionNode implements INode
         env.removeLastHashMap();
 
         //TODO: check if we need to reset the offset of the environment
-        //env.offset = 0;
+
+        env.offset = savedOffset-1;
 
         // TODO controllare che funzioni per classi e oggetti
         return errors;

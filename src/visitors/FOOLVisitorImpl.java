@@ -71,20 +71,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     {
         boolean value;
 
-        /*
-         * if we do not have the "not" prefix, we can simply get the boolean value.
-         * Otherwise we must convert the value into the opposite one (true to false and false to true).
-         *
-         * We can do this by checking if the booleanVal text is equal to the literal name chosen for the TRUE token.
-         * If that's the case, we have "not true", which must be transformed in false. Likewise if we have "not false",
-         * we must transform it in true. For this reason the assignment expression in the else branch has a "!"
-         */
-        if(ctx.optionalNot == null)
-            value = Boolean.parseBoolean(ctx.booleanVal.getText());
-        else
-            value = !ctx.booleanVal.getText().equals(FOOLParser.VOCABULARY.getLiteralName(FOOLParser.TRUE));
+        value = Boolean.parseBoolean(ctx.booleanVal.getText());
 
-        return new BoolNode(value);
+        return new BoolNode(value,ctx);
     }
 
     @SuppressWarnings("Duplicates")
@@ -337,7 +326,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitBaseExp(FOOLParser.BaseExpContext ctx)
     {
-        return visit(ctx.exp());
+        return new BaseExpNode(ctx, visit(ctx.exp()));
     }
 
     @Override

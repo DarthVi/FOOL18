@@ -26,5 +26,4 @@ public class FOOLlib {
         return funCode;
     }
 
-
 }
