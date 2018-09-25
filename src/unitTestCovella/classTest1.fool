@@ -1,7 +1,7 @@
 class Pippo (bool postazione; int portatili)
 {
     int f(int x, int y)
-        x + y
+        x + y;
 
 
 }

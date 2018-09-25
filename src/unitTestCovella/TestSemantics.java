@@ -162,11 +162,11 @@ public class TestSemantics
     @Test
     public void testFunctionDefinitionAndCallSemantics()
     {
-        String code = "let" +
-                "   int foo(int a) let bool flag; in a + 2;" +
-                "   int c;" +
-                "in" +
-                "   foo(2);";
+        String code = "let\n" +
+                "   int foo(int a) let bool flag; in a + 2;\n" +
+                "   int c;\n" +
+                "in\n" +
+                "   foo(2);\n";
 
         try
         {

@@ -17,18 +17,18 @@ prog   : exp SEMIC                                  #singleExp
        | classdec+ (let (exp SEMIC | stats))?       #classdecExp
        ;
 
-let       : LET (dec SEMIC)+ IN ;
+let       : LET dec+ IN ;
 
-vardec  : type ID (ASM exp)?;
+vardec  : type ID (ASM exp)? SEMIC;
 
 argdec : type ID;
 
-funlet  : LET (vardec SEMIC)+ IN ;
+funlet  : LET vardec+ IN ;
 
 varasm     : ID ASM exp ;
 
 // funlet serve ad evitare di usare let, il quale permetterebbe di avere funzioni annidate
-fun    : type ID LPAR ( argdec ( COMMA argdec)* )? RPAR (funlet)? (exp | stats) ;
+fun    : type ID LPAR ( argdec ( COMMA argdec)* )? RPAR (funlet)? (exp SEMIC | stats) ;
 
 dec   : vardec           #varDeclaration
       | fun              #funDeclaration
