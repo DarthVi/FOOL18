@@ -162,7 +162,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         INode body;
 
-        if(ctx.exp().isEmpty())
+        if(ctx.exp() == null)
             body = visit(ctx.stats());
         else
             body = visit(ctx.exp());
@@ -277,6 +277,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
        return new VarNode(varName, exp, ctx);
     }
 
+
     @Override
     public INode visitLetInExp(FOOLParser.LetInExpContext ctx)
     {
@@ -380,5 +381,44 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         ClassType classType = new ClassType(classToken.getText(), classMembers, classMethods);
 
         return new ClassDecNode(classType, parentString, memberNodes, methodNodes, ctx);
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Override
+    public INode visitClassdecExp(FOOLParser.ClassdecExpContext ctx)
+    {
+        ArrayList<ClassDecNode> classdecs = new ArrayList<>();
+
+        for(FOOLParser.ClassdecContext cd : ctx.classdec())
+        {
+            ClassDecNode cn = (ClassDecNode) visit(cd);
+            classdecs.add(cn);
+        }
+
+        ArrayList<INode> declarations = new ArrayList<>();
+
+        for(FOOLParser.DecContext dc : ctx.let().dec())
+        {
+            declarations.add(visit(dc));
+        }
+
+        LetNode letNode = new LetNode(declarations, ctx);
+        INode exp = null;
+        ArrayList<INode> statements = new ArrayList<>();
+
+        if(ctx.exp() != null)
+            exp = visit(ctx.exp());
+        else
+        {
+            for(FOOLParser.StatContext sc : ctx.stats().stat())
+            {
+                INode stat = visit(sc);
+                statements.add(stat);
+            }
+        }
+
+        ClassdecProgLetInNode res = new ClassdecProgLetInNode(classdecs, letNode, exp, statements);
+
+        return res;
     }
 }

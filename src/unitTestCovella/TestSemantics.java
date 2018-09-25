@@ -332,6 +332,37 @@ public class TestSemantics
         }
     }
 
+    @Test
+    public void simpleParentChildClassdec()
+    {
+        String filePath = "src/unitTestCovella/classTest2.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        }
+        catch (LexerException e)
+        {
+            fail("LexerException thrown with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException thrown with valid code");
+        } catch (SemanticException e)
+        {
+            System.out.println(e.getMessage());
+            fail("SemanticException thrown with valid code");
+        } catch (TypeException e)
+        {
+            fail("TypeException thrown with valid code");
+        } catch (IOException e)
+        {
+            fail("File opening failed");
+        }
+    }
+
     public String getStringFromFile(String path) throws IOException
     {
         StringBuilder sb = new StringBuilder(1024);
