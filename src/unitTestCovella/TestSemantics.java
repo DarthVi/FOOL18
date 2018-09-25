@@ -8,9 +8,10 @@ import exception.TypeException;
 import org.junit.Before;
 import org.junit.Test;
 import type.IType;
-import util.Environment;
 import util.SemanticError;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
@@ -300,5 +301,48 @@ public class TestSemantics
         {
             fail("SemanticException thrown with valid code");
         }
+    }
+
+    @Test
+    public void simpleCorrectClassdec()
+    {
+        String filePath = "src/unitTestCovella/classTest1.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        } catch (IOException e)
+        {
+            fail("File opening failed");
+        } catch (LexerException e)
+        {
+            fail("Lexer error with valid code");
+        } catch (TypeException e)
+        {
+            fail("Type error with valid code");
+        } catch (SemanticException e)
+        {
+            fail("SemanticException with valid code");
+        } catch (ParserException e)
+        {
+            fail("ParserException with valid code");
+        }
+    }
+
+    public String getStringFromFile(String path) throws IOException
+    {
+        StringBuilder sb = new StringBuilder(1024);
+
+        InputStream is = new FileInputStream(path);
+        Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+        int c = 0;
+        while ((c = r.read()) != -1) {
+            sb.append((char) c);
+        }
+
+        return sb.toString();
     }
 }

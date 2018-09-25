@@ -35,7 +35,7 @@ dec   : vardec           #varDeclaration
       ;
 
 classdec    : CLASS ID (EXTENDS ID)? (LPAR argdec (SEMIC argdec)* RPAR)?
-              (CLPAR fun (SEMIC fun)* CRPAR)? ;
+              (CLPAR fun* CRPAR)? ;
 
 
 type   :  INT
@@ -67,9 +67,9 @@ value  : (MINUS)?  INTEGER                                        #intVal
       ;
 
 
-stats:  (stat SEMIC)+ ;
+stats:  (stat)+ ;
 
-stat:   varasm  #varasmStat
+stat:   varasm SEMIC  #varasmStat
         | PRINT LPAR exp RPAR #printStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat
         ;
