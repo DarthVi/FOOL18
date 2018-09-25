@@ -99,15 +99,14 @@ public class ClassDecNode implements INode
 
         try
         {
-            if(classType.getParent() == null)
+            if(this.parentStr == null)
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
             else
             {
                 ClassType parentType = null;
 
                 //we check if the declared parent exists, otherwise the method throws an exception
-                if(this.parentStr != null)
-                    parentType = env.getClassType(((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol());
+                parentType = env.getClassType(((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol());
 
                 this.classType.setParent(parentType);
 
@@ -146,13 +145,16 @@ public class ClassDecNode implements INode
                     currentParent = currentParent.getParent();
                 }
 
+                List<String> allMembersStringList =
+                        allMembers.stream().map(MemberNode::getId).collect(Collectors.toList());
+
                 //checking that we are not overriding members, if not we add them to the member list
                 //containing ALL the members
                 for(MemberNode memberNode : members)
                 {
                     String varName = memberNode.getId();
 
-                    if(classType.getClassMembers().containsKey(varName))
+                    if(allMembersStringList.contains(varName))
                         throw new ClassMemberOverridingException(memberNode.getCtx().ID().getSymbol());
 
                     allMembers.add(memberNode);
@@ -235,7 +237,7 @@ public class ClassDecNode implements INode
         classType.setDftIndex(currentClassDftIndex);
 
         //we need the collection made up of overriddenMethods string to ease up some operations
-        //in line 236
+        //in line 255
         List<String> overriddenString =
                 overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
 
