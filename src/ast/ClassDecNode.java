@@ -20,8 +20,6 @@ public class ClassDecNode implements INode
     //members declared in this class
     private ArrayList<MemberNode> members;
     private ArrayList<MethodNode> methods;
-    //members declared in this class + its parent
-    private ArrayList<MemberNode> allMembers;
     //private DTableEntry virtualFunctionTable;
 
     public ClassDecNode(ClassType classType, String parentStr, ArrayList<MemberNode> members,
@@ -32,7 +30,6 @@ public class ClassDecNode implements INode
         this.members = members;
         this.methods = methods;
         this.ctx = ctx;
-        this.allMembers = new ArrayList<>();
     }
 
 
@@ -95,7 +92,7 @@ public class ClassDecNode implements INode
     {
         ArrayList<SemanticError> errors = new ArrayList<>();
 
-        ArrayList<MemberNode> allMembers = new ArrayList<>();
+        ArrayList<MemberNode> allParentMembers = new ArrayList<>();
 
         try
         {
@@ -107,7 +104,6 @@ public class ClassDecNode implements INode
                 //and comments for details
                 buildDftTable(new ArrayList<>(), this.methods, null, env);
 
-                this.allMembers = this.members;
             }
             else
             {
@@ -125,22 +121,35 @@ public class ClassDecNode implements INode
 
                 ArrayList<MethodNode> overriddenMethods = new ArrayList<>();
 
-                //we must retrieve the parent members going up through the parent chain
-                //we also must retrieve overridden methods
-                while(currentParent != null)
+                //we must check that the constructor has all the members of the parent
+                for(Object o : currentParent.getClassMembers().values())
                 {
-                    if (!currentParent.getClassMembers().values().isEmpty())
+                    ClassMember parentMember = (ClassMember) o;
+
+                    if(!this.members.stream().map(MemberNode::getId).collect(Collectors.toList()).contains(
+                            parentMember.getMemberID()))
                     {
-                        for (Object o : classType.getParent().getClassMembers().values())
+                        throw new MissingMemberException(((FOOLParser.ClassdecContext) (ctx)).
+                                ID(0).getSymbol(), ((FOOLParser.ClassdecContext) (ctx)).
+                                ID(0).getSymbol().getText(), parentMember.getMemberID());
+                    }
+                    else
+                    {
+                        ClassMember childMember = (ClassMember) this.classType.getClassMembers()
+                                .get(parentMember.getMemberID());
+
+                        //checking that the subclass correctly use the type of the parent member without overriding it
+                        if(!childMember.getType().toString().equals(parentMember.getType().toString()))
                         {
-                            ClassMember cm = (ClassMember) o;
-
-                            MemberNode memberNode = new MemberNode(cm.getMemberID(), cm.getType(),  (FOOLParser.ArgdecContext) cm.getCtx());
-
-                            allMembers.add(memberNode);
+                            throw new ClassMemberOverridingException(((FOOLParser.ClassdecContext) (ctx)).
+                                    ID(0).getSymbol());
                         }
                     }
+                }
 
+                //we must retrieve parent methods going up through the parent chain
+                while(currentParent != null)
+                {
                     //get overridden methods
                     overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
 
@@ -152,29 +161,10 @@ public class ClassDecNode implements INode
                     currentParent = currentParent.getParent();
                 }
 
-                List<String> allMembersStringList =
-                        allMembers.stream().map(MemberNode::getId).collect(Collectors.toList());
-
-                //checking that we are not overriding members, if not we add them to the member list
-                //containing ALL the members
-                for(MemberNode memberNode : members)
-                {
-                    String varName = memberNode.getId();
-
-                    if(allMembersStringList.contains(varName))
-                        throw new ClassMemberOverridingException(memberNode.getCtx().ID().getSymbol());
-
-                    allMembers.add(memberNode);
-
-
-                }
-
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(),
                         ((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol(),
                         classType);
 
-
-                this.allMembers = allMembers;
 
                 //building the DFT (dispatch function table) of this class, check function javadoc
                 //and comments for details
@@ -187,7 +177,7 @@ public class ClassDecNode implements INode
             env.addHashMap();
             //calling the checkSemantics on members: we need this to populate the symbol table and allow
             //class methods to see the class members
-            for(MemberNode md : this.allMembers)
+            for(MemberNode md : this.members)
                 errors.addAll(md.checkSemantics(env));
 
             //In order to be able tu use mutual recursion,
@@ -216,7 +206,8 @@ public class ClassDecNode implements INode
         }catch (ClassAlreadyDefinedException
                 | UndeclaredClassException
                 | ClassMemberOverridingException
-                | MethodAlreadyDefinedException e)
+                | MethodAlreadyDefinedException
+                | MissingMemberException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }

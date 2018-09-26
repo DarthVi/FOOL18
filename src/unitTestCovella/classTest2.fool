@@ -4,7 +4,7 @@ class Pippo (bool postazione; int portatili)
         x + y;
 }
 
-class Pluto extends Pippo (int quaderno)
+class Pluto extends Pippo (bool postazione; int portatili; int quaderno)
 {
     void g(bool val)
         let

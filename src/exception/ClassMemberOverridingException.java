@@ -4,16 +4,16 @@ import org.antlr.v4.runtime.Token;
 
 public class ClassMemberOverridingException extends CompileException
 {
-    private String varName;
+    private String className;
 
     public ClassMemberOverridingException(Token token)
     {
         super(token);
-        this.varName = token.getText();
+        this.className = token.getText();
     }
 
     @Override
     public String getMessage() {
-        return line + ":" + column + " member overriding forbidden: <" + varName + ">";
+        return line + ":" + column + " overriding type member is forbidden in class: <" + className + ">";
     }
 }

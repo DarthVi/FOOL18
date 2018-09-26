@@ -116,6 +116,6 @@ public class ClassType implements IType
     @Override
     public String toString()
     {
-        return "Class={className = " + this.className + ", parent = " + this.parent.getClassName() + "}";
+        return this.className;
     }
 }
