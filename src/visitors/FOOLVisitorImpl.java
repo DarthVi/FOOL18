@@ -388,6 +388,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     public INode visitClassdecExp(FOOLParser.ClassdecExpContext ctx)
     {
         ArrayList<ClassDecNode> classdecs = new ArrayList<>();
+        LetNode letNode = null;
+        INode exp = null;
+        ArrayList<INode> statements = new ArrayList<>();
 
         for(FOOLParser.ClassdecContext cd : ctx.classdec())
         {
@@ -397,23 +400,24 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         ArrayList<INode> declarations = new ArrayList<>();
 
-        for(FOOLParser.DecContext dc : ctx.let().dec())
+        if(ctx.let() != null)
         {
-            declarations.add(visit(dc));
-        }
-
-        LetNode letNode = new LetNode(declarations, ctx);
-        INode exp = null;
-        ArrayList<INode> statements = new ArrayList<>();
-
-        if(ctx.exp() != null)
-            exp = visit(ctx.exp());
-        else
-        {
-            for(FOOLParser.StatContext sc : ctx.stats().stat())
+            for (FOOLParser.DecContext dc : ctx.let().dec())
             {
-                INode stat = visit(sc);
-                statements.add(stat);
+                declarations.add(visit(dc));
+            }
+
+            letNode = new LetNode(declarations, ctx);
+
+            if (ctx.exp() != null)
+                exp = visit(ctx.exp());
+            else
+            {
+                for (FOOLParser.StatContext sc : ctx.stats().stat())
+                {
+                    INode stat = visit(sc);
+                    statements.add(stat);
+                }
             }
         }
 
