@@ -363,6 +363,29 @@ public class TestSemantics
         }
     }
 
+    @Test
+    @SuppressWarnings("Duplicates")
+    public void incorrect3ClassdecHierarchyMissingMember()
+    {
+        String filePath = "src/unitTestCovella/classTest3.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        }
+        catch (LexerException | ParserException | TypeException | IOException e)
+        {
+            fail("Incorrect exception thrown");
+        } catch (SemanticException e)
+        {
+            assertEquals(1, e.errors.size());
+            assertEquals("16:6 missing member <portatili> in class: <Paperino>", e.errors.get(0).msg);
+        }
+    }
+
     public String getStringFromFile(String path) throws IOException
     {
         StringBuilder sb = new StringBuilder(1024);
