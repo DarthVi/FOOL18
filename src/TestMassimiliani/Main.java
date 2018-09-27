@@ -1,13 +1,7 @@
 package TestMassimiliani;
 
-<<<<<<< HEAD
 import org.antlr.v4.runtime.CodePointCharStream;
 import parser.*;
-=======
-import org.antlr.v4.runtime.tree.ParseTree;
-import parser.SVMLexer;
-import parser.SVMParser;
->>>>>>> master
 import visitors.FunctionVisitor;
 import ast.INode;
 import exception.LexerException;
@@ -17,11 +11,6 @@ import exception.TypeException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-<<<<<<< HEAD
-=======
-import parser.FOOLLexer;
-import parser.FOOLParser;
->>>>>>> master
 import type.IType;
 import util.Environment;
 import util.SemanticError;
@@ -41,15 +30,10 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-<<<<<<< HEAD
 
             String fileName = "test1.fool";
             CharStream input = CharStreams.fromFileName("TestMassimiliani/" +fileName);
 
-=======
-            String fileName = "src/TestMassimiliani/test4.fool";
-            CharStream input = CharStreams.fromFileName(fileName);
->>>>>>> master
 
             //LEXER
             FOOLLexer lexer = new FOOLLexer(input);
@@ -76,20 +60,10 @@ public class Main {
 
             Environment env = funVisitor.getEnvironment();
 
-<<<<<<< HEAD
             FOOLVisitor<INode> visitor = new FOOLVisitorImpl();
 
             INode ast = (INode) visitor.visit(progContext);
 
-=======
-
-
-            FOOLVisitorImpl visitor = new FOOLVisitorImpl();
-
-            INode ast = (INode) visitor.visit(progContext);
-
-
->>>>>>> master
             ArrayList<SemanticError> errors = ast.checkSemantics(env);
             if (errors.size() > 0) throw new SemanticException(errors);
             System.out.println("\n...END SEMANTIC ANALYSIS");
@@ -103,7 +77,6 @@ public class Main {
             //CODE GENERATION
             System.out.println("BEGIN CODE GENERATION...");
             String code = ast.codeGeneration();
-<<<<<<< HEAD
           //  code += "halt";                                            //to stop execution
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
@@ -134,43 +107,6 @@ public class Main {
             //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);
             //System.out.println();
             //vm.cpu();
-=======
-            code += "halt";                                            //to stop execution
-            System.out.println(code);
-            System.out.println("END CODE GENERATION...\n");
-
-
-
-            BufferedWriter out = new BufferedWriter(new FileWriter("src/TestMassimiliani/test.fool.asm"));
-            out.write(code);
-            out.close();
-
-
-            //CODE EXECUTION
-            CharStream isASM = CharStreams.fromFileName("src/TestMassimiliani/test.fool.asm");
-            SVMLexer lexerASM = new SVMLexer(isASM);
-            System.out.println(isASM);
-
-            CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
-            SVMParser parserASM = new SVMParser(tokensASM);
-            SVMParser.CodeContext codeContext = parserASM.code() ;
-
-            SVMVisitor svmVisitor = new SVMVisitor();
-            svmVisitor.visit(codeContext);
-            ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
-            System.out.println();
-            vm.cpu();
-
-
-
-
-
-
-          //  ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
-            //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);
-          //  System.out.println();
-            // vm.cpu();
->>>>>>> master
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException  e ) {
             System.out.println(e.getMessage());

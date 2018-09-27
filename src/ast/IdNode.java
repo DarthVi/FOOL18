@@ -30,7 +30,6 @@ public class IdNode implements INode
         this.varName = varName;
         this.entry = null;
         this.ctx = ctx;
-        System.out.println("\n\n\n B;" + ctx.getParent().getParent().getChild(0).getText());
         if (ctx.getChild(0).toString().equalsIgnoreCase( "-")) extra = 1;
         else if ((ctx.getChild(0).toString().equalsIgnoreCase( "not"))) extra = 2;
         else extra = 0;

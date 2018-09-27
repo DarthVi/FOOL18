@@ -1,38 +1,34 @@
 package ast;
 
-<<<<<<< HEAD
-import org.antlr.v4.runtime.ParserRuleContext;
-=======
 import exception.TypeException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLParser;
+import type.ClassType;
 import type.FunctionType;
->>>>>>> master
 import type.IType;
+import util.Environment;
+import util.SemanticError;
 
 import java.util.ArrayList;
 
 public class MethodNode extends FunctionNode
 {
-<<<<<<< HEAD
-    public MethodNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
-=======
+    //index to the dispatch function table in which this method is located
+    private ClassType classType;
+
     public MethodNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs,
                       INode body, ParserRuleContext ctx)
->>>>>>> master
     {
         super(id, type, params, decs, body, ctx);
     }
 
-<<<<<<< HEAD
-=======
     public MethodNode(FunctionNode fn)
     {
         super(fn.id, fn.decReturnType, fn.params, fn.decs, fn.body, fn.ctx);
         this.fType = fn.fType;
     }
 
->>>>>>> master
     public String getId()
     {
         return this.id;
@@ -44,8 +40,6 @@ public class MethodNode extends FunctionNode
         return (obj instanceof MethodNode && this.id.equals(((MethodNode) (obj)).id));
     }
 
-<<<<<<< HEAD
-=======
     public IType getDeclaredReturnType()
     {
         return this.decReturnType;
@@ -64,12 +58,62 @@ public class MethodNode extends FunctionNode
         return new FunctionType(decReturnType, paramTypes);
     }
 
+
     public ParserRuleContext getCtx()
     {
         return this.ctx;
     }
 
 
->>>>>>> master
-    //TODO: see what's to override among codegen, checksemantics and typecheck
+    public ClassType getClassType()
+    {
+        return classType;
+    }
+
+
+    public void setClassType(ClassType classType)
+    {
+        this.classType = classType;
+    }
+
+
+    @Override
+    public String codeGeneration() {
+        StringBuilder declCode = new StringBuilder();
+        if (decs != null)
+            for (INode dec : decs)
+                declCode.append(dec.codeGeneration());
+
+        StringBuilder popDecl = new StringBuilder();
+        if (decs != null)
+            for (INode dec : decs)
+                popDecl.append("pop\n");
+
+        StringBuilder popParl = new StringBuilder();
+        for (INode dec : params)
+            popParl.append("pop\n");
+
+        String funl = FOOLlib.freshFunLabel();
+        FOOLlib.insertfun(funl
+                + ":\n"
+                + "cfp\n"                   //setta $fp a $sp
+                + "lra\n"                   //inserimento return address
+                + declCode                  //inserimento dichiarazioni locali
+                + body.codeGeneration()
+                + "srv\n"                   //pop del return value
+                + popDecl
+                + "sra\n"                   // pop del return address
+                + "pop\n"                   // pop di AL
+                + popParl
+                + "sfp\n"                   // setto $fp a valore del CL
+                + "lrv\n"                   // risultato della funzione sullo stack
+                + "lra\n"
+                +"js\n"                      // salta a $ra
+        );
+
+        return funl + "\n";
+    }
+
+
+    //TODO: see what's to override among  checksemantics and typecheck
 }

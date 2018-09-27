@@ -14,7 +14,7 @@ push function7
 lfp
 push 5
 lfp
-push -12
+push -10
 lfp
 add
 lw

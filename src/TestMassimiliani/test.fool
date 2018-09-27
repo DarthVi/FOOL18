@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-0-2;
-=======
 let
     int x= 12;
     int y=
 in
     f();
->>>>>>> master
