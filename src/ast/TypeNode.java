@@ -1,8 +1,7 @@
 package ast;
 
 import exception.TypeException;
-import exception.UndeclaredVariableException;
-import org.antlr.runtime.CommonToken;
+import exception.UndeclaredClassException;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
 import util.SemanticError;
@@ -53,8 +52,8 @@ public class TypeNode implements INode {
         {
             try
             {
-                this.type = env.getEntry(this.token).getType();
-            } catch (UndeclaredVariableException e)
+                this.type = env.getClassType(this.token);
+            } catch (UndeclaredClassException e)
             {
                 res.add(new SemanticError(e.getMessage() +" Class '" + declaredType + "' does not exist"));
             }

@@ -15,12 +15,21 @@ public class FunctionNode implements INode
 {
 
     protected String id;
+<<<<<<< HEAD
     private IType decReturnType;
     private ArrayList<FormalParamNode> params;
     private ArrayList<INode> decs;
     private INode body;
     private FunctionType fType;
     private ParserRuleContext ctx;
+=======
+    protected IType decReturnType;
+    protected ArrayList<FormalParamNode> params;
+    protected ArrayList<INode> decs;
+    protected INode body;
+    protected FunctionType fType;
+    protected ParserRuleContext ctx;
+>>>>>>> master
 
     public FunctionNode(String id, IType type, ArrayList<FormalParamNode> params, ArrayList<INode> decs, INode body, ParserRuleContext ctx)
     {
@@ -82,8 +91,11 @@ public class FunctionNode implements INode
         }
 
         String fun = FOOLlib.freshFunLabel();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
         FOOLlib.insertfun(fun + ":\n" +
                 "cfp\n" + //setta $fp a $sp
                 "lra\n" + //inserimento return address
@@ -99,8 +111,11 @@ public class FunctionNode implements INode
                 "lra\n" + "js\n" // salta a $ra
         );
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
         return "push " + fun + "\n";
     }
 
@@ -135,7 +150,10 @@ public class FunctionNode implements INode
         //we already have functions' signature entries because of the first pass done in order
         //to allow mutual recursion. We only need to add infos about formal parameters
         //and declarations
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
         env.addHashMap();
 
@@ -161,8 +179,12 @@ public class FunctionNode implements INode
         env.removeLastHashMap();
 
         //TODO: check if we need to reset the offset of the environment
+<<<<<<< HEAD
 
         env.offset = savedOffset-1;
+=======
+        //env.offset = 0;
+>>>>>>> master
 
         // TODO controllare che funzioni per classi e oggetti
         return errors;

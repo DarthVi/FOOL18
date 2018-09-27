@@ -11,6 +11,14 @@ public class MemberNode extends FormalParamNode
         super(id, type, true, ctx);
     }
 
+<<<<<<< HEAD
+=======
+    public MemberNode(FormalParamNode fn)
+    {
+        super(fn.id, fn.type, fn.isAttribute, fn.ctx);
+    }
+
+>>>>>>> master
     @Override
     public String toString()
     {
@@ -21,4 +29,12 @@ public class MemberNode extends FormalParamNode
     {
         return (FOOLParser.ArgdecContext) super.ctx;
     }
+<<<<<<< HEAD
+=======
+
+    public IType getType()
+    {
+        return this.type;
+    }
+>>>>>>> master
 }

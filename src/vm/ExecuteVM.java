@@ -104,7 +104,10 @@ public class ExecuteVM {
                     System.out.println((virtualMachine.sp<virtualMachine.MEMSIZE)?virtualMachine.memory[virtualMachine.sp]:"Empty stack!");
                     break;
                 case SVMParser.HALT :
+<<<<<<< HEAD
                     System.out.println((virtualMachine.sp<virtualMachine.MEMSIZE)?virtualMachine.memory[virtualMachine.sp]:"Empty stack!"); //only debug
+=======
+>>>>>>> master
                     return;
             }
         }

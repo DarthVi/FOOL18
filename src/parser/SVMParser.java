@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
+=======
+// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/SVM.g4 by ANTLR 4.7
+>>>>>>> master
 package parser;
 
 import java.util.HashMap;
@@ -14,7 +18,11 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class SVMParser extends Parser {
+<<<<<<< HEAD
 	static { RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION); }
+=======
+	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
+>>>>>>> master
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -102,6 +110,7 @@ public class SVMParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_code; }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterCode(this);
 		}
@@ -110,6 +119,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitCode(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitCode(this);
 			else return visitor.visitChildren(this);
@@ -165,6 +176,7 @@ public class SVMParser extends Parser {
 		public TerminalNode STORERA() { return getToken(SVMParser.STORERA, 0); }
 		public StoreRaContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterStoreRa(this);
 		}
@@ -173,6 +185,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitStoreRa(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitStoreRa(this);
 			else return visitor.visitChildren(this);
@@ -182,6 +196,7 @@ public class SVMParser extends Parser {
 		public TerminalNode SUB() { return getToken(SVMParser.SUB, 0); }
 		public SubContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterSub(this);
 		}
@@ -190,6 +205,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitSub(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitSub(this);
 			else return visitor.visitChildren(this);
@@ -199,6 +216,7 @@ public class SVMParser extends Parser {
 		public TerminalNode MULT() { return getToken(SVMParser.MULT, 0); }
 		public MultContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterMult(this);
 		}
@@ -207,6 +225,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitMult(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitMult(this);
 			else return visitor.visitChildren(this);
@@ -216,6 +236,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LOADFP() { return getToken(SVMParser.LOADFP, 0); }
 		public LoadFpContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterLoadFp(this);
 		}
@@ -224,6 +245,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitLoadFp(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLoadFp(this);
 			else return visitor.visitChildren(this);
@@ -235,6 +258,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
 		public BranchLessEqLabelContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterBranchLessEqLabel(this);
 		}
@@ -243,6 +267,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitBranchLessEqLabel(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitBranchLessEqLabel(this);
 			else return visitor.visitChildren(this);
@@ -252,6 +278,7 @@ public class SVMParser extends Parser {
 		public TerminalNode JS() { return getToken(SVMParser.JS, 0); }
 		public JsContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterJs(this);
 		}
@@ -260,6 +287,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitJs(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitJs(this);
 			else return visitor.visitChildren(this);
@@ -271,6 +300,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
 		public BranchEqLabelContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterBranchEqLabel(this);
 		}
@@ -279,6 +309,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitBranchEqLabel(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitBranchEqLabel(this);
 			else return visitor.visitChildren(this);
@@ -288,6 +320,7 @@ public class SVMParser extends Parser {
 		public TerminalNode POP() { return getToken(SVMParser.POP, 0); }
 		public PopContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterPop(this);
 		}
@@ -296,6 +329,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitPop(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitPop(this);
 			else return visitor.visitChildren(this);
@@ -305,6 +340,7 @@ public class SVMParser extends Parser {
 		public TerminalNode DIV() { return getToken(SVMParser.DIV, 0); }
 		public DivContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterDiv(this);
 		}
@@ -313,6 +349,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitDiv(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitDiv(this);
 			else return visitor.visitChildren(this);
@@ -324,6 +362,7 @@ public class SVMParser extends Parser {
 		public TerminalNode NUMBER() { return getToken(SVMParser.NUMBER, 0); }
 		public PushNumberContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterPushNumber(this);
 		}
@@ -332,6 +371,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitPushNumber(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitPushNumber(this);
 			else return visitor.visitChildren(this);
@@ -343,6 +384,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
 		public LabelColContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterLabelCol(this);
 		}
@@ -351,6 +393,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitLabelCol(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLabelCol(this);
 			else return visitor.visitChildren(this);
@@ -360,6 +404,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LOADHP() { return getToken(SVMParser.LOADHP, 0); }
 		public LoadHpContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterLoadHp(this);
 		}
@@ -368,6 +413,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitLoadHp(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLoadHp(this);
 			else return visitor.visitChildren(this);
@@ -377,6 +424,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LOADRV() { return getToken(SVMParser.LOADRV, 0); }
 		public LoadRvContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterLoadRv(this);
 		}
@@ -385,6 +433,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitLoadRv(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLoadRv(this);
 			else return visitor.visitChildren(this);
@@ -394,6 +444,7 @@ public class SVMParser extends Parser {
 		public TerminalNode COPYFP() { return getToken(SVMParser.COPYFP, 0); }
 		public CopyFpContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterCopyFp(this);
 		}
@@ -402,6 +453,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitCopyFp(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitCopyFp(this);
 			else return visitor.visitChildren(this);
@@ -411,6 +464,7 @@ public class SVMParser extends Parser {
 		public TerminalNode ADD() { return getToken(SVMParser.ADD, 0); }
 		public AddContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterAdd(this);
 		}
@@ -419,6 +473,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitAdd(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitAdd(this);
 			else return visitor.visitChildren(this);
@@ -428,6 +484,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LOADRA() { return getToken(SVMParser.LOADRA, 0); }
 		public LoadRaContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterLoadRa(this);
 		}
@@ -436,6 +493,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitLoadRa(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLoadRa(this);
 			else return visitor.visitChildren(this);
@@ -447,6 +506,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
 		public PushLabelContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterPushLabel(this);
 		}
@@ -455,6 +515,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitPushLabel(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitPushLabel(this);
 			else return visitor.visitChildren(this);
@@ -464,6 +526,7 @@ public class SVMParser extends Parser {
 		public TerminalNode STOREW() { return getToken(SVMParser.STOREW, 0); }
 		public StorewContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterStorew(this);
 		}
@@ -472,11 +535,14 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitStorew(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitStorew(this);
 			else return visitor.visitChildren(this);
 		}
 	}
+<<<<<<< HEAD
 	public static class LabelContext extends AssemblyContext {
 		public Token l;
 		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
@@ -495,10 +561,13 @@ public class SVMParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+=======
+>>>>>>> master
 	public static class HaltContext extends AssemblyContext {
 		public TerminalNode HALT() { return getToken(SVMParser.HALT, 0); }
 		public HaltContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterHalt(this);
 		}
@@ -507,6 +576,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitHalt(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitHalt(this);
 			else return visitor.visitChildren(this);
@@ -516,6 +587,7 @@ public class SVMParser extends Parser {
 		public TerminalNode PRINT() { return getToken(SVMParser.PRINT, 0); }
 		public PrintContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterPrint(this);
 		}
@@ -524,6 +596,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitPrint(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitPrint(this);
 			else return visitor.visitChildren(this);
@@ -533,6 +607,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LOADW() { return getToken(SVMParser.LOADW, 0); }
 		public LoadwContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterLoadw(this);
 		}
@@ -541,6 +616,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitLoadw(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitLoadw(this);
 			else return visitor.visitChildren(this);
@@ -550,6 +627,7 @@ public class SVMParser extends Parser {
 		public TerminalNode STORERV() { return getToken(SVMParser.STORERV, 0); }
 		public StoreRvContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterStoreRv(this);
 		}
@@ -558,6 +636,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitStoreRv(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitStoreRv(this);
 			else return visitor.visitChildren(this);
@@ -567,6 +647,7 @@ public class SVMParser extends Parser {
 		public TerminalNode STOREHP() { return getToken(SVMParser.STOREHP, 0); }
 		public StoreHpContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterStoreHp(this);
 		}
@@ -575,6 +656,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitStoreHp(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitStoreHp(this);
 			else return visitor.visitChildren(this);
@@ -584,6 +667,7 @@ public class SVMParser extends Parser {
 		public TerminalNode STOREFP() { return getToken(SVMParser.STOREFP, 0); }
 		public StoreFpContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterStoreFp(this);
 		}
@@ -592,6 +676,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitStoreFp(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitStoreFp(this);
 			else return visitor.visitChildren(this);
@@ -603,6 +689,7 @@ public class SVMParser extends Parser {
 		public TerminalNode LABEL() { return getToken(SVMParser.LABEL, 0); }
 		public BranchLabelContext(AssemblyContext ctx) { copyFrom(ctx); }
 		@Override
+<<<<<<< HEAD
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).enterBranchLabel(this);
 		}
@@ -611,6 +698,8 @@ public class SVMParser extends Parser {
 			if ( listener instanceof SVMListener ) ((SVMListener)listener).exitBranchLabel(this);
 		}
 		@Override
+=======
+>>>>>>> master
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof SVMVisitor ) return ((SVMVisitor<? extends T>)visitor).visitBranchLabel(this);
 			else return visitor.visitChildren(this);
@@ -621,7 +710,11 @@ public class SVMParser extends Parser {
 		AssemblyContext _localctx = new AssemblyContext(_ctx, getState());
 		enterRule(_localctx, 2, RULE_assembly);
 		try {
+<<<<<<< HEAD
 			setState(42);
+=======
+			setState(41);
+>>>>>>> master
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
@@ -741,6 +834,7 @@ public class SVMParser extends Parser {
 				}
 				break;
 			case 14:
+<<<<<<< HEAD
 				_localctx = new LabelContext(_localctx);
 				enterOuterAlt(_localctx, 14);
 				{
@@ -841,6 +935,100 @@ public class SVMParser extends Parser {
 				enterOuterAlt(_localctx, 26);
 				{
 				setState(41);
+=======
+				_localctx = new JsContext(_localctx);
+				enterOuterAlt(_localctx, 14);
+				{
+				setState(29);
+				match(JS);
+				}
+				break;
+			case 15:
+				_localctx = new LoadRaContext(_localctx);
+				enterOuterAlt(_localctx, 15);
+				{
+				setState(30);
+				match(LOADRA);
+				}
+				break;
+			case 16:
+				_localctx = new StoreRaContext(_localctx);
+				enterOuterAlt(_localctx, 16);
+				{
+				setState(31);
+				match(STORERA);
+				}
+				break;
+			case 17:
+				_localctx = new LoadRvContext(_localctx);
+				enterOuterAlt(_localctx, 17);
+				{
+				setState(32);
+				match(LOADRV);
+				}
+				break;
+			case 18:
+				_localctx = new StoreRvContext(_localctx);
+				enterOuterAlt(_localctx, 18);
+				{
+				setState(33);
+				match(STORERV);
+				}
+				break;
+			case 19:
+				_localctx = new LoadFpContext(_localctx);
+				enterOuterAlt(_localctx, 19);
+				{
+				setState(34);
+				match(LOADFP);
+				}
+				break;
+			case 20:
+				_localctx = new StoreFpContext(_localctx);
+				enterOuterAlt(_localctx, 20);
+				{
+				setState(35);
+				match(STOREFP);
+				}
+				break;
+			case 21:
+				_localctx = new CopyFpContext(_localctx);
+				enterOuterAlt(_localctx, 21);
+				{
+				setState(36);
+				match(COPYFP);
+				}
+				break;
+			case 22:
+				_localctx = new LoadHpContext(_localctx);
+				enterOuterAlt(_localctx, 22);
+				{
+				setState(37);
+				match(LOADHP);
+				}
+				break;
+			case 23:
+				_localctx = new StoreHpContext(_localctx);
+				enterOuterAlt(_localctx, 23);
+				{
+				setState(38);
+				match(STOREHP);
+				}
+				break;
+			case 24:
+				_localctx = new PrintContext(_localctx);
+				enterOuterAlt(_localctx, 24);
+				{
+				setState(39);
+				match(PRINT);
+				}
+				break;
+			case 25:
+				_localctx = new HaltContext(_localctx);
+				enterOuterAlt(_localctx, 25);
+				{
+				setState(40);
+>>>>>>> master
 				match(HALT);
 				}
 				break;
@@ -858,6 +1046,7 @@ public class SVMParser extends Parser {
 	}
 
 	public static final String _serializedATN =
+<<<<<<< HEAD
 		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\36/\4\2\t\2\4\3\t"+
 		"\3\3\2\7\2\b\n\2\f\2\16\2\13\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
@@ -874,6 +1063,23 @@ public class SVMParser extends Parser {
 		"\35\3\2\2\2,\37\3\2\2\2, \3\2\2\2,!\3\2\2\2,\"\3\2\2\2,#\3\2\2\2,$\3\2"+
 		"\2\2,%\3\2\2\2,&\3\2\2\2,\'\3\2\2\2,(\3\2\2\2,)\3\2\2\2,*\3\2\2\2,+\3"+
 		"\2\2\2-\5\3\2\2\2\4\t,";
+=======
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\36.\4\2\t\2\4\3\t"+
+		"\3\3\2\7\2\b\n\2\f\2\16\2\13\13\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\5\3,\n\3\3\3\2\2\4\2\4\2\2\2D\2\t\3\2\2\2\4+\3\2\2"+
+		"\2\6\b\5\4\3\2\7\6\3\2\2\2\b\13\3\2\2\2\t\7\3\2\2\2\t\n\3\2\2\2\n\3\3"+
+		"\2\2\2\13\t\3\2\2\2\f\r\7\3\2\2\r,\7\34\2\2\16\17\7\3\2\2\17,\7\33\2\2"+
+		"\20,\7\4\2\2\21,\7\5\2\2\22,\7\6\2\2\23,\7\7\2\2\24,\7\b\2\2\25,\7\t\2"+
+		"\2\26,\7\n\2\2\27\30\7\33\2\2\30,\7\32\2\2\31\32\7\13\2\2\32,\7\33\2\2"+
+		"\33\34\7\f\2\2\34,\7\33\2\2\35\36\7\r\2\2\36,\7\33\2\2\37,\7\16\2\2 ,"+
+		"\7\17\2\2!,\7\20\2\2\",\7\21\2\2#,\7\22\2\2$,\7\23\2\2%,\7\24\2\2&,\7"+
+		"\25\2\2\',\7\26\2\2(,\7\27\2\2),\7\30\2\2*,\7\31\2\2+\f\3\2\2\2+\16\3"+
+		"\2\2\2+\20\3\2\2\2+\21\3\2\2\2+\22\3\2\2\2+\23\3\2\2\2+\24\3\2\2\2+\25"+
+		"\3\2\2\2+\26\3\2\2\2+\27\3\2\2\2+\31\3\2\2\2+\33\3\2\2\2+\35\3\2\2\2+"+
+		"\37\3\2\2\2+ \3\2\2\2+!\3\2\2\2+\"\3\2\2\2+#\3\2\2\2+$\3\2\2\2+%\3\2\2"+
+		"\2+&\3\2\2\2+\'\3\2\2\2+(\3\2\2\2+)\3\2\2\2+*\3\2\2\2,\5\3\2\2\2\4\t+";
+>>>>>>> master
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
+=======
+// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/SVM.g4 by ANTLR 4.7
+>>>>>>> master
 package parser;
 
 import java.util.HashMap;
@@ -118,6 +122,7 @@ public class SVMBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+<<<<<<< HEAD
 	@Override public T visitLabel(SVMParser.LabelContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -125,6 +130,8 @@ public class SVMBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+=======
+>>>>>>> master
 	@Override public T visitJs(SVMParser.JsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

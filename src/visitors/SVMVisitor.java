@@ -221,9 +221,13 @@ public class SVMVisitor extends SVMBaseVisitor
     public void patchCodeWithIndexes()
     {
         for(Integer refAdd : labelRef.keySet())
+<<<<<<< HEAD
             if(labelRef.get(refAdd) != null) {
                 code[refAdd] = labelAdd.get(labelRef.get(refAdd));
             }
+=======
+            code[refAdd] = labelAdd.get(labelRef.get(refAdd));
+>>>>>>> master
     }
 
     public int[] getCode()
@@ -232,4 +236,8 @@ public class SVMVisitor extends SVMBaseVisitor
         return code;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master

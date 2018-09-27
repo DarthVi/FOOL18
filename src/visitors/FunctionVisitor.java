@@ -26,7 +26,10 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
     public FunctionVisitor()
     {
         environment.offset = -2;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     }
 
     @Override
@@ -39,6 +42,10 @@ public class FunctionVisitor extends FOOLBaseVisitor<INode>
     public INode visitVardec(FOOLParser.VardecContext ctx)
     {
         environment.offset--;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
         return null;
     }
 

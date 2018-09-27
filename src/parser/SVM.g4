@@ -31,8 +31,11 @@ assembly:
 
 	  | BRANCHLESSEQ l=LABEL #branchLessEqLabel
 
+<<<<<<< HEAD
 	  | l=LABEL         #label
 
+=======
+>>>>>>> master
 	  | JS              #js
 	  | LOADRA          #loadRa
 	  | STORERA         #storeRa
