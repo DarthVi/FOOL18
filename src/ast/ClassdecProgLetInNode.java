@@ -59,29 +59,11 @@ public class ClassdecProgLetInNode implements INode
 
     @Override
     public String codeGeneration() {
-        String declaration = "";
-        ArrayList<ClassDecNode> orderClassDeclarations = new ArrayList<ClassDecNode>();
-
-        //TODO modificare
-
-        // add every class into array orderClassDeclarations
-        ListIterator iterator = classdecs.listIterator();
-        while (iterator.hasNext()) {
-            ClassDecNode classDec = (ClassDecNode) iterator.next();
-            if (classDec.getSuperClassID() == null || classDec.getSuperClassID().isEmpty()) {
-                orderClassDeclarations.add(classDec);
-                iterator.remove();
-            }
-        }
-
-        for (ClassDecNode c : orderClassDeclarations) {
-            declaration += c.codeGeneration();
-        }
 
         if (letPart != null)
-            return declaration + letPart.codeGeneration() + exp.codeGeneration() + env.generateCode();
+            return letPart.codeGeneration() + exp.codeGeneration() + env.generateCode();
         else
-            return declaration + exp.codeGeneration() + env.generateCode();
+            return exp.codeGeneration() + env.generateCode();
     }
 
     @Override
