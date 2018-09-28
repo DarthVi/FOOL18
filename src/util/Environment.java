@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ListIterator;
 
 import exception.*;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.Token;
 import type.ClassType;
 import type.FunctionType;
@@ -19,10 +20,10 @@ public class Environment
     private HashMap<String, ClassType> symClassTypes;
 
     //dispatch function table
-    ArrayList<HashMap<String, DTableEntry>> dispatchTables;
+    HashMap<String, HashMap<String, DTableEntry> > dispatchTables;
 
     public Environment(ArrayList<HashMap<String, STentry>> symTable, HashMap<String, ClassType> symClassTypes,
-                       ArrayList<HashMap<String, DTableEntry>> vtable)
+                       HashMap<String, HashMap<String, DTableEntry> > vtable)
     {
 
         this.symTable = symTable;
@@ -33,7 +34,7 @@ public class Environment
     public Environment()
     {
         symTable = new ArrayList<HashMap<String,STentry>>();
-        dispatchTables = new ArrayList<>();
+        dispatchTables = new HashMap<>();
         symClassTypes = new HashMap<>();
     }
 
@@ -214,13 +215,26 @@ public class Environment
         return dispatchTables.size();
     }
 
-    public HashMap<String, DTableEntry> getDftTable(int index)
+    public HashMap<String, DTableEntry> getDftTable(String classname)
     {
-        return this.dispatchTables.get(index);
+        return this.dispatchTables.get(classname);
     }
 
-    public void addDftTable(HashMap<String, DTableEntry> table)
+    public void addDftTable(String name, HashMap<String, DTableEntry> table)
     {
-        this.dispatchTables.add(table);
+        this.dispatchTables.put(name, table);
     }
+
+//    public String generateDFTCode()
+//    {
+//        String funCode = FOOLlib.getfun();
+//
+//        StringBuilder sb = new StringBuilder();
+//
+//        for(int i = 0; i < dispatchTables.size(); i++)
+//        {
+//            HashMap<String, DTableEntry> entry = dispatchTables.get(i);
+//            sb.append("class" + entry.)
+//        }
+//    }
 }

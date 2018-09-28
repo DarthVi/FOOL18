@@ -19,7 +19,7 @@ public class FunCallNode implements INode
 {
     private Token token;
     private String id;
-    private ActualParamsNode actualArgs;
+    protected ActualParamsNode actualArgs;
     private STentry entry;
     private int nestingLevel;
     private ParserRuleContext ctx;

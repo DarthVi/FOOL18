@@ -26,8 +26,8 @@ public class MethodCallNode  extends FunCallNode  {
     @Override
     public String codeGeneration() {
         StringBuilder parCode = new StringBuilder();
-        for (int i = args.size() - 1; i >= 0; i--)
-            parCode.append(args.get(i).codeGeneration());
+        for (int i = actualArgs.size() - 1; i >= 0; i--)
+            parCode.append(actualArgs.get(i).codeGeneration());
 
         StringBuilder getAR = new StringBuilder();
 

@@ -228,8 +228,7 @@ public class ClassDecNode implements INode
         HashMap<String, DTableEntry> dTable = new HashMap<>();
 
         //setting current class dft index to point appropriately to the new collection of dispatch tables
-        int currentClassDftIndex = env.getDftSize();
-        classType.setDftIndex(currentClassDftIndex);
+        String currentClassDftIndex = this.getClassID();
 
         if(parent == null)
         {
@@ -254,7 +253,7 @@ public class ClassDecNode implements INode
                     overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
 
             //getting the index to the parent's dispatch table
-            int parentDftIndex = parent.getDftIndex();
+            String parentDftIndex = parent.getClassName();
 
             //getting the parent's dispatch table
             HashMap<String, DTableEntry> parentTable = env.getDftTable(parentDftIndex);
@@ -302,7 +301,7 @@ public class ClassDecNode implements INode
         }
 
         //adds the DFT to the collection of DFTs
-        env.addDftTable(dTable);
+        env.addDftTable(currentClassDftIndex, dTable);
     }
 
     public ArrayList<MethodNode> getOverriddenMethods(ArrayList<MethodNode> methods,
