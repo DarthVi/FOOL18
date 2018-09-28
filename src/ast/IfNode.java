@@ -56,7 +56,7 @@ public class IfNode implements INode {
             ClassType currentElP = ((ClassType) elType).getParent();
             ClassType currentThP = ((ClassType) thType).getParent();
 
-            while( currentElP.getParent() != null & currentThP.getParent() != null )
+            while( !(currentElP.getParent() != null & currentThP.getParent() != null) )
             {
                 if(currentElP.isSubtypeOf(currentThP))
                     return currentThP;
