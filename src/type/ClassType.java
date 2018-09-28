@@ -57,9 +57,21 @@ public class ClassType implements IType
     @Override
     public boolean isSubtypeOf(IType type)
     {
-        ClassType parent = (ClassType) type;
+        if(type instanceof ClassType)
+        {
 
-        return this.parent.getClassName().equals(parent.getClassName());
+            ClassType argType = (ClassType) type;
+
+            if(this.getClassName().equals(argType.getClassName()))
+                return true;
+
+
+            if(this.parent != null)
+                return this.parent.getClassName().equals(argType.getClassName()) ||
+                        this.parent.isSubtypeOf(type);
+        }
+
+        return false;
     }
 
     public String getClassName()

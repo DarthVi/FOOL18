@@ -6,6 +6,7 @@ import exception.TypeException;
 import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import type.BoolType;
+import type.ClassType;
 import type.IType;
 import type.VoidType;
 import util.Environment;
@@ -47,6 +48,29 @@ public class IfNode implements INode {
 
         if(elType.isSubtypeOf(thType))
             return thType;
+
+        //if none of the previous branch works, we can try to get the closest supertype
+        //to return
+        if(elType instanceof ClassType && thType instanceof ClassType)
+        {
+            ClassType currentElP = ((ClassType) elType).getParent();
+            ClassType currentThP = ((ClassType) thType).getParent();
+
+            while( currentElP.getParent() != null & currentThP.getParent() != null )
+            {
+                if(currentElP.isSubtypeOf(currentThP))
+                    return currentThP;
+
+                if(currentThP.isSubtypeOf(currentElP))
+                    return currentThP;
+
+                if(currentElP.getParent() != null)
+                    currentElP = currentElP.getParent();
+
+                if(currentThP.getParent() != null)
+                    currentThP = currentThP.getParent();
+            }
+        }
 
         throw new TypeException("Type error in then and else branches ", ctx);
     }
