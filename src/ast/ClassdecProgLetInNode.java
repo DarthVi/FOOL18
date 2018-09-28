@@ -18,6 +18,7 @@ public class ClassdecProgLetInNode implements INode
     private INode letPart;
     //according to the grammar we can either have exp or stast
     private INode exp;
+    private Environment env;
     private ArrayList<INode> stats;
 
     public ClassdecProgLetInNode(ArrayList<ClassDecNode> classdecs, INode letPart, INode exp, ArrayList<INode> stats)
@@ -61,6 +62,8 @@ public class ClassdecProgLetInNode implements INode
         String declaration = "";
         ArrayList<ClassDecNode> orderClassDeclarations = new ArrayList<ClassDecNode>();
 
+        //TODO modificare
+
         // add every class into array orderClassDeclarations
         ListIterator iterator = classdecs.listIterator();
         while (iterator.hasNext()) {
@@ -76,9 +79,9 @@ public class ClassdecProgLetInNode implements INode
         }
 
         if (letPart != null)
-            return declaration + letPart.codeGeneration() + exp.codeGeneration();
+            return declaration + letPart.codeGeneration() + exp.codeGeneration() + env.generateCode();
         else
-            return declaration + exp.codeGeneration();
+            return declaration + exp.codeGeneration() + env.generateCode();
     }
 
     @Override
@@ -111,6 +114,8 @@ public class ClassdecProgLetInNode implements INode
             //exiting the scope
             env.removeLastHashMap();
         }
+
+        this.env = env;
 
         return errors;
     }

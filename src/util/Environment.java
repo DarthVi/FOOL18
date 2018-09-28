@@ -3,6 +3,7 @@ package util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ListIterator;
+import java.util.Map;
 
 import exception.*;
 import lib.FOOLlib;
@@ -225,16 +226,38 @@ public class Environment
         this.dispatchTables.put(name, table);
     }
 
-//    public String generateDFTCode()
-//    {
-//        String funCode = FOOLlib.getfun();
-//
-//        StringBuilder sb = new StringBuilder();
-//
-//        for(int i = 0; i < dispatchTables.size(); i++)
-//        {
-//            HashMap<String, DTableEntry> entry = dispatchTables.get(i);
-//            sb.append("class" + entry.)
-//        }
-//    }
+    /**
+     * Generate the code for functions and dispatch function table
+     * @return
+     */
+    public String generateCode()
+    {
+        //we get all the function defined
+        StringBuilder sb = new StringBuilder(FOOLlib.getfun());
+
+        //we add at the end the appropriate function label for each class
+        //according to the dispatch function table
+        //example:
+        //classPippo:
+        //funlabel1
+        //funlabel2
+        //classPluto:
+        //funlabel1
+        //funlabel3
+        for (Map.Entry<String, HashMap<String, DTableEntry>> entry : dispatchTables.entrySet())
+        {
+            String classID = entry.getKey();
+
+            sb.append("class").append(classID).append(":\n");
+
+            HashMap<String, DTableEntry> table = entry.getValue();
+
+            for(DTableEntry label : table.values())
+            {
+                sb.append(label).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
 }

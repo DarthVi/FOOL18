@@ -24,6 +24,7 @@ public class ProgLetInNode implements INode
         this.stats = stats;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public IType typeCheck() throws TypeException
     {
