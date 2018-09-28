@@ -386,6 +386,25 @@ public class TestSemantics
         }
     }
 
+    @Test
+    @SuppressWarnings("Duplicates")
+    public void testClassdecAccessToMembers()
+    {
+        String filePath = "src/unitTestCovella/classTest4.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        }
+        catch (LexerException | ParserException | TypeException | IOException | SemanticException e)
+        {
+            fail("Exception thrown with valid code");
+        }
+    }
+
     public String getStringFromFile(String path) throws IOException
     {
         StringBuilder sb = new StringBuilder(1024);
