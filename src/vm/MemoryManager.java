@@ -109,12 +109,22 @@ public class MemoryManager
         ObjectInfo objinfo = new ObjectInfo(startIndex, false, size, vftAddress);
         allocatedInstances.put(startIndex, objinfo);
 
-        for(int i = 0; i < size + 1; i++)
-            freeHeapMemory.remove(i);
+        ListIterator<Integer> iterator = freeHeapMemory.listIterator();
+
+        int i = 0;
+        while(iterator.hasNext() && i < size + 1)
+        {
+            iterator.remove();
+            i++;
+        }
+
+//        for(int i = 0; i < size + 1; i++)
+//            freeHeapMemory.remove(i);
 
         memory[startIndex] = vftAddress;
 
-        for(int i = startIndex + 1, j = 0; i < startIndex + size; i++, j++)
+        int j;
+        for(i = startIndex + 1, j = 0; i < startIndex + size; i++, j++)
             memory[i] = args[j];
 
         vm.hp += size + 1;
