@@ -7,6 +7,8 @@ import util.Environment;
 import util.SemanticError;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.ListIterator;
 
 public class ClassdecProgLetInNode implements INode
 {
@@ -55,10 +57,28 @@ public class ClassdecProgLetInNode implements INode
     }
 
     @Override
-    public String codeGeneration()
-    {
-        //TODO
-        return null;
+    public String codeGeneration() {
+        String declaration = "";
+        ArrayList<ClassDecNode> orderClassDeclarations = new ArrayList<ClassDecNode>();
+
+        // add every class into array orderClassDeclarations
+        ListIterator iterator = classdecs.listIterator();
+        while (iterator.hasNext()) {
+            ClassDecNode classDec = (ClassDecNode) iterator.next();
+            if (classDec.getSuperClassID() == null || classDec.getSuperClassID().isEmpty()) {
+                orderClassDeclarations.add(classDec);
+                iterator.remove();
+            }
+        }
+
+        for (ClassDecNode c : orderClassDeclarations) {
+            declaration += c.codeGeneration();
+        }
+
+        if (letPart != null)
+            return declaration + letPart.codeGeneration() + exp.codeGeneration();
+        else
+            return declaration + exp.codeGeneration();
     }
 
     @Override

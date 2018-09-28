@@ -1,6 +1,7 @@
 package ast;
 
 import exception.TypeException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLParser;
 import type.ClassType;
@@ -73,5 +74,43 @@ public class MethodNode extends FunctionNode
     }
 
 
-    //TODO: see what's to override among codegen, checksemantics and typecheck
+    @Override
+    public String codeGeneration() {
+        StringBuilder declCode = new StringBuilder();
+        if (decs != null)
+            for (INode dec : decs)
+                declCode.append(dec.codeGeneration());
+
+        StringBuilder popDecl = new StringBuilder();
+        if (decs != null)
+            for (INode dec : decs)
+                popDecl.append("pop\n");
+
+        StringBuilder popParl = new StringBuilder();
+        for (INode dec : params)
+            popParl.append("pop\n");
+
+        String funl = FOOLlib.freshFunLabel();
+        FOOLlib.insertfun(funl
+                + ":\n"
+                + "cfp\n"                   //setta $fp a $sp
+                + "lra\n"                   //inserimento return address
+                + declCode                  //inserimento dichiarazioni locali
+                + body.codeGeneration()
+                + "srv\n"                   //pop del return value
+                + popDecl
+                + "sra\n"                   // pop del return address
+                + "pop\n"                   // pop di AL
+                + popParl
+                + "sfp\n"                   // setto $fp a valore del CL
+                + "lrv\n"                   // risultato della funzione sullo stack
+                + "lra\n"
+                +"js\n"                      // salta a $ra
+        );
+
+        return funl + "\n";
+    }
+
+
+    //TODO: see what's to override among  checksemantics and typecheck
 }

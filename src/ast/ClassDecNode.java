@@ -80,12 +80,7 @@ public class ClassDecNode implements INode
         return this.classType;
     }
 
-    @Override
-    public String codeGeneration()
-    {
-        //TODO completare questo metodo
-        return "";
-    }
+
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
@@ -341,4 +336,24 @@ public class ClassDecNode implements INode
     {
         return "ClassDecNode: " + classType.toString();
     }
+
+    @Override
+    public String codeGeneration()
+    {
+
+        //TODO completare questo metodo
+        //dovrebbe bastare, perchè la creazione della DispatchTableEntry viene fatta nelle funzioni sopra
+        return "";
+    }
+
+    public String getClassID() {
+        return classType.toString();
+    }
+
+    public String getSuperClassID() {
+        return this.parentStr;
+    }
+
+
+
 }
