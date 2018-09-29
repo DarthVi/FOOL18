@@ -23,6 +23,13 @@ public class NewNode implements INode
     private ParserRuleContext ctx;
     private HashMap<String, DTableEntry> dTable;
 
+    public NewNode(String className, ActualParamsNode actualArgs, ParserRuleContext ctx)
+    {
+        this.className = className;
+        this.actualArgs = actualArgs;
+        this.ctx = ctx;
+    }
+
     @Override
     public IType typeCheck() throws TypeException
     {

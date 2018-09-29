@@ -57,7 +57,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
     @Override
     public INode visitNullVal(FOOLParser.NullValContext ctx)
     {
-        return new NullNode();
+        return new NullNode(ctx);
     }
 
     @Override
@@ -191,6 +191,27 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         return res;
     }
+
+    @Override
+    public INode visitObjInst(FOOLParser.ObjInstContext ctx)
+    {
+        //this corresponds to a new operator call, used to instantiate an object
+        INode res;
+        String className;
+
+        //get the actual arguments passed to the constructor
+        ArrayList<INode> args = new ArrayList<>();
+
+        for (FOOLParser.ExpContext exp : ctx.exp())
+            args.add(visit(exp));
+
+        className = ctx.ID().getText();
+
+        res = new NewNode(className, new ActualParamsNode(args), ctx);
+
+        return res;
+    }
+
 
 
     @Override

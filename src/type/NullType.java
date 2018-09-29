@@ -11,7 +11,9 @@ public class NullType implements IType
     @Override
     public boolean isSubtypeOf(IType type)
     {
-        return this.getTypeID() == type.getTypeID();
+        //null is considered a "correct type" for every class
+        //except for primitive types such as integers, boolean, functions, etc.
+        return (type instanceof ClassType);
     }
 
     @Override
