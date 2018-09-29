@@ -1221,12 +1221,15 @@ public class FOOLParser extends Parser {
 	}
 	public static class ObjInstContext extends ValueContext {
 		public TerminalNode NEW() { return getToken(FOOLParser.NEW, 0); }
-		public List<TerminalNode> ID() { return getTokens(FOOLParser.ID); }
-		public TerminalNode ID(int i) {
-			return getToken(FOOLParser.ID, i);
-		}
+		public TerminalNode ID() { return getToken(FOOLParser.ID, 0); }
 		public TerminalNode LPAR() { return getToken(FOOLParser.LPAR, 0); }
 		public TerminalNode RPAR() { return getToken(FOOLParser.RPAR, 0); }
+		public List<ExpContext> exp() {
+			return getRuleContexts(ExpContext.class);
+		}
+		public ExpContext exp(int i) {
+			return getRuleContext(ExpContext.class,i);
+		}
 		public List<TerminalNode> COMMA() { return getTokens(FOOLParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(FOOLParser.COMMA, i);
@@ -1503,10 +1506,10 @@ public class FOOLParser extends Parser {
 				setState(223);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==ID) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOT) | (1L << MINUS) | (1L << TRUE) | (1L << FALSE) | (1L << LPAR) | (1L << IF) | (1L << NULL) | (1L << NEW) | (1L << VOID) | (1L << INTEGER) | (1L << ID))) != 0)) {
 					{
 					setState(215);
-					match(ID);
+					exp();
 					setState(220);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
@@ -1516,7 +1519,7 @@ public class FOOLParser extends Parser {
 						setState(216);
 						match(COMMA);
 						setState(217);
-						match(ID);
+						exp();
 						}
 						}
 						setState(222);
@@ -1857,9 +1860,9 @@ public class FOOLParser extends Parser {
 		"\u00cf\3\2\2\2\u00cf\u00d2\3\2\2\2\u00d0\u00ce\3\2\2\2\u00d1\u00c9\3\2"+
 		"\2\2\u00d1\u00d2\3\2\2\2\u00d2\u00d3\3\2\2\2\u00d3\u00d5\7\30\2\2\u00d4"+
 		"\u00c8\3\2\2\2\u00d4\u00d5\3\2\2\2\u00d5\u00f4\3\2\2\2\u00d6\u00d7\7("+
-		"\2\2\u00d7\u00d8\7+\2\2\u00d8\u00e1\7\27\2\2\u00d9\u00de\7+\2\2\u00da"+
-		"\u00db\7\6\2\2\u00db\u00dd\7+\2\2\u00dc\u00da\3\2\2\2\u00dd\u00e0\3\2"+
-		"\2\2\u00de\u00dc\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e2\3\2\2\2\u00e0"+
+		"\2\2\u00d7\u00d8\7+\2\2\u00d8\u00e1\7\27\2\2\u00d9\u00de\5\26\f\2\u00da"+
+		"\u00db\7\6\2\2\u00db\u00dd\5\26\f\2\u00dc\u00da\3\2\2\2\u00dd\u00e0\3"+
+		"\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e2\3\2\2\2\u00e0"+
 		"\u00de\3\2\2\2\u00e1\u00d9\3\2\2\2\u00e1\u00e2\3\2\2\2\u00e2\u00e3\3\2"+
 		"\2\2\u00e3\u00f4\7\30\2\2\u00e4\u00e5\7+\2\2\u00e5\u00e6\7\3\2\2\u00e6"+
 		"\u00e7\7+\2\2\u00e7\u00f0\7\27\2\2\u00e8\u00ed\7+\2\2\u00e9\u00ea\7\6"+

@@ -1,5 +1,6 @@
 package type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,20 @@ public class ClassType implements IType
     private String className;
     private ClassType parent;
     private Map<String, ClassMember> classMembers;
+
+    public ArrayList<ClassMember> getDeclaredOrderMembers()
+    {
+        return declaredOrderMembers;
+    }
+
+    public void setDeclaredOrderMembers(ArrayList<ClassMember> declaredOrderMembers)
+    {
+        this.declaredOrderMembers = declaredOrderMembers;
+    }
+
+    //we need the members orderet exactly as they were declared
+    //in order to make the new operator work.
+    private ArrayList<ClassMember> declaredOrderMembers = null;
     private Map<String, ClassMethod> classMethods;
 
     public ClassType(String className)

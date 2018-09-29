@@ -87,7 +87,6 @@ public class ClassDecNode implements INode
     {
         ArrayList<SemanticError> errors = new ArrayList<>();
 
-        ArrayList<MemberNode> allParentMembers = new ArrayList<>();
 
         try
         {
@@ -167,8 +166,19 @@ public class ClassDecNode implements INode
 
             }
 
-            //adding a new scope
 
+            //we need this to allow the user to make a new call (new Object(..))
+            //and using inside the constructor the same ordering defined
+            //here during class declaration
+            ArrayList<ClassMember> membersOrderedAsDeclaration = new ArrayList<>();
+            for(MemberNode mn : this.members)
+            {
+                ClassMember cm = new ClassMember(mn.getId(), mn.getType(), mn.getCtx());
+                membersOrderedAsDeclaration.add(cm);
+            }
+            this.classType.setDeclaredOrderMembers(membersOrderedAsDeclaration);
+
+            //adding a new scope
             env.addHashMap();
             //calling the checkSemantics on members: we need this to populate the symbol table and allow
             //class methods to see the class members

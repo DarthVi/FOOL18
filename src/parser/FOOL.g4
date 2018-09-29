@@ -62,7 +62,7 @@ value  : (MINUS)?  INTEGER                                        #intVal
       | IF cond=exp THEN CLPAR thenBranch=exp CRPAR ELSE CLPAR elseBranch=exp CRPAR  #ifExp
       | (MINUS| NOT)? ID                                             #varExp
       | (MINUS| NOT)? ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
-      | NEW ID LPAR (ID (COMMA ID)* )? RPAR                        #objInst
+      | NEW ID LPAR (exp (COMMA exp)* )? RPAR                        #objInst
       | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR                      #objCall
       ;
 

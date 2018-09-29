@@ -9,7 +9,8 @@ import util.SemanticError;
 import java.util.ArrayList;
 
 /**
- * It holds info about the actual arguments used when calling a function (see {@link FunCallNode}).
+ * It holds info about the actual arguments used when calling a function (see {@link FunCallNode})
+ * or when creating a new object instance (see {@link NewNode}).
  * The types of the actual arguments must be compared to the types of the formal parameters (see
  * {@link FunctionNode} and {@link FormalParamNode}) in order to check if the call obeys
  * the chosen type system.
