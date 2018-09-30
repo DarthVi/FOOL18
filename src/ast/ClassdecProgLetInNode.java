@@ -60,10 +60,16 @@ public class ClassdecProgLetInNode implements INode
     @Override
     public String codeGeneration() {
 
-        if (letPart != null)
-            return letPart.codeGeneration() + exp.codeGeneration() + env.generateCode();
-        else
-            return exp.codeGeneration() + env.generateCode();
+        //per generare il codice delle classi che sarà poi inserito da env.codeGeneration
+        for (ClassDecNode c: classdecs) c.codeGeneration();
+
+        StringBuilder s = new StringBuilder();
+
+        if (letPart != null) s.append(letPart.codeGeneration());
+        if (exp != null) s.append(exp.codeGeneration());
+        s.append("halt\n").append(env.generateCode());
+
+        return s.toString();
     }
 
     @Override

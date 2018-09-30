@@ -1,5 +1,7 @@
-let
-    int x= 12;
-    int y=
-in
-    f();
+class pippo (int x) {
+    int pluto () 1;
+    int minnie () 2;
+}
+
+let pippo x = new pippo(1); int f() 1;
+in 1;
