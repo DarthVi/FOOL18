@@ -5,6 +5,7 @@ import exception.UndeclaredVariableException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
+import type.ClassType;
 import type.IType;
 import type.VoidType;
 import util.Environment;
@@ -59,6 +60,15 @@ public class VarNode implements INode{
             //we need this in typeCheck() to check if the type return from the expression is compatible
             //with the type of the variable defined during declaration
             this.type = entry.getType();
+
+            //if this node is an object variable and null is assigned to it,
+            //we update the isNull flag in the symbol table and
+            //set the classID of the NullNode
+            if(this.type instanceof ClassType && exp instanceof NullNode)
+            {
+                env.updateIsNull(token.getText(), true);
+                ((NullNode) exp).setClassID(((ClassType) this.type).getClassName());
+            }
         }
         catch (UndeclaredVariableException e)
         {

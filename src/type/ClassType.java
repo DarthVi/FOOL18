@@ -72,6 +72,9 @@ public class ClassType implements IType
     @Override
     public boolean isSubtypeOf(IType type)
     {
+        if(type instanceof NullType)
+            return true;
+
         if(type instanceof ClassType)
         {
 

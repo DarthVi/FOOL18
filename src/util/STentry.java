@@ -8,6 +8,7 @@ public class STentry
     private IType type;
     private int offset;
     private boolean isAttribute;
+    private boolean isNull;
 
     public STentry(int nestingLevel, IType type, int offset)
     {
@@ -15,6 +16,7 @@ public class STentry
         this.type = type;
         this.offset = offset;
         this.isAttribute = false;
+        this.isNull = false;
     }
 
     public STentry(int nestingLevel, IType type, int offset, boolean isAttribute)
@@ -23,6 +25,25 @@ public class STentry
         this.type = type;
         this.offset = offset;
         this.isAttribute = isAttribute;
+    }
+
+    public STentry(int nestingLevel, IType type, int offset, boolean isAttribute, boolean isNull)
+    {
+        this.nestingLevel = nestingLevel;
+        this.type = type;
+        this.offset = offset;
+        this.isAttribute = isAttribute;
+        this.isNull = isNull;
+    }
+
+    public boolean isNull()
+    {
+        return isNull;
+    }
+
+    public void setNull(boolean aNull)
+    {
+        isNull = aNull;
     }
 
     public int getNestingLevel()

@@ -12,10 +12,17 @@ import java.util.ArrayList;
 public class NullNode implements INode
 {
     private ParserRuleContext ctx;
+    private String classID;
 
     public NullNode(ParserRuleContext ctx)
     {
         this.ctx = ctx;
+        this.classID = "-1";
+    }
+
+    public void setClassID(String classID)
+    {
+        this.classID = classID;
     }
 
     @Override
@@ -40,7 +47,7 @@ public class NullNode implements INode
         //when coding the VM we must remember to check that if both arguments size and labels
         //are equal to -1, we have a null reference initialization
         return "push -1\n" +
-                "push -1\n" +
+                "push " + classID + "\n" +
                 "new\n";
     }
 

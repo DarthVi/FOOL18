@@ -102,6 +102,48 @@ public class Environment
         return this;
     }
 
+    @SuppressWarnings("Duplicates")
+    public Environment updateIsNull(String id, boolean isNull)
+    {
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
+        STentry entry = null;
+
+        while(li.hasPrevious())
+        {
+            HashMap<String, STentry> map = li.previous();
+
+            if((entry = map.get(id)) != null)
+            {
+                entry.setNull(isNull);
+                map.put(id, entry);
+                break;
+            }
+        }
+
+        return this;
+    }
+
+    @SuppressWarnings("Duplicates")
+    public Environment updateIsAttribute(String id, boolean isAttribute)
+    {
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
+        STentry entry = null;
+
+        while(li.hasPrevious())
+        {
+            HashMap<String, STentry> map = li.previous();
+
+            if((entry = map.get(id)) != null)
+            {
+                entry.setNull(isAttribute);
+                map.put(id, entry);
+                break;
+            }
+        }
+
+        return this;
+    }
+
     /**
      * Pushes a new hashmap at the end of the list
      * @return  this - the currently modified Environment
