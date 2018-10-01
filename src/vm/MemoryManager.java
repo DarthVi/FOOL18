@@ -33,9 +33,46 @@ public class MemoryManager
     //table of break records used by the table-compaction algorithm
     Map<Integer, BreakRecord> breakRecords;
 
+    int hp;
+    int sp;
+    int ip;
+    int fp;
+    int ra;
+    int rv;
+
+    public int getMemorySize()
+    {
+        return memorySize;
+    }
+
+    public void setMemorySize(int memorySize)
+    {
+        this.memorySize = memorySize;
+    }
+
+    public int getCodeSize()
+    {
+        return codeSize;
+    }
+
+    public void setCodeSize(int codeSize)
+    {
+        this.codeSize = codeSize;
+    }
+
+    public int getHeapstart()
+    {
+        return heapstart;
+    }
+
+    public void setHeapstart(int heapstart)
+    {
+        this.heapstart = heapstart;
+    }
+
     public static int readCodeSizeFromConfig()
     {
-        VMConfigReader configReader = new VMConfigReader("vm/vmconfig.properties");
+        VMConfigReader configReader = new VMConfigReader("src/vm/vmconfig.properties");
         int codesize = configReader.getCodeSize();
         configReader.closePropFile();
         return codesize;
@@ -43,7 +80,7 @@ public class MemoryManager
 
     public MemoryManager()
     {
-        VMConfigReader configReader = new VMConfigReader("vm/vmconfig.properties");
+        VMConfigReader configReader = new VMConfigReader("src/vm/vmconfig.properties");
         memorySize = configReader.getMemorySize();
         codeSize = configReader.getCodeSize();
         heapstart = configReader.getHeapStart();
@@ -54,37 +91,52 @@ public class MemoryManager
 
         for( int i = heapstart; i < memorySize; i++)
         {
-            freeHeapMemory.set(i, i);
+            freeHeapMemory.add(i, i);
         }
 
+        hp = heapstart;
+        ip = 0;
+        sp = memorySize;
+        fp = memorySize;
+
+    }
+
+    public void setMemory(int address, int value)
+    {
+        memory[address] = value;
+    }
+
+    public int getMemory(int address)
+    {
+        return memory[address];
     }
 
     /**
      * pushes a value at the top of the stack of the virtual machine
      * @param value
-     * @param vm
      * @throws StackOverflowException
      */
-    public void push(int value, VirtualMachine vm) throws StackOverflowException
+    public void push(int value) throws StackOverflowException
     {
-        if(vm.sp - 1 < 0 || vm.sp - 1 < vm.hp)
+        if(sp - 1 < 0 || sp - 1 < hp)
             throw new StackOverflowException();
 
-        memory[vm.sp--] = value;
+        memory[--sp] = value;
     }
 
     /**
      * Pops values from the stack
-     * @param value
-     * @param vm
      * @throws StackUnderflowException
      */
-    public void pop(int value, VirtualMachine vm) throws StackUnderflowException
+    public int pop() throws StackUnderflowException
     {
-        if (vm.sp + 1 > this.memorySize)
+        if (sp + 1 > this.memorySize)
             throw new StackUnderflowException();
 
-        vm.sp++;
+        int retValue = memory[sp];
+        sp++;
+
+        return retValue;
     }
 
     /**
@@ -97,22 +149,21 @@ public class MemoryManager
      * @return  ObjectInfo containing startIndex, size and pointers list
      * @throws VMOutOfMemoryException
      */
-    public ObjectInfo allocate(int size, int vftAddress, int[] args, VirtualMachine vm) throws VMOutOfMemoryException
+    public ObjectInfo allocate(int size, int[] args) throws VMOutOfMemoryException
     {
 
 
-        //object size + 1 for the virtual function table address
-        if(freeHeapMemory.size() < size + 1 || vm.hp + 1 > vm.sp)
+        if(freeHeapMemory.size() < size || hp + 1 > sp)
             throw new VMOutOfMemoryException();
 
         int startIndex = freeHeapMemory.get(0);
-        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size, vftAddress);
+        ObjectInfo objinfo = new ObjectInfo(startIndex, false, size);
         allocatedInstances.put(startIndex, objinfo);
 
         ListIterator<Integer> iterator = freeHeapMemory.listIterator();
 
         int i = 0;
-        while(iterator.hasNext() && i < size + 1)
+        while(iterator.hasNext() && i < size)
         {
             iterator.remove();
             i++;
@@ -121,13 +172,11 @@ public class MemoryManager
 //        for(int i = 0; i < size + 1; i++)
 //            freeHeapMemory.remove(i);
 
-        memory[startIndex] = vftAddress;
-
         int j;
-        for(i = startIndex + 1, j = 0; i < startIndex + size; i++, j++)
+        for(i = startIndex, j = 0; i < startIndex + size; i++, j++)
             memory[i] = args[j];
 
-        vm.hp += size + 1;
+        hp += size;
 
 
         return objinfo;
@@ -138,18 +187,18 @@ public class MemoryManager
      * @param index
      * @param size
      */
-    public void deallocate(int index, int size, VirtualMachine vm)
+    public void deallocate(int index, int size)
     {
 
         allocatedInstances.remove(index);
 
-        for(int i = index; i < index + size + 1; i++)
+        for(int i = index; i < index + size; i++)
         {
             memory[i] = 0;
             freeHeapMemory.add(i);
         }
 
-        vm.hp -= size + 1;
+        hp -= size;
 
         Collections.sort(freeHeapMemory);
     }

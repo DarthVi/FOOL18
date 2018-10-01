@@ -13,20 +13,49 @@ public class ObjectInfo
 
     int startIndex;
     boolean markBit;
+    int dftAddress;
     int size;
-    //virtual function table for the dynamic dispatching
-    int vtableAddress;
+    boolean isNull;
     //an object may have other object as members, we need to keep track of them
     //for the mark-and-sweep algorithm and the table-compaction algorithm
     List<Integer> pointers;
 
-    ObjectInfo(int start, boolean bit, int size, int vtable)
+    ObjectInfo(int start, boolean bit, int size)
     {
         this.startIndex = start;
         this.markBit = bit;
         this.size = size;
         pointers = new ArrayList<Integer>();
-        this.vtableAddress = vtable;
+        this.isNull = false;
+    }
+
+    public ObjectInfo(int startIndex, boolean markBit, int size, boolean isNull)
+    {
+        this.startIndex = startIndex;
+        this.markBit = markBit;
+        this.size = size;
+        this.isNull = isNull;
+        this.pointers = new ArrayList<>();
+    }
+
+    public int getDftAddress()
+    {
+        return dftAddress;
+    }
+
+    public void setDftAddress(int dftAddress)
+    {
+        this.dftAddress = dftAddress;
+    }
+
+    public boolean isNull()
+    {
+        return isNull;
+    }
+
+    public void setNull(boolean aNull)
+    {
+        isNull = aNull;
     }
 
     public int getStartIndex()
@@ -67,16 +96,6 @@ public class ObjectInfo
     public int getPointer(int index)
     {
         return pointers.get(index);
-    }
-
-    public int getVtable()
-    {
-        return vtableAddress;
-    }
-
-    public void setVtable(int vtable)
-    {
-        this.vtableAddress = vtable;
     }
 
 }

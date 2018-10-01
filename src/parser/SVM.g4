@@ -45,6 +45,7 @@ assembly:
 	  | STOREHP         #storeHp
 	  | PRINT           #print
 	  | HALT            #halt
+	  | NEW             #new
 	  ;
 
 /*------------------------------------------------------------------
@@ -74,6 +75,7 @@ LOADHP	 : 'lhp' ;	// load heap pointer in the stack
 STOREHP	 : 'shp' ;	// store top into heap pointer
 PRINT	 : 'print' ;	// print top of stack
 HALT	 : 'halt' ;	// stop execution
+NEW      : 'new' ; //operator used to instantiate objects
 
 COL	 : ':' ;
 LABEL	 : ('a'..'z'|'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')* ;

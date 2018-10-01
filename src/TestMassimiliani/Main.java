@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import visitors.FOOLVisitorImpl;
 import visitors.SVMVisitor;
-import vm.ExecuteVM;
+import vm.VirtualMachine;
 
 
 public class Main {
@@ -31,8 +31,8 @@ public class Main {
         try {
 
 
-            String fileName = "test.fool";
-            CharStream input = CharStreams.fromFileName("TestMassimiliani/" +fileName);
+            String fileName = "test1.fool";
+            CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 
             //LEXER
@@ -81,12 +81,12 @@ public class Main {
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            BufferedWriter out = new BufferedWriter(new FileWriter("TestMassimiliani/asm/" + fileName +".asm"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("src/TestMassimiliani/asm/" + fileName +".asm"));
             out.write(code);
             out.close();
 
             //CODE EXECUTION
-            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("TestMassimiliani/asm/" + fileName +".asm");
+            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("src/TestMassimiliani/asm/" + fileName +".asm");
             SVMLexer lexerASM = new SVMLexer(isASM);
 
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
@@ -99,7 +99,7 @@ public class Main {
 
 
 
-            ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
+            VirtualMachine vm = new VirtualMachine(svmVisitor.getCode());
             System.out.println();
              vm.cpu();
 
