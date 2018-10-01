@@ -66,17 +66,17 @@ public class VirtualMachine
                     memoryManager.push(value);
                     break;
                 case SVMParser.BRANCH :
-                    address = memoryManager.getMemory(memoryManager.ip);
+                    address = code[memoryManager.ip];
                     memoryManager.ip = address;
                     break;
                 case SVMParser.BRANCHEQ : //
-                    address = memoryManager.getMemory(memoryManager.ip++);
+                    address = code[memoryManager.ip++];
                     v1=memoryManager.pop();
                     v2=memoryManager.pop();
                     if (v2 == v1) memoryManager.ip = address;
                     break;
                 case SVMParser.BRANCHLESSEQ :
-                    address = memoryManager.getMemory(memoryManager.ip++);
+                    address = code[memoryManager.ip++];
                     v1=memoryManager.pop();
                     v2=memoryManager.pop();
                     if (v2 <= v1) memoryManager.ip = address;
