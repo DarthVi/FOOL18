@@ -74,8 +74,8 @@ public class MethodNode extends FunctionNode
     }
 
 
-    @Override
-    public String codeGeneration() {
+
+    public String codeGeneration(String functionLabel) {
         StringBuilder declCode = new StringBuilder();
         if (decs != null)
             for (INode dec : decs)
@@ -90,7 +90,7 @@ public class MethodNode extends FunctionNode
         for (INode dec : params)
             popParl.append("pop\n");
 
-        String funl = FOOLlib.freshFunLabel();
+        String funl = functionLabel;
         FOOLlib.insertfun(funl
                 + ":\n"
                 + "cfp\n"                   //setta $fp a $sp

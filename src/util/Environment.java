@@ -296,7 +296,7 @@ public class Environment
 
             for(DTableEntry label : table.values())
             {
-                sb.append(label).append("\n");
+                sb.append(label.getMethodLabel()).append("\n");
             }
         }
 

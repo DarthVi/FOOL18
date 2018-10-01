@@ -21,6 +21,9 @@ public class ClassDecNode implements INode
     private ArrayList<MemberNode> members;
     private ArrayList<MethodNode> methods;
     //private DTableEntry virtualFunctionTable;
+    HashMap<String, String> fromIdtoLabelFunc = new HashMap<>();
+
+
 
     public ClassDecNode(ClassType classType, String parentStr, ArrayList<MemberNode> members,
                         ArrayList<MethodNode> methods, ParserRuleContext ctx)
@@ -245,9 +248,11 @@ public class ClassDecNode implements INode
             //generates new label for each new method, then stores it in the DFT
             for (MethodNode mn : newMethods)
             {
-                DTableEntry dTableEntry = new DTableEntry(mn.getId(), FOOLlib.freshFunLabel(),
+                String label = FOOLlib.freshFunLabel();
+                DTableEntry dTableEntry = new DTableEntry(mn.getId(),label,
                         (FOOLParser.FunContext) mn.getCtx());
                 DTableEntry check = dTable.put(mn.getId(), dTableEntry);
+                fromIdtoLabelFunc.put(mn.getId(), label);
 
                 //checking for invalid multiple entries for the same function name
                 if (check != null)
@@ -285,10 +290,12 @@ public class ClassDecNode implements INode
             //we generate a new label for each overridden method and store it in the dispatch table
             for (MethodNode methodNode : overriddenMethods)
             {
-                DTableEntry dTableEntry = new DTableEntry(methodNode.getId(), FOOLlib.freshFunLabel(),
+                String label = FOOLlib.freshFunLabel();
+                DTableEntry dTableEntry = new DTableEntry(methodNode.getId(), label,
                         (FOOLParser.FunContext) methodNode.getCtx());
 
                 DTableEntry check = dTable.put(methodNode.getId(), dTableEntry);
+                fromIdtoLabelFunc.put(methodNode.getId(), label);
 
                 //checking for invalid multiple entries for the same function name
                 if (check != null)
@@ -299,9 +306,11 @@ public class ClassDecNode implements INode
             //generates new label for each new method, then stores it in the DFT
             for (MethodNode mn : newMethods)
             {
-                DTableEntry dTableEntry = new DTableEntry(mn.getId(), FOOLlib.freshFunLabel(),
+                String label = FOOLlib.freshFunLabel();
+                DTableEntry dTableEntry = new DTableEntry(mn.getId(),label,
                         (FOOLParser.FunContext) mn.getCtx());
                 DTableEntry check = dTable.put(mn.getId(), dTableEntry);
+                fromIdtoLabelFunc.put(mn.getId(), label);
 
                 //checking for invalid multiple entries for the same function name
                 if (check != null)
@@ -349,6 +358,10 @@ public class ClassDecNode implements INode
     @Override
     public String codeGeneration()
     {
+        //generazione del codice dei metodi, passato come parametro la label della funzione
+        for (MethodNode m:methods) {
+            m.codeGeneration(fromIdtoLabelFunc.get(m.getId()));
+        }
 
         //TODO completare questo metodo
         //dovrebbe bastare, perchè la creazione della DispatchTableEntry viene fatta nelle funzioni sopra
