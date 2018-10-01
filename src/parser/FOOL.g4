@@ -63,7 +63,7 @@ value  : (MINUS)?  INTEGER                                        #intVal
       | (MINUS| NOT)? ID                                             #varExp
       | (MINUS| NOT)? ID ( LPAR (exp (COMMA exp)* )? RPAR )?         #funExp
       | NEW ID LPAR (exp (COMMA exp)* )? RPAR                        #objInst
-      | ID '.' ID LPAR (ID (COMMA ID)*)? RPAR                      #objCall
+      | ID '.' ID LPAR (exp (COMMA exp)*)? RPAR                      #objCall
       ;
 
 

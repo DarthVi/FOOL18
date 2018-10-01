@@ -1152,6 +1152,12 @@ public class FOOLParser extends Parser {
 		}
 		public TerminalNode LPAR() { return getToken(FOOLParser.LPAR, 0); }
 		public TerminalNode RPAR() { return getToken(FOOLParser.RPAR, 0); }
+		public List<ExpContext> exp() {
+			return getRuleContexts(ExpContext.class);
+		}
+		public ExpContext exp(int i) {
+			return getRuleContext(ExpContext.class,i);
+		}
 		public List<TerminalNode> COMMA() { return getTokens(FOOLParser.COMMA); }
 		public TerminalNode COMMA(int i) {
 			return getToken(FOOLParser.COMMA, i);
@@ -1548,10 +1554,10 @@ public class FOOLParser extends Parser {
 				setState(238);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==ID) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << NOT) | (1L << MINUS) | (1L << TRUE) | (1L << FALSE) | (1L << LPAR) | (1L << IF) | (1L << NULL) | (1L << NEW) | (1L << VOID) | (1L << INTEGER) | (1L << ID))) != 0)) {
 					{
 					setState(230);
-					match(ID);
+					exp();
 					setState(235);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
@@ -1561,7 +1567,7 @@ public class FOOLParser extends Parser {
 						setState(231);
 						match(COMMA);
 						setState(232);
-						match(ID);
+						exp();
 						}
 						}
 						setState(237);
@@ -1865,8 +1871,8 @@ public class FOOLParser extends Parser {
 		"\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e2\3\2\2\2\u00e0"+
 		"\u00de\3\2\2\2\u00e1\u00d9\3\2\2\2\u00e1\u00e2\3\2\2\2\u00e2\u00e3\3\2"+
 		"\2\2\u00e3\u00f4\7\30\2\2\u00e4\u00e5\7+\2\2\u00e5\u00e6\7\3\2\2\u00e6"+
-		"\u00e7\7+\2\2\u00e7\u00f0\7\27\2\2\u00e8\u00ed\7+\2\2\u00e9\u00ea\7\6"+
-		"\2\2\u00ea\u00ec\7+\2\2\u00eb\u00e9\3\2\2\2\u00ec\u00ef\3\2\2\2\u00ed"+
+		"\u00e7\7+\2\2\u00e7\u00f0\7\27\2\2\u00e8\u00ed\5\26\f\2\u00e9\u00ea\7"+
+		"\6\2\2\u00ea\u00ec\5\26\f\2\u00eb\u00e9\3\2\2\2\u00ec\u00ef\3\2\2\2\u00ed"+
 		"\u00eb\3\2\2\2\u00ed\u00ee\3\2\2\2\u00ee\u00f1\3\2\2\2\u00ef\u00ed\3\2"+
 		"\2\2\u00f0\u00e8\3\2\2\2\u00f0\u00f1\3\2\2\2\u00f1\u00f2\3\2\2\2\u00f2"+
 		"\u00f4\7\30\2\2\u00f3\u00a5\3\2\2\2\u00f3\u00a9\3\2\2\2\u00f3\u00ac\3"+
