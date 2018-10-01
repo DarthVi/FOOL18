@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import visitors.FOOLVisitorImpl;
 import visitors.SVMVisitor;
-import vm.ExecuteVM;
+
 
 
 public class Main {
@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "test.fool";
+            String fileName = "test1.fool";
             CharStream input = CharStreams.fromFileName("TestMassimiliani/" +fileName);
 
 
@@ -99,9 +99,11 @@ public class Main {
 
 
 
-            ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
+
+
+            vm.VirtualMachine vm = new vm.VirtualMachine(svmVisitor.getCode());
             System.out.println();
-             vm.cpu();
+            vm.cpu();
 
             //ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);

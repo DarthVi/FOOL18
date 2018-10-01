@@ -1,6 +1,5 @@
 package visitors;
 
-import org.antlr.v4.runtime.tree.ParseTree;
 import parser.SVMBaseVisitor;
 import parser.SVMParser;
 import vm.MemoryManager;
@@ -211,6 +210,13 @@ public class SVMVisitor extends SVMBaseVisitor
     public Object visitHalt(SVMParser.HaltContext ctx)
     {
         addCode(SVMParser.HALT);
+        return null;
+    }
+
+    @Override
+    public Object visitNew(SVMParser.NewContext ctx)
+    {
+        addCode(SVMParser.NEW);
         return null;
     }
 
