@@ -1,8 +1,10 @@
 package ast;
 
 import exception.TypeException;
+import exception.UndeclaredClassException;
 import exception.VariableAlreadyDefinedException;
 import parser.FOOLParser;
+import type.ClassType;
 import type.IType;
 import type.VoidType;
 import util.Environment;
@@ -90,9 +92,15 @@ public class VardecNode implements INode
         //we try to add entries to the symbol table
         try
         {
+            if(type.getType() instanceof ClassType)
+            {
+                env.getClassType(ctx.type().ID().getSymbol());
+            }
+
             env.addEntry(ctx.ID().getSymbol(), type.getType(), env.offset--, isAttribute);
         }
-        catch (VariableAlreadyDefinedException e)
+        catch (VariableAlreadyDefinedException |
+                UndeclaredClassException e)
         {
             res.add(new SemanticError(e.getMessage()));
         }

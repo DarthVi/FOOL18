@@ -21,7 +21,7 @@ public class NewNode implements INode
     private ClassType classType;
     private ActualParamsNode actualArgs;
     private ParserRuleContext ctx;
-    private HashMap<String, DTableEntry> dTable;
+    ArrayList<DTableEntry> dTable;
 
     public NewNode(String className, ActualParamsNode actualArgs, ParserRuleContext ctx)
     {

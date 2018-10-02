@@ -237,8 +237,10 @@ public class ClassDecNode implements INode
     public void buildDftTable(ArrayList<MethodNode> overriddenMethods, ArrayList<MethodNode> newMethods,
                               ClassType parent, Environment env) throws MethodAlreadyDefinedException
     {
-        //this class' dispatch table
+        //this is used for checking correctness
         HashMap<String, DTableEntry> dTable = new HashMap<>();
+        //this class' dispatch table
+        ArrayList<DTableEntry> effectiveDtable = new ArrayList<>();
 
         //setting current class dft index to point appropriately to the new collection of dispatch tables
         String currentClassDftIndex = this.getClassID();
@@ -252,6 +254,7 @@ public class ClassDecNode implements INode
                 DTableEntry dTableEntry = new DTableEntry(mn.getId(),label,
                         (FOOLParser.FunContext) mn.getCtx());
                 DTableEntry check = dTable.put(mn.getId(), dTableEntry);
+                effectiveDtable.add(dTableEntry);
                 fromIdtoLabelFunc.put(mn.getId(), label);
 
                 //checking for invalid multiple entries for the same function name
@@ -271,19 +274,20 @@ public class ClassDecNode implements INode
             String parentDftIndex = parent.getClassName();
 
             //getting the parent's dispatch table
-            HashMap<String, DTableEntry> parentTable = env.getDftTable(parentDftIndex);
+            ArrayList<DTableEntry> parentTable = env.getDftTable(parentDftIndex);
 
             //we iterate through the parent's table, if we are not overriding, we inherit the method
             //simply by storing in the dTable the old function label previously set by the the parent
-            for (Map.Entry<String, DTableEntry> entry : parentTable.entrySet())
+            for (DTableEntry entry : parentTable)
             {
-                if (!overriddenString.contains(entry.getKey()))
+                if (!overriddenString.contains(entry.getMethodId()))
                 {
-                    DTableEntry check = dTable.put(entry.getKey(), entry.getValue());
+                    DTableEntry check = dTable.put(entry.getMethodId(), entry);
+                    effectiveDtable.add(entry);
 
                     //checking for invalid multiple entries for the same function name
                     if (check != null)
-                        throw new MethodAlreadyDefinedException(entry.getValue().getCtx().ID().getSymbol());
+                        throw new MethodAlreadyDefinedException(entry.getCtx().ID().getSymbol());
                 }
             }
 
@@ -295,6 +299,7 @@ public class ClassDecNode implements INode
                         (FOOLParser.FunContext) methodNode.getCtx());
 
                 DTableEntry check = dTable.put(methodNode.getId(), dTableEntry);
+                effectiveDtable.add(dTableEntry);
                 fromIdtoLabelFunc.put(methodNode.getId(), label);
 
                 //checking for invalid multiple entries for the same function name
@@ -310,6 +315,7 @@ public class ClassDecNode implements INode
                 DTableEntry dTableEntry = new DTableEntry(mn.getId(),label,
                         (FOOLParser.FunContext) mn.getCtx());
                 DTableEntry check = dTable.put(mn.getId(), dTableEntry);
+                effectiveDtable.add(dTableEntry);
                 fromIdtoLabelFunc.put(mn.getId(), label);
 
                 //checking for invalid multiple entries for the same function name
@@ -320,7 +326,7 @@ public class ClassDecNode implements INode
         }
 
         //adds the DFT to the collection of DFTs
-        env.addDftTable(currentClassDftIndex, dTable);
+        env.addDftTable(currentClassDftIndex, effectiveDtable);
     }
 
     public ArrayList<MethodNode> getOverriddenMethods(ArrayList<MethodNode> methods,

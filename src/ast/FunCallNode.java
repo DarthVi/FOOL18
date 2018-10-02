@@ -22,7 +22,7 @@ public class FunCallNode implements INode
     protected ActualParamsNode actualArgs;
     private STentry entry;
     private int nestingLevel;
-    private ParserRuleContext ctx;
+    protected ParserRuleContext ctx;
     int extra;                      // extra = 1 id preceded by '-', extra = 2 id preceded by 'not', extra = 0 there aren't both
 
     public FunCallNode(Token token, ActualParamsNode actualArgs, ParserRuleContext ctx)

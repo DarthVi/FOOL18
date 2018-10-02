@@ -1,9 +1,18 @@
 package ast;
 
+import exception.TypeException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
+import type.ClassMethod;
+import type.ClassType;
 import type.IType;
+import util.DTableEntry;
+import util.Environment;
+import util.STentry;
+import util.SemanticError;
+
+import java.util.ArrayList;
 
 public class MethodCallNode  extends FunCallNode  {
     private int objectOffset;
@@ -22,7 +31,96 @@ public class MethodCallNode  extends FunCallNode  {
     }
 
 
+    @Override
+    public IType typeCheck() throws TypeException
+    {
+        return super.typeCheck();
+    }
 
+    //TODO: check this
+    /*@Override
+    public ArrayList<SemanticError> checkSemantics(Environment env)
+    {
+        ArrayList<SemanticError> errors = new ArrayList<>();
+
+        nestinglevel = env.getNestingLevel();
+
+        try
+        {
+            ClassType classType = null;
+
+            if(objectID.equals("this"))
+            {
+                STentry thisEntry = env.getEntry(
+                        ((FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
+
+                objectOffset = 0;
+
+                classType = (ClassType) thisEntry.getType();
+                objectNestingLevel = 3;
+            }
+            else
+            {
+                STentry entry = env.getEntry(
+                        ((FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
+
+                if(entry.isNull())
+                {
+                    //TODO: creare eccezione per oggetti null su cui si tenta di chiamare metodi
+                    System.out.println("Errore si sta tentando di chiamare un metodo su un oggetto null");
+                    System.exit(-1);
+                }
+
+                IType objectType = entry.getType();
+                objectOffset = entry.getOffset();
+                objectNestingLevel = entry.getNestingLevel();
+
+                STentry check = env.checkEntryPresence("this");
+                // controllo se c'è this, se c'è sono in un metodo e decremento il nesting level
+                if(check != null)
+                    nestinglevel--;
+
+                if(! (objectType instanceof ClassType))
+                {
+                    errors.add(new SemanticError("Invocazione di metodo su un tipo non oggetto"));
+                }
+                else
+                    classType = (ClassType) objectType;
+                return errors;
+            }
+
+            STentry classEntry = env.getEntry(
+                    ((FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
+
+            //classname will be used to get the dispatch table index to retrieve the method offset
+            String classname = classType.getClassName();
+            ArrayList<DTableEntry> dtable = env.getDftTable(classname);
+
+            methodOffset = 0;
+            boolean found = false;
+            //this loop is needed in order to find the method offset in the dispatch function
+            //table
+            for(int i = 0; i < dtable.size() && !found; i++)
+            {
+                DTableEntry dEntry = dtable.get(i);
+
+                if(dEntry.getMethodId().equals(this.methodID))
+                {
+                    methodOffset = i;
+                    found = true;
+                }
+            }
+
+            ClassMethod classMethod = ((ClassMethod) classType.getClassMethods().get(objectID));
+
+            if(classMethod == null)
+            {
+                errors.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."))
+            }
+
+        }
+    }
+*/
     @Override
     public String codeGeneration() {
         StringBuilder parCode = new StringBuilder();

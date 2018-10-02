@@ -21,10 +21,10 @@ public class Environment
     private HashMap<String, ClassType> symClassTypes;
 
     //dispatch function table
-    HashMap<String, HashMap<String, DTableEntry> > dispatchTables;
+    HashMap<String, ArrayList<DTableEntry> > dispatchTables;
 
     public Environment(ArrayList<HashMap<String, STentry>> symTable, HashMap<String, ClassType> symClassTypes,
-                       HashMap<String, HashMap<String, DTableEntry> > vtable)
+                       HashMap<String, ArrayList<DTableEntry> > vtable)
     {
 
         this.symTable = symTable;
@@ -97,6 +97,20 @@ public class Environment
                     i++;
                 }while(checkEntry != null);
             }*/
+        }
+
+        return this;
+    }
+
+    public Environment addEntry(String id, IType type, int offset,
+                         boolean isAttribute) throws VariableAlreadyDefinedException
+    {
+        STentry newEntry = new STentry(getNestingLevel(), type, offset, isAttribute);
+        STentry checkEntry = symTable.get(symTable.size() - 1).put(id, newEntry);
+
+        if(checkEntry != null)
+        {
+            throw new VariableAlreadyDefinedException(id);
         }
 
         return this;
@@ -258,12 +272,12 @@ public class Environment
         return dispatchTables.size();
     }
 
-    public HashMap<String, DTableEntry> getDftTable(String classname)
+    public ArrayList<DTableEntry> getDftTable(String classname)
     {
         return this.dispatchTables.get(classname);
     }
 
-    public void addDftTable(String name, HashMap<String, DTableEntry> table)
+    public void addDftTable(String name, ArrayList<DTableEntry> table)
     {
         this.dispatchTables.put(name, table);
     }
@@ -286,20 +300,25 @@ public class Environment
         //classPluto:
         //funlabel1
         //funlabel3
-        for (Map.Entry<String, HashMap<String, DTableEntry>> entry : dispatchTables.entrySet())
+        for (Map.Entry<String, ArrayList<DTableEntry>> entry : dispatchTables.entrySet())
         {
             String classID = entry.getKey();
 
             sb.append("class").append(classID).append(":\n");
 
-            HashMap<String, DTableEntry> table = entry.getValue();
+            ArrayList<DTableEntry> table = entry.getValue();
 
-            for(DTableEntry label : table.values())
+            for(DTableEntry dtEntry : table)
             {
-                sb.append(label.getMethodLabel()).append("\n");
+                sb.append(dtEntry.getMethodLabel()).append("\n");
             }
         }
 
         return sb.toString();
+    }
+
+    public STentry checkEntryPresence(String id)
+    {
+        return symTable.get(symTable.size() -1 ).get(id);
     }
 }
