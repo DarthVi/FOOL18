@@ -47,7 +47,7 @@ public class ClassDecNode implements INode
             //Example to explain why this is necessary:
             //we have 3 classes, a "grandparent" a "parent" and a "child"; the child
             //may override none of the parent's methods but some of the granparent's ones.
-            while (currentParent != null)
+            if(currentParent != null)
             {
 
                 //checking if methods are overridden correctly.
@@ -71,8 +71,6 @@ public class ClassDecNode implements INode
                             throw new OverrideErrorException(fc.ID().getSymbol());
                     }
                 }
-
-                currentParent = currentParent.getParent();
             }
         }
         catch(OverrideErrorException e)
@@ -93,6 +91,26 @@ public class ClassDecNode implements INode
 
         try
         {
+            //we build the classtype information for members
+            HashMap<String, ClassMember> classMembers = new HashMap<>();
+            for(MemberNode mn : members)
+            {
+                ClassMember mb = new ClassMember(mn.getId(), mn.getType(), mn.getCtx());
+                classMembers.put(mn.getId(), mb);
+            }
+
+            this.classType.setClassMembers(classMembers);
+
+            //building classtype information for methods
+            HashMap<String, ClassMethod> classMethods = new HashMap<>();
+            for(MethodNode mn : methods)
+            {
+                ClassMethod mm = new ClassMethod(mn.getId(), mn.getFunctionType());
+                classMethods.put(mn.getId(), mm);
+            }
+
+            this.classType.setClassMethods(classMethods);
+
             if(this.parentStr == null)
             {
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
@@ -144,19 +162,16 @@ public class ClassDecNode implements INode
                     }
                 }
 
-                //we must retrieve parent methods going up through the parent chain
-                while(currentParent != null)
-                {
-                    //get overridden methods
-                    overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
+                //we must retrieve parent methods to check for overrides
 
-                    //overridden methods and new methods must have a new fresh label to be put
-                    //inside this class' DFT
-                    //for inherited not overridden methods we must get the old label and put it
-                    //inside the current class DFT
+                //get overridden methods
+                overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
 
-                    currentParent = currentParent.getParent();
-                }
+                //overridden methods and new methods must have a new fresh label to be put
+                //inside this class' DFT
+                //for inherited not overridden methods we must get the old label and put it
+                //inside the current class DFT
+
 
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(),
                         ((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol(),

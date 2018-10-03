@@ -363,7 +363,6 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
             parentString = ctx.ID(1).getSymbol().getText();
 
         ArrayList<MemberNode> memberNodes = new ArrayList<>();
-        HashMap<String, ClassMember> classMembers = new HashMap<>();
 
         //we get the list of class members and member nodes
         for(FOOLParser.ArgdecContext ac : ctx.argdec())
@@ -372,14 +371,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
             //function and use its return value to build the subclass MemberNode
             MemberNode memberNode = new MemberNode((FormalParamNode) visit(ac));
             memberNodes.add(memberNode);
-            //we retrieve the classMember information from the MemberNode
-            ClassMember classMember = new ClassMember(memberNode.getId(), memberNode.getType(),
-                    memberNode.getCtx());
-            classMembers.put(memberNode.getId(), classMember);
         }
 
         ArrayList<MethodNode> methodNodes = new ArrayList<>();
-        HashMap<String, ClassMethod> classMethods = new HashMap<>();
 
         //we get the list of class methods and method nodes
         for(FOOLParser.FunContext fc : ctx.fun())
@@ -389,17 +383,13 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
             MethodNode methodNode = new MethodNode((FunctionNode) visit(fc));
             methodNodes.add(methodNode);
 
-            //we retrieve the classMethod information from the MethodNode
-            ClassMethod classMethod = new ClassMethod(methodNode.getId(),
-                    methodNode.getFunctionType());
-            classMethods.put(classMethod.getMethodID(), classMethod);
         }
 
         //we don't pass the parent ClassType because it gets retrieved by the ClassDecNode's checkSemantics
         //through the parent string passed to the ClassDecNode constructor.
         //This is necessary because the Environment class stable gets built by the various
         //checkSemantic's call and right now it will remain empty.
-        ClassType classType = new ClassType(classToken.getText(), classMembers, classMethods);
+        ClassType classType = new ClassType(classToken.getText());
 
         return new ClassDecNode(classType, parentString, memberNodes, methodNodes, ctx);
     }
