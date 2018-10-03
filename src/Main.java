@@ -15,6 +15,9 @@ import type.IType;
 import util.Environment;
 import util.SemanticError;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -68,10 +71,10 @@ public class Main {
             //CODE GENERATION
             System.out.println("BEGIN CODE GENERATION...");
             String code = ast.codeGeneration();
-            /*File svmFile = new File("code.svm");
+            File svmFile = new File("code.svm");
             BufferedWriter svmWriter = new BufferedWriter(new FileWriter(svmFile.getAbsoluteFile()));
             svmWriter.write(code);
-            svmWriter.close();*/
+            svmWriter.close();
             System.out.println("END CODE GENERATION...\n");
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException e) {

@@ -72,6 +72,10 @@ public class MockCompilerSteps
         return node.typeCheck();
     }
 
+    public String codeGeneration(INode node){
+        return node.codeGeneration();
+    }
+
     public Environment getEnvironment()
     {
         return environment;

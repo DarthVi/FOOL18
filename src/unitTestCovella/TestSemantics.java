@@ -405,7 +405,7 @@ public class TestSemantics
         }
     }
 
-    public String getStringFromFile(String path) throws IOException
+    public static String getStringFromFile(String path) throws IOException
     {
         StringBuilder sb = new StringBuilder(1024);
 
