@@ -46,6 +46,7 @@ assembly:
 	  | PRINT           #print
 	  | HALT            #halt
 	  | NEW             #new
+	  | CALCHOFF        #calchoff
 	  ;
 
 /*------------------------------------------------------------------
@@ -76,6 +77,7 @@ STOREHP	 : 'shp' ;	// store top into heap pointer
 PRINT	 : 'print' ;	// print top of stack
 HALT	 : 'halt' ;	// stop execution
 NEW      : 'new' ; //operator used to instantiate objects
+CALCHOFF : 'calchoff'; //calculate real offset of object from logical and physical ones
 
 COL	 : ':' ;
 LABEL	 : ('a'..'z'|'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')* ;

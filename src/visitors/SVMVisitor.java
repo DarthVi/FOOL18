@@ -221,6 +221,13 @@ public class SVMVisitor extends SVMBaseVisitor
         return null;
     }
 
+    @Override
+    public Object visitCalchoff(SVMParser.CalchoffContext ctx)
+    {
+        addCode(SVMParser.CALCHOFF);
+        return null;
+    }
+
     /**
      * After having collected references, we must put them them where needed in order
      * to be used appropriately in the VM code.

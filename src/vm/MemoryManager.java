@@ -203,4 +203,9 @@ public class MemoryManager
         Collections.sort(freeHeapMemory);
     }
 
+    public ObjectInfo getObjInfo(int address)
+    {
+        return allocatedInstances.get(address);
+    }
+
 }

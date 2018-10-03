@@ -134,6 +134,15 @@ public class VirtualMachine
 
                     memoryManager.push(object.getStartIndex());
                     break;
+                case SVMParser.CALCHOFF:
+                    int objectAddress = memoryManager.pop();
+                    int objectOffset = memoryManager.pop();
+
+                    ObjectInfo objInfo = memoryManager.getObjInfo(objectAddress);
+                    int realOffset = objInfo.startIndex + objectOffset;
+                    memoryManager.push(realOffset);
+                    memoryManager.push(objectAddress);
+                    break;
                 case SVMParser.HALT :
                     System.out.println((memoryManager.sp < memoryManager.getMemorySize()) ?
                             memoryManager.getMemory(memoryManager.sp) :
