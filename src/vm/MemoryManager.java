@@ -134,6 +134,7 @@ public class MemoryManager
             throw new StackUnderflowException();
 
         int retValue = memory[sp];
+        memory[sp] = 0;
         sp++;
 
         return retValue;
@@ -165,6 +166,7 @@ public class MemoryManager
         int i = 0;
         while(iterator.hasNext() && i < size)
         {
+            iterator.next();
             iterator.remove();
             i++;
         }
@@ -201,6 +203,11 @@ public class MemoryManager
         hp -= size;
 
         Collections.sort(freeHeapMemory);
+    }
+
+    public ObjectInfo getObjInfo(int address)
+    {
+        return allocatedInstances.get(address);
     }
 
 }

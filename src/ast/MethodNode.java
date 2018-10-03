@@ -1,6 +1,7 @@
 package ast;
 
 import exception.TypeException;
+import exception.VariableAlreadyDefinedException;
 import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLParser;
@@ -8,6 +9,7 @@ import type.ClassType;
 import type.FunctionType;
 import type.IType;
 import util.Environment;
+import util.STentry;
 import util.SemanticError;
 
 import java.util.ArrayList;
@@ -73,7 +75,72 @@ public class MethodNode extends FunctionNode
         this.classType = classType;
     }
 
+    @Override
+    public ArrayList<SemanticError> checkSemantics(Environment env)
+    {
+        ArrayList<SemanticError> errors = new ArrayList<>();
 
+
+        FunctionType funType = null;
+
+        ArrayList<IType> paramTypes = new ArrayList<>();
+
+        //this is needed to build the symbol table entry for the function ID
+        try
+        {
+            for (FormalParamNode param : params)
+            {
+                paramTypes.add(param.typeCheck());
+            }
+        }
+        catch (TypeException e)
+        {
+            //do nothing
+            //it's never going to happen, see FormalParamNode.typeCheck()
+        }
+
+        funType = new FunctionType(decReturnType, paramTypes);
+
+        this.fType = funType;
+
+        env.addHashMap();
+
+        int savedOffset = env.offset;  //salvato offset della dichiarazione di funzione, per ripristinarlo dopo
+        env.offset = 1;                //l'offset dei parametri formali inizia da 1.
+
+        try
+        {
+            env.addEntry("this", this.classType, 0, true);
+        }
+        catch (VariableAlreadyDefinedException e)
+        {
+            errors.add(new SemanticError(e.getMessage()));
+        }
+
+        // Parametri formali
+        for (FormalParamNode param : params) {
+            errors.addAll(param.checkSemantics(env));
+        }
+
+        env.offset=-2;                 // offset delle dichiarazioni locali
+
+
+        // Variabili locali
+        for (INode dec : decs){
+            errors.addAll(dec.checkSemantics(env));
+        }
+        // Body della funzione
+        errors.addAll(body.checkSemantics(env));
+        env.removeLastHashMap();
+
+        //TODO: check if we need to reset the offset of the environment
+
+        env.offset = savedOffset-1;
+
+        // TODO controllare che funzioni per classi e oggetti
+        return errors;
+
+    }
 
     public String codeGeneration(String functionLabel) {
         StringBuilder declCode = new StringBuilder();

@@ -58,10 +58,7 @@ public class ClassType implements IType
         this.classMethods = classMethods;
     }
 
-    public void addParent(ClassType parent)
-    {
-        this.parent = parent;
-    }
+
 
     @Override
     public TypeID getTypeID()
@@ -117,7 +114,7 @@ public class ClassType implements IType
         return classMembers;
     }
 
-    public void setClassMembers(Map classMembers)
+    public void setClassMembers(Map<String, ClassMember> classMembers)
     {
         this.classMembers = classMembers;
     }
@@ -127,7 +124,7 @@ public class ClassType implements IType
         return classMethods;
     }
 
-    public void setClassMethods(Map classMethods)
+    public void setClassMethods(Map<String, ClassMethod> classMethods)
     {
         this.classMethods = classMethods;
     }

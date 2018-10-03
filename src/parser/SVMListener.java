@@ -332,4 +332,52 @@ public interface SVMListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitHalt(SVMParser.HaltContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code new}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void enterNew(SVMParser.NewContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code new}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void exitNew(SVMParser.NewContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code lc}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void enterLc(SVMParser.LcContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code lc}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void exitLc(SVMParser.LcContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code calchoff}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void enterCalchoff(SVMParser.CalchoffContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code calchoff}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void exitCalchoff(SVMParser.CalchoffContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code copy}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void enterCopy(SVMParser.CopyContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code copy}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 */
+	void exitCopy(SVMParser.CopyContext ctx);
 }

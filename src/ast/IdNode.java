@@ -64,10 +64,24 @@ public class IdNode implements INode
         String getAR="";
         for (int i=0; i<nestingLevel-entry.getNestingLevel(); i++)  getAR+="lw\n";
 
-        s= "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
-                "lfp\n"+getAR+ //risalgo la catena statica
-                "add\n"+
-                "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
+        if(entry.isAttribute())
+        {
+            //TODO: controllare che basti avere l'offset dell'entry
+           s = "push " + entry.getOffset() + "\n" + // pushing ID's offset
+                   "lfp\n" +
+                   "lw\n" +
+                   "heapoffset\n" +  //this instruction converts the logic offset to the physical one inside the class
+                                    //then loads it on the stack
+                   "add\n" +
+                   "lw\n";//carico sullo stack il valore all'indirizzo ottenuto
+        }
+        else
+        {
+            s= "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
+                    "lfp\n"+getAR+ //risalgo la catena statica
+                    "add\n"+
+                    "lw\n"; //carico sullo stack il valore all'indirizzo ottenuto
+        }
 
         if(extra == 1) {
             s ="push 0\n" +
