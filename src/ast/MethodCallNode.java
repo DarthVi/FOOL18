@@ -1,12 +1,12 @@
 package ast;
 
+import exception.NullPointerException;
 import exception.TypeException;
+import exception.UndeclaredClassException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
-import type.ClassMethod;
-import type.ClassType;
-import type.IType;
+import type.*;
 import util.DTableEntry;
 import util.Environment;
 import util.STentry;
@@ -34,11 +34,39 @@ public class MethodCallNode  extends FunCallNode  {
     @Override
     public IType typeCheck() throws TypeException
     {
-        return super.typeCheck();
+        FunctionType funType = (FunctionType) this.methodType;
+
+        actualArgs.typeCheck();
+
+        if(actualArgs.size() != funType.getArgumentListSize())
+            throw new TypeException("Wrong number of arguments.", ctx);
+
+        //we must check that the actual arguments are of the right type
+        //(the one that follows the function declaration)
+        for(int i = 0; i < actualArgs.size(); i++)
+        {
+            INode arg = actualArgs.get(i);
+
+            if(!arg.typeCheck().isSubtypeOf(funType.getArgumentType(i)))
+                throw new TypeException("Argument " + (i + 1) + " has an incorrect type.",ctx);
+        }
+
+        if (extra == 1 && !funType.getReturnType().isSubtypeOf(new IntType()))
+        {
+
+            throw new TypeException("- operator allowed only for int value", ctx);
+        }
+
+        if (extra == 2 && !funType.getReturnType().isSubtypeOf(new BoolType()))
+        {
+            throw new TypeException("not operator allowed only for bool value", ctx);
+        }
+
+            return funType.getReturnType();
     }
 
     //TODO: check this
-    /*@Override
+    @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         ArrayList<SemanticError> errors = new ArrayList<>();
@@ -66,9 +94,7 @@ public class MethodCallNode  extends FunCallNode  {
 
                 if(entry.isNull())
                 {
-                    //TODO: creare eccezione per oggetti null su cui si tenta di chiamare metodi
-                    System.out.println("Errore si sta tentando di chiamare un metodo su un oggetto null");
-                    System.exit(-1);
+                    throw new NullPointerException(((FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
                 }
 
                 IType objectType = entry.getType();
@@ -115,12 +141,24 @@ public class MethodCallNode  extends FunCallNode  {
 
             if(classMethod == null)
             {
-                errors.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."))
+                errors.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
             }
+            else
+                methodType = classMethod.getMethodType();
+
+            //checkSemantics of effective arguments
+            actualArgs.checkSemantics(env);
 
         }
+        catch (UndeclaredClassException |
+                NullPointerException e)
+        {
+            errors.add(new SemanticError(e.getMessage()));
+        }
+
+        return errors;
     }
-*/
+
     @Override
     public String codeGeneration() {
         StringBuilder parCode = new StringBuilder();
