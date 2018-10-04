@@ -1,5 +1,6 @@
 package ast;
 
+import exception.InvalidObjectInstantiation;
 import exception.TypeException;
 import exception.UndeclaredClassException;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -21,7 +22,7 @@ public class NewNode implements INode
     private ClassType classType;
     private ActualParamsNode actualArgs;
     private ParserRuleContext ctx;
-    ArrayList<DTableEntry> dTable;
+    public ArrayList<DTableEntry> dTable;
 
     public NewNode(String className, ActualParamsNode actualArgs, ParserRuleContext ctx)
     {
@@ -80,13 +81,15 @@ public class NewNode implements INode
         }
 
         //we must have the same actual arguments defined in the constructor
-        if(actualArgs.size() != classType.getClassMembers().size())
-            errors.add(new SemanticError(
-                    "Incorrect number of arguments in instantiation of class " + className));
-        else
-        {
-            //calling argument's checkSemantics
-            errors.addAll(actualArgs.checkSemantics(env));
+        try {
+            if (actualArgs.size() != classType.getClassMembers().size()){
+                throw new InvalidObjectInstantiation(className);
+            } else {
+                //calling argument's checkSemantics
+                errors.addAll(actualArgs.checkSemantics(env));
+            }
+        } catch (InvalidObjectInstantiation e){
+            errors.add(new SemanticError(e.getMessage()));
         }
 
         this.dTable = env.getDftTable(this.className);
