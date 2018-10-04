@@ -1,8 +1,7 @@
 package ast;
 
+import exception.*;
 import exception.NullPointerException;
-import exception.TypeException;
-import exception.UndeclaredClassException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
@@ -108,12 +107,11 @@ public class MethodCallNode  extends FunCallNode  {
 
                 if(! (objectType instanceof ClassType))
                 {
-                    errors.add(new SemanticError("Invocazione di metodo su un tipo non oggetto"));
+                    throw new InvalidMethodInvocation(((
+                            FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
                 }
                 else
                     classType = (ClassType) objectType;
-
-                if(errors.size()>0) return errors;
             }
 
             STentry classEntry = env.getEntry(
@@ -143,7 +141,7 @@ public class MethodCallNode  extends FunCallNode  {
 
             if(classMethod == null)
             {
-                errors.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
+                throw new MissingMethodException(objectID, methodID);
             }
             else
                 methodType = classMethod.getMethodType();
@@ -153,7 +151,9 @@ public class MethodCallNode  extends FunCallNode  {
 
         }
         catch (UndeclaredClassException |
-                NullPointerException e)
+                NullPointerException    |
+                InvalidMethodInvocation |
+                MissingMethodException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
