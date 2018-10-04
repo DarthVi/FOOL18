@@ -21,8 +21,12 @@ public class VirtualMachine
         //int iter = 0;
 
         while ( true ) {
-            //System.out.println("IP: " + memoryManager.ip);
             int bytecode = code[memoryManager.ip++]; // fetch
+         //    System.out.println("\n Byte" + bytecode);
+          //  for(int i=0; i<memoryManager.memory.length; i++) System.out.print("" +i + "->"+memoryManager.memory[i]+", ");
+           // System.out.print("\n" + bytecode +"\n");
+
+
             int v1,v2, value;
             int address;
 
@@ -63,6 +67,7 @@ public class VirtualMachine
                 case SVMParser.LOADW : //
                     address = memoryManager.pop();
                     value = memoryManager.getMemory(address);
+                   // System.out.println(address);
                     memoryManager.push(value);
                     break;
                 case SVMParser.BRANCH :
@@ -123,8 +128,7 @@ public class VirtualMachine
                     int dftAddress = memoryManager.pop();
                     //the number of arguments passed to the constructor
                     int numArgs = memoryManager.pop();
-
-                    memoryManager.allocate(1,new int[]{dftAddress});
+                     memoryManager.allocate(1,new int[]{dftAddress});
                     int[] arguments = new int[numArgs];
 
                     for(int i = numArgs - 1; i >= 0; i--)
@@ -133,11 +137,10 @@ public class VirtualMachine
                     ObjectInfo object = memoryManager.allocate(numArgs, arguments);
                     //setting the dispatch table address
                       object.setDftAddress(dftAddress);
+                      memoryManager.push(0);
                     break;
                 case SVMParser.LC:
                     address = memoryManager.pop();
-                    for(int i=0;i< 80; i++) System.out.print(i+"="+code[i]+", ");
-                    System.out.println(address);
                     memoryManager.push(code[address]);
                     break;
                 case SVMParser.CALCHOFF:

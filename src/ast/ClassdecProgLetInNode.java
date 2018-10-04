@@ -64,7 +64,7 @@ public class ClassdecProgLetInNode implements INode
         for (ClassDecNode c: classdecs) c.codeGeneration();
 
         StringBuilder s = new StringBuilder();
-        s.append("push 0\n");
+
 
         if (letPart != null) s.append(letPart.codeGeneration());
         if (exp != null) s.append(exp.codeGeneration());
