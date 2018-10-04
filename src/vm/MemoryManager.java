@@ -21,7 +21,7 @@ public class MemoryManager
     //start memory address for the heap
     private int heapstart;
 
-    private int[] memory;
+    public int[] memory;
 
     //map of objects allocated
     Map<Integer, ObjectInfo> allocatedInstances = new HashMap<Integer, ObjectInfo>();
@@ -134,6 +134,7 @@ public class MemoryManager
             throw new StackUnderflowException();
 
         int retValue = memory[sp];
+        memory[sp] = 0;
         sp++;
 
         return retValue;
@@ -165,6 +166,7 @@ public class MemoryManager
         int i = 0;
         while(iterator.hasNext() && i < size)
         {
+            iterator.next();
             iterator.remove();
             i++;
         }

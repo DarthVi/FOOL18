@@ -436,4 +436,23 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         return res;
     }
+
+    @Override
+    public INode visitObjCall(FOOLParser.ObjCallContext ctx) {
+
+        INode res;
+
+        //get the invocation arguments
+        ArrayList<INode> args = new ArrayList<INode>();
+
+        for (FOOLParser.ExpContext exp : ctx.exp())
+            args.add(visit(exp));
+
+       // res = new FunCallNode(ctx.ID().getSymbol(), new ActualParamsNode(args), ctx);
+        res=new MethodCallNode(ctx.ID(0).getSymbol() , new ActualParamsNode(args),
+                ctx, ctx.ID(0).getText(), ctx.ID(1).getText());
+
+
+        return res;
+    }
 }

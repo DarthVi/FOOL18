@@ -3,5 +3,7 @@ class pippo (int x) {
     int minnie () 2;
 }
 
-let pippo x = new pippo(1); int f() 1;
-in 1;
+let
+    pippo x = new pippo(1);
+in
+    x.pluto();

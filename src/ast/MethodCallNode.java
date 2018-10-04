@@ -112,7 +112,8 @@ public class MethodCallNode  extends FunCallNode  {
                 }
                 else
                     classType = (ClassType) objectType;
-                return errors;
+
+                if(errors.size()>0) return errors;
             }
 
             STentry classEntry = env.getEntry(
@@ -137,7 +138,8 @@ public class MethodCallNode  extends FunCallNode  {
                 }
             }
 
-            ClassMethod classMethod = ((ClassMethod) classType.getClassMethods().get(objectID));
+            //System.out.println(classType.getClassMethods() + "  " + objectID);
+            ClassMethod classMethod = ((ClassMethod) classType.getClassMethods().get(methodID));
 
             if(classMethod == null)
             {
@@ -179,7 +181,7 @@ public class MethodCallNode  extends FunCallNode  {
                 + "lw\n"                                // carico il valore dell'oggetto sullo stack
                 + "copy\n"                              // copio il valore sopra (l'indirizzo di memoria nel quale si trova l'indirizzo della dispatch table)
                 + "lw\n"                                // carico l'indirizzo della dispatch table sullo stack
-                + "push " + (methodOffset - 1) + "\n"   // carico l'offset del metodo rispetto all'inizio della dispatch table
+                + "push " + (methodOffset ) + "\n"   // carico l'offset del metodo rispetto all'inizio della dispatch table
                 + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset
                 + "lc\n"                                // trovo l'indirizzo del metodo
                 + "js\n";                               // salto all'istruzione dove e' definito il metodo e salvo $ra

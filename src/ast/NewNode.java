@@ -58,7 +58,7 @@ public class NewNode implements INode
         StringBuilder code = new StringBuilder(actualArgs.codeGeneration());
 
         code.append("push ").append(actualArgs.size()).append("\n")
-                .append("class").append(className).append("\n")
+                .append("push class").append(className).append("\n")
                 .append("new\n");
 
         return code.toString();
