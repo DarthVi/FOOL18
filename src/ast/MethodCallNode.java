@@ -1,8 +1,7 @@
 package ast;
 
+import exception.*;
 import exception.NullPointerException;
-import exception.TypeException;
-import exception.UndeclaredClassException;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
@@ -108,11 +107,11 @@ public class MethodCallNode  extends FunCallNode  {
 
                 if(! (objectType instanceof ClassType))
                 {
-                    errors.add(new SemanticError("Invocazione di metodo su un tipo non oggetto"));
+                    throw new InvalidMethodInvocation(((
+                            FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
                 }
                 else
                     classType = (ClassType) objectType;
-                return errors;
             }
 
             STentry classEntry = env.getEntry(
@@ -137,11 +136,12 @@ public class MethodCallNode  extends FunCallNode  {
                 }
             }
 
-            ClassMethod classMethod = ((ClassMethod) classType.getClassMethods().get(objectID));
+            //System.out.println(classType.getClassMethods() + "  " + objectID);
+            ClassMethod classMethod = ((ClassMethod) classType.getClassMethods().get(methodID));
 
             if(classMethod == null)
             {
-                errors.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
+                throw new MissingMethodException(objectID, methodID);
             }
             else
                 methodType = classMethod.getMethodType();
@@ -151,7 +151,9 @@ public class MethodCallNode  extends FunCallNode  {
 
         }
         catch (UndeclaredClassException |
-                NullPointerException e)
+                NullPointerException    |
+                InvalidMethodInvocation |
+                MissingMethodException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
@@ -179,7 +181,7 @@ public class MethodCallNode  extends FunCallNode  {
                 + "lw\n"                                // carico il valore dell'oggetto sullo stack
                 + "copy\n"                              // copio il valore sopra (l'indirizzo di memoria nel quale si trova l'indirizzo della dispatch table)
                 + "lw\n"                                // carico l'indirizzo della dispatch table sullo stack
-                + "push " + (methodOffset - 1) + "\n"   // carico l'offset del metodo rispetto all'inizio della dispatch table
+                + "push " + (methodOffset ) + "\n"   // carico l'offset del metodo rispetto all'inizio della dispatch table
                 + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset
                 + "lc\n"                                // trovo l'indirizzo del metodo
                 + "js\n";                               // salto all'istruzione dove e' definito il metodo e salvo $ra
