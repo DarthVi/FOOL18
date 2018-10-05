@@ -1,0 +1,9 @@
+class pippo (int x) {
+    int pluto () 1;
+    int minnie () 2;
+}
+
+let
+    pippo x = new pippo(1);
+in
+    x.pluto();

@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            String fileName = "src/test/test.fool";
+            String fileName = "src/test/let_in.fool";
             CharStream input = CharStreams.fromFileName(fileName);
 
             //LEXER
