@@ -164,7 +164,7 @@ public class MemoryManager
         ListIterator<Integer> iterator = freeHeapMemory.listIterator();
 
         int i = 0;
-        while(iterator.hasNext() && i < size)
+        while(iterator.hasNext() && i < size + 1)
         {
             iterator.next();
             iterator.remove();

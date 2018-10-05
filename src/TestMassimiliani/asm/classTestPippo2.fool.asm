@@ -4,15 +4,18 @@ push 5
 push 2
 push classpaperino
 new
+push 1
+push 1
+push classpippo
+new
 lfp
-push 5
 push -2
 lfp
 add
 lw
 copy
 lw
-push 1
+push 2
 add
 lc
 js

@@ -10,6 +10,8 @@ class paperino extends pippo(int a; int v) {
 
 let
     paperino x = new paperino(3,5);
+    pippo y = new pippo(1);
 
 in
-    x.pluto(5);
+    x.p();
+    //x.pluto(5);

@@ -70,7 +70,7 @@ value  : (MINUS)?  INTEGER                                        #intVal
 stats:  (stat)+ ;
 
 stat:   varasm SEMIC  #varasmStat
-        | PRINT LPAR exp RPAR #printStat
+        | PRINT LPAR exp RPAR SEMIC #printStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat
         ;
 
