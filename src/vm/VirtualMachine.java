@@ -132,7 +132,7 @@ public class VirtualMachine
                     for(int i = numArgs - 1; i >= 0; i--)
                         arguments[i] = memoryManager.pop();
                     ObjectInfo object = memoryManager.allocate(numArgs, arguments);
-                    memoryManager.push(0);
+                    memoryManager.push(memoryManager.getHeapstart());
                     //setting the dispatch table address
                       object.setDftAddress(dftAddress);
 

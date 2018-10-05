@@ -113,6 +113,7 @@ public class ClassDecNode implements INode
 
             if(this.parentStr == null)
             {
+                this.classType.setClassMethods(classMethods);
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
 
                 //building the DFT (dispatch function table) of this class, check function javadoc
@@ -166,6 +167,21 @@ public class ClassDecNode implements INode
 
                 //get overridden methods
                 overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
+
+                //inheriting parent's not overridden methods
+                List<String> overriddenString =
+                        overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
+                for(Object o : parentType.getClassMethods().values())
+                {
+                    ClassMethod cm = (ClassMethod) o;
+
+                    if(!overriddenString.contains(cm.getMethodID()))
+                        classMethods.put(cm.getMethodID(), cm);
+                }
+
+                this.classType.setClassMethods(classMethods);
+
+
 
                 //overridden methods and new methods must have a new fresh label to be put
                 //inside this class' DFT

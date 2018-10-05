@@ -4,6 +4,10 @@ push 5
 push 2
 push classpaperino
 new
+push 1
+push 1
+push classpippo
+new
 lfp
 push -2
 lfp
@@ -23,6 +27,7 @@ lra
 push 2
 srv
 sra
+pop
 pop
 sfp
 lrv
@@ -48,7 +53,7 @@ lrv
 lra
 js
 
-function2:
+function3:
 cfp
 lra
 push 1
@@ -59,16 +64,30 @@ lw
 calchoff
 add
 lw
-lfp
-lfp
 push 2
+push 0 
 lfp
 add
 lw
-js
+calchoff
+add
+lw
 add
 srv
 sra
+pop
+sfp
+lrv
+lra
+js
+
+function2:
+cfp
+lra
+push 2
+srv
+sra
+pop
 pop
 sfp
 lrv
@@ -78,6 +97,6 @@ classpippo:
 function0
 function1
 classpaperino:
-function0
 function1
 function2
+function3
