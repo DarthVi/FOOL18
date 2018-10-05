@@ -126,13 +126,13 @@ public class VirtualMachine
                     int dftAddress = memoryManager.pop();
                     //the number of arguments passed to the constructor
                     int numArgs = memoryManager.pop();
-                     memoryManager.allocate(1,new int[]{dftAddress});
+                     //memoryManager.allocate(1,new int[]{dftAddress});
                     int[] arguments = new int[numArgs];
 
                     for(int i = numArgs - 1; i >= 0; i--)
                         arguments[i] = memoryManager.pop();
 
-                    ObjectInfo object = memoryManager.allocate(numArgs, arguments);
+                    ObjectInfo object = memoryManager.allocate(numArgs, arguments, dftAddress);
                     memoryManager.push(0);
                     //setting the dispatch table address
                       object.setDftAddress(dftAddress);
