@@ -321,4 +321,22 @@ public class Environment
     {
         return symTable.get(symTable.size() -1 ).get(id);
     }
+
+    public STentry getLatestThis()
+    {
+        String id = "this";
+
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
+        STentry entry = null;
+
+        while(li.hasPrevious())
+        {
+            HashMap<String, STentry> map = li.previous();
+
+            if((entry = map.get(id)) != null)
+                break;
+        }
+
+        return entry;
+    }
 }

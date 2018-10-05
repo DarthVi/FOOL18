@@ -242,6 +242,13 @@ public class SVMVisitor extends SVMBaseVisitor
         return null;
     }
 
+    @Override
+    public Object visitLabel(SVMParser.LabelContext ctx)
+    {
+        labelRef.put(i++, ctx.l.getText());
+        return null;
+    }
+
     /**
      * After having collected references, we must put them them where needed in order
      * to be used appropriately in the VM code.

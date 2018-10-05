@@ -1,0 +1,10 @@
+class Pippo (int a; int b)
+{
+    int f(int x, int y)
+        x + y + a + b;
+}
+
+let
+    Pippo varPip = new Pippo(2, 4);
+in
+    varPip.f(5, 6);

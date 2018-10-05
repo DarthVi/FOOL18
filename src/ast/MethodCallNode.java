@@ -22,6 +22,7 @@ public class MethodCallNode  extends FunCallNode  {
     private String objectID;
     private String methodID;
     private IType methodType;
+    private ClassType classType;
 
     public MethodCallNode(Token token, ActualParamsNode args, FOOLParser.ObjCallContext ctx, String objectID, String methodID) {
         super(token, args, ctx);
@@ -149,6 +150,8 @@ public class MethodCallNode  extends FunCallNode  {
             //checkSemantics of effective arguments
             actualArgs.checkSemantics(env);
 
+            this.classType = classType;
+
         }
         catch (UndeclaredClassException |
                 NullPointerException    |
@@ -172,7 +175,7 @@ public class MethodCallNode  extends FunCallNode  {
         for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
             getAR.append("lw\n");
 
-        return "lfp\n"                                  // carico il frame pointer
+        /*return "lfp\n"                                  // carico il frame pointer
                 + parCode                               // carico i parametri
                 + "push " + objectOffset + "\n"         // carico l'offset dell'oggetto nello scope di definizione
                 + "lfp\n"                               // carico il frame pointer
@@ -185,6 +188,14 @@ public class MethodCallNode  extends FunCallNode  {
                 + "add" + "\n"                          // carico sullo stack dispatch_table_start + offset
                 + "lc\n"                                // trovo l'indirizzo del metodo
                 + "js\n";                               // salto all'istruzione dove e' definito il metodo e salvo $ra
+                */
+        return "lfp\n"
+                + parCode
+                + "push class" + classType.getClassName() + "\n"
+                + "push " + (methodOffset ) + "\n"
+                + "add\n"
+                + "lc\n"
+                + "js\n";
     }
 
 

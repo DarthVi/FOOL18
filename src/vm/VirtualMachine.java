@@ -133,6 +133,7 @@ public class VirtualMachine
                     ObjectInfo object = memoryManager.allocate(numArgs, arguments);
                     //setting the dispatch table address
                       object.setDftAddress(dftAddress);
+                      memoryManager.push(object.getStartIndex());
                     break;
                 case SVMParser.LC:
                     address = memoryManager.pop();
