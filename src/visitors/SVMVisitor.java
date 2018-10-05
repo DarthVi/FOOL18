@@ -131,6 +131,12 @@ public class SVMVisitor extends SVMBaseVisitor
     }
 
     @Override
+    public Object visitLabel(SVMParser.LabelContext ctx) {
+        labelRef.put(i++, ctx.l.getText());
+        return null;
+    }
+
+    @Override
     public Object visitJs(SVMParser.JsContext ctx)
     {
         addCode(SVMParser.JS);

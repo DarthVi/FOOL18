@@ -21,8 +21,11 @@ public class VirtualMachine
         //int iter = 0;
 
         while ( true ) {
-            //System.out.println("IP: " + memoryManager.ip);
             int bytecode = code[memoryManager.ip++]; // fetch
+            // System.out.println("\n" + bytecode);
+
+
+
             int v1,v2, value;
             int address;
 
@@ -123,26 +126,30 @@ public class VirtualMachine
                     int dftAddress = memoryManager.pop();
                     //the number of arguments passed to the constructor
                     int numArgs = memoryManager.pop();
-
-                    //memoryManager.allocate(1,new int[]{dftAddress});
+                     memoryManager.allocate(1,new int[]{dftAddress});
                     int[] arguments = new int[numArgs];
 
                     for(int i = numArgs - 1; i >= 0; i--)
                         arguments[i] = memoryManager.pop();
 
                     ObjectInfo object = memoryManager.allocate(numArgs, arguments);
+                    memoryManager.push(0);
                     //setting the dispatch table address
                       object.setDftAddress(dftAddress);
+
                     break;
                 case SVMParser.LC:
                     address = memoryManager.pop();
-                    for(int i=0;i< 80; i++) System.out.print(i+"="+code[i]+", ");
-                    System.out.println(address);
                     memoryManager.push(code[address]);
                     break;
+                case SVMParser.COPY:
+                    value = memoryManager.getMemory(memoryManager.sp);
+                    memoryManager.push(value);
                 case SVMParser.CALCHOFF:
                     int objectAddress = memoryManager.pop();
                     int objectOffset = memoryManager.pop();
+                   // System.out.println(objectAddress + "  " + objectOffset);
+
 
                     ObjectInfo objInfo = memoryManager.getObjInfo(objectAddress);
                     int realOffset = objInfo.startIndex + objectOffset;

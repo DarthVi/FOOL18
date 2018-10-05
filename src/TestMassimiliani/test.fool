@@ -1,9 +1,16 @@
-class pippo (int x) {
-    int pluto () 1;
-    int minnie () 2;
+class pippo(int a) {
+    int pluto() 2;
+    int minnie() a;
+}
+
+class paperino extends pippo(int a; int v) {
+    int p() a+v();
 }
 
 let
-    pippo x = new pippo(1);
+    paperino x = new paperino(3,5);
+
 in
     x.pluto();
+
+    

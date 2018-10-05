@@ -68,9 +68,11 @@ public class IdNode implements INode
         {
             //TODO: controllare che basti avere l'offset dell'entry
            s = "push " + entry.getOffset() + "\n" + // pushing ID's offset
+                   "push 0 \n" +       // TODO: check if it works
                    "lfp\n" +
+                   "add\n" +
                    "lw\n" +
-                   "heapoffset\n" +  //this instruction converts the logic offset to the physical one inside the class
+                   "calchoff\n" +  //this instruction converts the logic offset to the physical one inside the class
                                     //then loads it on the stack
                    "add\n" +
                    "lw\n";//carico sullo stack il valore all'indirizzo ottenuto

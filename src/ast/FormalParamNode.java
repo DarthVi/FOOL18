@@ -52,13 +52,20 @@ public class FormalParamNode implements INode
     {
         ArrayList<SemanticError> res = new ArrayList<>();
 
-        try
-        {
-            env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset++, isAttribute );
+        if(!isAttribute) {
+            try {
+                env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset--, isAttribute);
+            } catch (VariableAlreadyDefinedException e) {
+                res.add(new SemanticError(e.getMessage()));
+            }
         }
-        catch (VariableAlreadyDefinedException e)
-        {
-            res.add(new SemanticError(e.getMessage()));
+
+        else {
+            try {
+                env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset++, isAttribute);
+            } catch (VariableAlreadyDefinedException e) {
+                res.add(new SemanticError(e.getMessage()));
+            }
         }
 
         return res;
