@@ -109,6 +109,8 @@ public class ClassDecNode implements INode
                 classMethods.put(mn.getId(), mm);
             }
 
+            this.classType.setClassMethods(classMethods);
+
             if(this.parentStr == null)
             {
                 this.classType.setClassMethods(classMethods);
