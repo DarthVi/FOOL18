@@ -111,6 +111,8 @@ public class ClassDecNode implements INode
 
             if(this.parentStr == null)
             {
+                this.classType.setClassMethods(classMethods);
+
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
 
                 //building the DFT (dispatch function table) of this class, check function javadoc
