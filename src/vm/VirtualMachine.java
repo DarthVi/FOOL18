@@ -158,7 +158,7 @@ public class VirtualMachine
                     break;
                 case SVMParser.HALT :
                     System.out.println((memoryManager.sp < memoryManager.getMemorySize()) ?
-                            memoryManager.getMemory(memoryManager.sp) :
+                            "Last value before halting: " + memoryManager.getMemory(memoryManager.sp) :
                             "Empty stack!");
                     return;
             }

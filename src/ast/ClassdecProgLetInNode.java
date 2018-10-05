@@ -87,7 +87,7 @@ public class ClassdecProgLetInNode implements INode
         for(ClassDecNode cn : classdecs)
             errors.addAll(cn.checkSemantics(env));
 
-        if(letPart != null)
+        if(letPart != null && errors.isEmpty())
         {
             //let's add a new scope
             env.addHashMap();

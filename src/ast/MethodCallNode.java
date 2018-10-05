@@ -83,7 +83,7 @@ public class MethodCallNode  extends FunCallNode  {
 
                 objectOffset = 0;
 
-                classType = (ClassType) thisEntry.getType();
+                classType = env.getClassType(((ClassType) thisEntry.getType()).getClassName());
                 objectNestingLevel = 3;
             }
             else
@@ -111,7 +111,7 @@ public class MethodCallNode  extends FunCallNode  {
                             FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
                 }
                 else
-                    classType = (ClassType) objectType;
+                    classType = env.getClassType(((ClassType) objectType).getClassName());
             }
 
             STentry classEntry = env.getEntry(

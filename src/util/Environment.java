@@ -262,6 +262,16 @@ public class Environment
         return type;
     }
 
+    public ClassType getClassType(String name) throws UndeclaredClassException
+    {
+        ClassType type = symClassTypes.get(name);
+
+        if(type == null)
+            throw new UndeclaredClassException(name);
+
+        return type;
+    }
+
     public IType getTypeOf(Token token)
     {
         return this.getEntry(token).getType();
