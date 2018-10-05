@@ -1,8 +1,8 @@
 push 0
-push 1
-push 6
+push 3
+push 5
 push 2
-push classciccio
+push classpaperino
 new
 lfp
 push -2
@@ -11,7 +11,7 @@ add
 lw
 copy
 lw
-push 0
+push 2
 add
 lc
 js
@@ -59,14 +59,13 @@ lw
 calchoff
 add
 lw
+lfp
+lfp
 push 2
-push 0 
 lfp
 add
 lw
-calchoff
-add
-lw
+js
 add
 srv
 sra
@@ -75,59 +74,10 @@ sfp
 lrv
 lra
 js
-
-function3:
-cfp
-lra
-push 2
-push -2
-lfp
-add
-lw
-push 1
-push 0 
-lfp
-add
-lw
-calchoff
-add
-lw
-push 2
-push 0 
-lfp
-add
-lw
-calchoff
-add
-lw
-add
-add
-srv
-pop
-sra
-pop
-sfp
-lrv
-lra
-js
-
-function4:
-cfp
-lra
-push 54
-srv
-sra
-pop
-sfp
-lrv
-lra
-js
-classciccio2:
-function2
-function4
-classciccio:
-function2
-function3
 classpippo:
 function0
 function1
+classpaperino:
+function0
+function1
+function2

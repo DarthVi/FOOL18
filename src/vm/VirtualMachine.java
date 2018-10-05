@@ -22,9 +22,8 @@ public class VirtualMachine
 
         while ( true ) {
             int bytecode = code[memoryManager.ip++]; // fetch
-         //    System.out.println("\n Byte" + bytecode);
-          //  for(int i=0; i<memoryManager.memory.length; i++) System.out.print("" +i + "->"+memoryManager.memory[i]+", ");
-           // System.out.print("\n" + bytecode +"\n");
+            // System.out.println("\n" + bytecode);
+
 
 
             int v1,v2, value;
@@ -67,7 +66,6 @@ public class VirtualMachine
                 case SVMParser.LOADW : //
                     address = memoryManager.pop();
                     value = memoryManager.getMemory(address);
-                   // System.out.println(address);
                     memoryManager.push(value);
                     break;
                 case SVMParser.BRANCH :
@@ -133,19 +131,24 @@ public class VirtualMachine
 
                     for(int i = numArgs - 1; i >= 0; i--)
                         arguments[i] = memoryManager.pop();
-
                     ObjectInfo object = memoryManager.allocate(numArgs, arguments);
+                    memoryManager.push(0);
                     //setting the dispatch table address
                       object.setDftAddress(dftAddress);
-                      memoryManager.push(0);
+
                     break;
                 case SVMParser.LC:
                     address = memoryManager.pop();
                     memoryManager.push(code[address]);
                     break;
+                case SVMParser.COPY:
+                    value = memoryManager.getMemory(memoryManager.sp);
+                    memoryManager.push(value);
                 case SVMParser.CALCHOFF:
                     int objectAddress = memoryManager.pop();
                     int objectOffset = memoryManager.pop();
+                   // System.out.println(objectAddress + "  " + objectOffset);
+
 
                     ObjectInfo objInfo = memoryManager.getObjInfo(objectAddress);
                     int realOffset = objInfo.startIndex + objectOffset;
