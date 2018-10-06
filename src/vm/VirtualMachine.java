@@ -152,7 +152,9 @@ public class VirtualMachine
 
 
                     ObjectInfo objInfo = memoryManager.getObjInfo(objectAddress);
-                    int realOffset = objInfo.startIndex + objectOffset;
+
+                    int fieldAdd = objInfo.startIndex + objectOffset;
+                    int realOffset = fieldAdd - objectAddress;
                     memoryManager.push(realOffset);
                     memoryManager.push(objectAddress);
                     break;

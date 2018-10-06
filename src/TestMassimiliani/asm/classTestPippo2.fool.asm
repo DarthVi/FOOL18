@@ -38,7 +38,7 @@ function1:
 cfp
 lra
 push 1
-push 0 
+push 0
 lfp
 add
 lw
@@ -57,7 +57,7 @@ function3:
 cfp
 lra
 push 1
-push 0 
+push 0
 lfp
 add
 lw
@@ -65,7 +65,7 @@ calchoff
 add
 lw
 push 2
-push 0 
+push 0
 lfp
 add
 lw
