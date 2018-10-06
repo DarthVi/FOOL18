@@ -16,6 +16,8 @@ import util.SemanticError;
 import visitors.FOOLVisitorImpl;
 import visitors.FunctionVisitor;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class MockCompilerSteps
@@ -79,5 +81,19 @@ public class MockCompilerSteps
     public Environment getEnvironment()
     {
         return environment;
+    }
+
+    public static String getStringFromFile(String path) throws IOException
+    {
+        StringBuilder sb = new StringBuilder(1024);
+
+        InputStream is = new FileInputStream(path);
+        Reader r = new InputStreamReader(is, StandardCharsets.UTF_8);
+        int c = 0;
+        while ((c = r.read()) != -1) {
+            sb.append((char) c);
+        }
+
+        return sb.toString();
     }
 }

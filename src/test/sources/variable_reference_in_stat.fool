@@ -1,0 +1,7 @@
+let
+    int pippo = 1;
+    int paperino = 3;
+    int paperoga;
+in
+    paperino = pippo;
+    paperoga = paperino;

@@ -1,0 +1,6 @@
+let
+    int foo(int a)
+        a + 2;
+    bool c = false;
+in
+    foo(c);

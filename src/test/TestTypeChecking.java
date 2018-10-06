@@ -7,7 +7,6 @@ import exception.SemanticException;
 import exception.TypeException;
 import org.junit.Before;
 import org.junit.Test;
-import type.IType;
 import util.SemanticError;
 
 import java.io.*;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
 
-public class TestSemantics
+public class TestTypeChecking
 {
     private INode root;
     ArrayList<SemanticError> errors;
@@ -31,98 +30,16 @@ public class TestSemantics
         errors = null;
     }
 
-    private void run(String filePath) throws IOException, LexerException, ParserException, SemanticException {
+    private void run(String filePath) throws IOException, LexerException, ParserException,
+            SemanticException, TypeException {
         String code = MockCompilerSteps.getStringFromFile("src/test/sources/" + filePath);
         root = compiler.buildAST(code);
         errors = compiler.checkSemantics(root, compiler.getEnvironment());
+        compiler.typeCheck(root);
     }
 
     @Test
-    public void testUndeclaredVariable()
-    {
-        try
-        {
-            run("undeclared_variable.fool");
-        } catch (LexerException e)
-        {
-            fail("LexerException thrown with valid code");
-        } catch (ParserException e)
-        {
-            fail("ParserException thrown with valid code");
-        } catch (SemanticException e)
-        {
-            assertEquals(1, e.errors.size());
-            assertEquals("1:18 undeclared variable <paperino>", e.errors.get(0).msg);
-        } catch (IOException e){
-            fail();
-        }
-    }
-
-    @Test
-    public void testUndefinedFunction()
-    {
-        try
-        {
-            run("undefined_function.fool");
-        }
-        catch (LexerException e)
-        {
-            fail("LexerException thrown with valid code");
-        } catch (ParserException e)
-        {
-            fail("ParserException thrown with valid code");
-        } catch (SemanticException e)
-        {
-            assertEquals(1, e.errors.size());
-            assertEquals("1:18 call to undefined function <paperino>", e.errors.get(0).msg);
-        } catch (IOException e){
-            fail();
-        }
-    }
-
-    @Test
-    public void testUndeclaredVariableAssignment()
-    {
-        try
-        {
-            run("undeclared_variable_asgm.fool");
-        } catch (LexerException e)
-        {
-            fail("LexerException thrown with valid code");
-        } catch (ParserException e)
-        {
-            fail("ParserException thrown with valid code");
-        } catch (SemanticException e)
-        {
-            assertEquals(1, e.errors.size());
-            assertEquals("1:18 undeclared variable <paperino>", e.errors.get(0).msg);
-        } catch (IOException e){
-            fail();
-        }
-    }
-
-    @Test
-    public void testVariableReferenceInExp()
-    {
-        try
-        {
-            run("variable_reference_in_exp.fool");
-        } catch (LexerException e)
-        {
-            fail("LexerException thrown with valid code");
-        } catch (ParserException e)
-        {
-            fail("ParserException thrown with valid code");
-        } catch (SemanticException e)
-        {
-            fail("SemanticException thrown with valid code");
-        } catch (IOException e){
-            fail();
-        }
-    }
-
-    @Test
-    public void testVariableReferenceInStat()
+    public void testVariableReferenceInStatWithTypechecking()
     {
         try
         {
@@ -136,6 +53,9 @@ public class TestSemantics
         } catch (SemanticException e)
         {
             fail("SemanticException thrown with valid code");
+        } catch (TypeException e)
+        {
+            fail("TypeException thrown with valid code");
         } catch (IOException e){
             fail();
         }
@@ -157,27 +77,9 @@ public class TestSemantics
         } catch (SemanticException e)
         {
             fail("SemanticException thrown with valid code");
-        } catch (IOException e){
-            fail();
-        }
-    }
-
-    @SuppressWarnings("Duplicates")
-    @Test
-    public void testMutualRecursionSemantics()
-    {
-        try
+        } catch (TypeException e)
         {
-            run("mutual_recursion.fool");
-        } catch (LexerException e)
-        {
-            fail("LexerException thrown with valid code");
-        } catch (ParserException e)
-        {
-            fail("ParserException thrown with valid code");
-        } catch (SemanticException e)
-        {
-            fail("SemanticException thrown with valid code");
+            fail("TypeException thrown without type errors");
         } catch (IOException e){
             fail();
         }
@@ -198,6 +100,10 @@ public class TestSemantics
         } catch (SemanticException e)
         {
             fail("Incorrect exception thrown, should be TypeException");
+        } catch (TypeException e)
+        {
+            assertEquals("Type error: \"Argument 1 has an incorrect type.\" at line 6, column 4.",
+                    e.getMessage());
         } catch (IOException e){
             fail();
         }
@@ -218,33 +124,16 @@ public class TestSemantics
         } catch (SemanticException e)
         {
             fail("Incorrect exception thrown, should be TypeException");
+        } catch (TypeException e)
+        {
+            assertEquals("Type error: \"Wrong number of arguments.\" at line 6, column 4.",
+                    e.getMessage());
         } catch (IOException e){
             fail();
         }
     }
 
     //TODO: testare lo shadowing
-
-    @SuppressWarnings("Duplicates")
-    @Test
-    public void outerScopeVariableReferenceInFunctionDefinition()
-    {
-        try
-        {
-            run("outer_scope_var_ref_in_fun_def.fool");
-        } catch (LexerException e)
-        {
-            fail("LexerException thrown with valid code");
-        } catch (ParserException e)
-        {
-            fail("ParserException thrown with valid code");
-        } catch (SemanticException e)
-        {
-            fail("SemanticException thrown with valid code");
-        } catch (IOException e){
-            fail();
-        }
-    }
 
     @Test
     public void simpleCorrectClassdec()
@@ -258,6 +147,9 @@ public class TestSemantics
         } catch (LexerException e)
         {
             fail("Lexer error with valid code");
+        } catch (TypeException e)
+        {
+            fail("Type error with valid code");
         } catch (SemanticException e)
         {
             fail("SemanticException with valid code");
@@ -284,6 +176,9 @@ public class TestSemantics
         {
             System.out.println(e.getMessage());
             fail("SemanticException thrown with valid code");
+        } catch (TypeException e)
+        {
+            fail("TypeException thrown with valid code");
         } catch (IOException e)
         {
             fail("File opening failed");
@@ -298,7 +193,7 @@ public class TestSemantics
         {
             run("subsubclass_wrong_declaration.fool");
         }
-        catch (LexerException | ParserException | IOException e)
+        catch (LexerException | ParserException | TypeException | IOException e)
         {
             fail("Incorrect exception thrown");
         } catch (SemanticException e)
@@ -316,7 +211,7 @@ public class TestSemantics
         {
             run("subsubclass_declaration.fool");
         }
-        catch (LexerException | ParserException | IOException | SemanticException e)
+        catch (LexerException | ParserException | TypeException | IOException | SemanticException e)
         {
             fail("Exception thrown with valid code");
         }

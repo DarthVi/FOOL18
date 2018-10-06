@@ -1,0 +1,10 @@
+let
+    int foo(int a)
+        let
+            bool flag;
+        in
+            a + 2;
+
+    int c;
+in
+    foo(2);
