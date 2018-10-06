@@ -4,7 +4,7 @@ class pippo(int a) {
 }
 
 class paperino extends pippo(int a; int v) {
-    int p() a+v();
+    int p() a+v;
 }
 
 let
@@ -12,5 +12,3 @@ let
 
 in
     x.pluto();
-
-    

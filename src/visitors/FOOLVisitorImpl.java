@@ -16,7 +16,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitSingleExp(FOOLParser.SingleExpContext ctx) {
-        return visit(ctx.exp());
+        return  new SingleExp(visit(ctx.exp()));
     }
 
     @Override

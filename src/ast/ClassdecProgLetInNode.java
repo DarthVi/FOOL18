@@ -64,10 +64,15 @@ public class ClassdecProgLetInNode implements INode
         for (ClassDecNode c: classdecs) c.codeGeneration();
 
         StringBuilder s = new StringBuilder();
-        s.append("push 0\n");
+
 
         if (letPart != null) s.append(letPart.codeGeneration());
         if (exp != null) s.append(exp.codeGeneration());
+        if(!stats.isEmpty())
+        {
+            for(INode stat : stats)
+                s.append(stat.codeGeneration());
+        }
         s.append("halt\n").append(env.generateCode());
 
         return s.toString();
@@ -82,7 +87,7 @@ public class ClassdecProgLetInNode implements INode
         for(ClassDecNode cn : classdecs)
             errors.addAll(cn.checkSemantics(env));
 
-        if(letPart != null)
+        if(letPart != null && errors.isEmpty())
         {
             //let's add a new scope
             env.addHashMap();

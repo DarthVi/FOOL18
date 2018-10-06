@@ -150,11 +150,11 @@ public class MemoryManager
      * @return  ObjectInfo containing startIndex, size and pointers list
      * @throws VMOutOfMemoryException
      */
-    public ObjectInfo allocate(int size, int[] args) throws VMOutOfMemoryException
+    public ObjectInfo allocate(int size, int[] args, int dispatchTableAddress) throws VMOutOfMemoryException
     {
 
 
-        if(freeHeapMemory.size() < size || hp + 1 > sp)
+        if(freeHeapMemory.size() < size + 1 || hp + 1 > sp)
             throw new VMOutOfMemoryException();
 
         int startIndex = freeHeapMemory.get(0);
@@ -164,7 +164,7 @@ public class MemoryManager
         ListIterator<Integer> iterator = freeHeapMemory.listIterator();
 
         int i = 0;
-        while(iterator.hasNext() && i < size)
+        while(iterator.hasNext() && i < size + 1)
         {
             iterator.next();
             iterator.remove();
@@ -175,10 +175,11 @@ public class MemoryManager
 //            freeHeapMemory.remove(i);
 
         int j;
-        for(i = startIndex, j = 0; i < startIndex + size; i++, j++)
+        memory[startIndex] = dispatchTableAddress;
+        for(i = startIndex + 1, j = 0; i < startIndex + 1 + size; i++, j++)
             memory[i] = args[j];
 
-        hp += size;
+        hp += size + 1;
 
 
         return objinfo;

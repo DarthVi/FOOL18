@@ -113,6 +113,8 @@ public class ClassDecNode implements INode
 
             if(this.parentStr == null)
             {
+                this.classType.setClassMethods(classMethods);
+
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
 
                 //building the DFT (dispatch function table) of this class, check function javadoc
@@ -167,6 +169,21 @@ public class ClassDecNode implements INode
                 //get overridden methods
                 overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
 
+                //inheriting parent's not overridden methods
+                List<String> overriddenString =
+                        overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
+                for(Object o : parentType.getClassMethods().values())
+                {
+                    ClassMethod cm = (ClassMethod) o;
+
+                    if(!overriddenString.contains(cm.getMethodID()))
+                        classMethods.put(cm.getMethodID(), cm);
+                }
+
+                this.classType.setClassMethods(classMethods);
+
+
+
                 //overridden methods and new methods must have a new fresh label to be put
                 //inside this class' DFT
                 //for inherited not overridden methods we must get the old label and put it
@@ -200,8 +217,11 @@ public class ClassDecNode implements INode
             env.addHashMap();
             //calling the checkSemantics on members: we need this to populate the symbol table and allow
             //class methods to see the class members
-            for(MemberNode md : this.members)
+
+            env.offset=1;
+            for(MemberNode md : this.members) {
                 errors.addAll(md.checkSemantics(env));
+            }
 
             //In order to be able tu use mutual recursion,
             //we must add all the methods to the symbol table before calling each method's
@@ -215,8 +235,9 @@ public class ClassDecNode implements INode
 
                 //lets add here the signature of the function to the symbol table,
                 //in order to support mutual recursion
+
                 env.addEntry(((FOOLParser.FunContext) (fn.getCtx())).ID().getSymbol(),
-                        fnType, env.offset--, true);
+                        fnType, env.offset++, true);
             }
 
             //calling the checkSemantics on methods

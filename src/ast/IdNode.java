@@ -22,6 +22,8 @@ public class IdNode implements INode
     private String varName;
     private STentry entry;
     private int nestingLevel;
+    private int thisNestLev;
+    private int thisOffset;
     ParserRuleContext ctx;
     int extra;                      // extra = 1 id preceded by '-', extra = 2 id preceded by 'not', extra = 0 there aren't both
 
@@ -61,22 +63,27 @@ public class IdNode implements INode
 
         String s;
 
-        String getAR="";
-        for (int i=0; i<nestingLevel-entry.getNestingLevel(); i++)  getAR+="lw\n";
-
         if(entry.isAttribute())
         {
+            String getAR="";
+            for (int i=0; i<nestingLevel-thisNestLev; i++)  getAR+="lw\n";
+
             //TODO: controllare che basti avere l'offset dell'entry
            s = "push " + entry.getOffset() + "\n" + // pushing ID's offset
-                   "lfp\n" +
+                   "push " + thisOffset + "\n" +       // TODO: check if it works
+                   "lfp\n" + getAR +
+                   "add\n" +
                    "lw\n" +
-                   "heapoffset\n" +  //this instruction converts the logic offset to the physical one inside the class
+                   "calchoff\n" +  //this instruction converts the logic offset to the physical one inside the class
                                     //then loads it on the stack
                    "add\n" +
                    "lw\n";//carico sullo stack il valore all'indirizzo ottenuto
         }
         else
         {
+            String getAR="";
+            for (int i=0; i<nestingLevel-entry.getNestingLevel(); i++)  getAR+="lw\n";
+
             s= "push "+entry.getOffset()+"\n"+ //metto offset sullo stack
                     "lfp\n"+getAR+ //risalgo la catena statica
                     "add\n"+
@@ -121,6 +128,12 @@ public class IdNode implements INode
         try
         {
             this.entry = env.getEntry(token);
+            if(this.entry.isAttribute())
+            {
+                STentry thisRef = env.getEntry("this");
+                thisNestLev = thisRef.getNestingLevel();
+                thisOffset = thisRef.getOffset();
+            }
             this.nestingLevel = env.getNestingLevel();
         }
         catch (UndeclaredVariableException e)

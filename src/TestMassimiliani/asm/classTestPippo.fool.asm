@@ -11,7 +11,7 @@ add
 lw
 copy
 lw
-push 2
+push 0
 add
 lc
 js
@@ -59,13 +59,14 @@ lw
 calchoff
 add
 lw
-lfp
-lfp
 push 2
+push 0 
 lfp
 add
 lw
-js
+calchoff
+add
+lw
 add
 srv
 sra

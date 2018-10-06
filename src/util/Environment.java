@@ -204,6 +204,25 @@ public class Environment
         return entry;
     }
 
+    public STentry getEntry(String id) throws UndeclaredVariableException
+    {
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
+        STentry entry = null;
+
+        while(li.hasPrevious())
+        {
+            HashMap<String, STentry> map = li.previous();
+
+            if((entry = map.get(id)) != null)
+                break;
+        }
+
+        if(entry == null)
+            throw new UndeclaredVariableException(id);
+
+        return entry;
+    }
+
     /**
      * Returns the latest entry corresponding to the token searched
      * @param token
@@ -255,6 +274,16 @@ public class Environment
     public ClassType getClassType(Token name) throws UndeclaredClassException
     {
         ClassType type = symClassTypes.get(name.getText());
+
+        if(type == null)
+            throw new UndeclaredClassException(name);
+
+        return type;
+    }
+
+    public ClassType getClassType(String name) throws UndeclaredClassException
+    {
+        ClassType type = symClassTypes.get(name);
 
         if(type == null)
             throw new UndeclaredClassException(name);

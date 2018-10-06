@@ -1721,6 +1721,7 @@ public class FOOLParser extends Parser {
 			return getRuleContext(ExpContext.class,0);
 		}
 		public TerminalNode RPAR() { return getToken(FOOLParser.RPAR, 0); }
+		public TerminalNode SEMIC() { return getToken(FOOLParser.SEMIC, 0); }
 		public PrintStatContext(StatContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
@@ -1745,7 +1746,7 @@ public class FOOLParser extends Parser {
 		StatContext _localctx = new StatContext(_ctx, getState());
 		enterRule(_localctx, 30, RULE_stat);
 		try {
-			setState(270);
+			setState(271);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case ID:
@@ -1770,31 +1771,33 @@ public class FOOLParser extends Parser {
 				exp();
 				setState(257);
 				match(RPAR);
+				setState(258);
+				match(SEMIC);
 				}
 				break;
 			case IF:
 				_localctx = new IfStatContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(259);
-				match(IF);
 				setState(260);
-				((IfStatContext)_localctx).cond = exp();
+				match(IF);
 				setState(261);
-				match(THEN);
+				((IfStatContext)_localctx).cond = exp();
 				setState(262);
-				match(CLPAR);
+				match(THEN);
 				setState(263);
-				((IfStatContext)_localctx).thenBranch = stats();
-				setState(264);
-				match(CRPAR);
-				setState(265);
-				match(ELSE);
-				setState(266);
 				match(CLPAR);
+				setState(264);
+				((IfStatContext)_localctx).thenBranch = stats();
+				setState(265);
+				match(CRPAR);
+				setState(266);
+				match(ELSE);
 				setState(267);
-				((IfStatContext)_localctx).elseBranch = stats();
+				match(CLPAR);
 				setState(268);
+				((IfStatContext)_localctx).elseBranch = stats();
+				setState(269);
 				match(CRPAR);
 				}
 				break;
@@ -1814,7 +1817,7 @@ public class FOOLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3/\u0113\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3/\u0114\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\3\2\3"+
 		"\2\3\2\3\2\3\2\3\2\3\2\5\2+\n\2\3\2\6\2.\n\2\r\2\16\2/\3\2\3\2\3\2\3\2"+
@@ -1834,15 +1837,15 @@ public class FOOLParser extends Parser {
 		"\u00e2\n\17\3\17\3\17\5\17\u00e6\n\17\3\17\3\17\3\17\3\17\3\17\3\17\3"+
 		"\17\7\17\u00ef\n\17\f\17\16\17\u00f2\13\17\5\17\u00f4\n\17\3\17\5\17\u00f7"+
 		"\n\17\3\20\6\20\u00fa\n\20\r\20\16\20\u00fb\3\21\3\21\3\21\3\21\3\21\3"+
-		"\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\5"+
-		"\21\u0111\n\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \2\b"+
-		"\6\2#$\'\'))++\3\2\21\22\3\2\23\24\4\2\7\13\r\16\3\2\25\26\4\2\17\17\22"+
-		"\22\2\u0131\2:\3\2\2\2\4<\3\2\2\2\6D\3\2\2\2\bL\3\2\2\2\nO\3\2\2\2\fW"+
-		"\3\2\2\2\16[\3\2\2\2\20t\3\2\2\2\22v\3\2\2\2\24\u0093\3\2\2\2\26\u0095"+
-		"\3\2\2\2\30\u009a\3\2\2\2\32\u009f\3\2\2\2\34\u00f6\3\2\2\2\36\u00f9\3"+
-		"\2\2\2 \u0110\3\2\2\2\"#\5\26\f\2#$\7\4\2\2$;\3\2\2\2%*\5\4\3\2&\'\5\26"+
-		"\f\2\'(\7\4\2\2(+\3\2\2\2)+\5\36\20\2*&\3\2\2\2*)\3\2\2\2+;\3\2\2\2,."+
-		"\5\22\n\2-,\3\2\2\2./\3\2\2\2/-\3\2\2\2/\60\3\2\2\2\608\3\2\2\2\61\66"+
+		"\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3\21\3"+
+		"\21\5\21\u0112\n\21\3\21\2\2\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36"+
+		" \2\b\6\2#$\'\'))++\3\2\21\22\3\2\23\24\4\2\7\13\r\16\3\2\25\26\4\2\17"+
+		"\17\22\22\2\u0132\2:\3\2\2\2\4<\3\2\2\2\6D\3\2\2\2\bL\3\2\2\2\nO\3\2\2"+
+		"\2\fW\3\2\2\2\16[\3\2\2\2\20t\3\2\2\2\22v\3\2\2\2\24\u0093\3\2\2\2\26"+
+		"\u0095\3\2\2\2\30\u009a\3\2\2\2\32\u009f\3\2\2\2\34\u00f6\3\2\2\2\36\u00f9"+
+		"\3\2\2\2 \u0111\3\2\2\2\"#\5\26\f\2#$\7\4\2\2$;\3\2\2\2%*\5\4\3\2&\'\5"+
+		"\26\f\2\'(\7\4\2\2(+\3\2\2\2)+\5\36\20\2*&\3\2\2\2*)\3\2\2\2+;\3\2\2\2"+
+		",.\5\22\n\2-,\3\2\2\2./\3\2\2\2/-\3\2\2\2/\60\3\2\2\2\608\3\2\2\2\61\66"+
 		"\5\4\3\2\62\63\5\26\f\2\63\64\7\4\2\2\64\67\3\2\2\2\65\67\5\36\20\2\66"+
 		"\62\3\2\2\2\66\65\3\2\2\2\679\3\2\2\28\61\3\2\2\289\3\2\2\29;\3\2\2\2"+
 		":\"\3\2\2\2:%\3\2\2\2:-\3\2\2\2;\3\3\2\2\2<>\7\37\2\2=?\5\20\t\2>=\3\2"+
@@ -1901,16 +1904,16 @@ public class FOOLParser extends Parser {
 		"\u00b5\3\2\2\2\u00f6\u00c1\3\2\2\2\u00f6\u00c5\3\2\2\2\u00f6\u00d6\3\2"+
 		"\2\2\u00f6\u00e5\3\2\2\2\u00f7\35\3\2\2\2\u00f8\u00fa\5 \21\2\u00f9\u00f8"+
 		"\3\2\2\2\u00fa\u00fb\3\2\2\2\u00fb\u00f9\3\2\2\2\u00fb\u00fc\3\2\2\2\u00fc"+
-		"\37\3\2\2\2\u00fd\u00fe\5\f\7\2\u00fe\u00ff\7\4\2\2\u00ff\u0111\3\2\2"+
+		"\37\3\2\2\2\u00fd\u00fe\5\f\7\2\u00fe\u00ff\7\4\2\2\u00ff\u0112\3\2\2"+
 		"\2\u0100\u0101\7\36\2\2\u0101\u0102\7\27\2\2\u0102\u0103\5\26\f\2\u0103"+
-		"\u0104\7\30\2\2\u0104\u0111\3\2\2\2\u0105\u0106\7\33\2\2\u0106\u0107\5"+
-		"\26\f\2\u0107\u0108\7\34\2\2\u0108\u0109\7\31\2\2\u0109\u010a\5\36\20"+
-		"\2\u010a\u010b\7\32\2\2\u010b\u010c\7\35\2\2\u010c\u010d\7\31\2\2\u010d"+
-		"\u010e\5\36\20\2\u010e\u010f\7\32\2\2\u010f\u0111\3\2\2\2\u0110\u00fd"+
-		"\3\2\2\2\u0110\u0100\3\2\2\2\u0110\u0105\3\2\2\2\u0111!\3\2\2\2\'*/\66"+
-		"8:@HScfjptz\u0082\u0087\u008d\u0091\u0098\u009d\u00a2\u00a5\u00a9\u00af"+
-		"\u00c1\u00c5\u00ce\u00d1\u00d4\u00de\u00e1\u00e5\u00f0\u00f3\u00f6\u00fb"+
-		"\u0110";
+		"\u0104\7\30\2\2\u0104\u0105\7\4\2\2\u0105\u0112\3\2\2\2\u0106\u0107\7"+
+		"\33\2\2\u0107\u0108\5\26\f\2\u0108\u0109\7\34\2\2\u0109\u010a\7\31\2\2"+
+		"\u010a\u010b\5\36\20\2\u010b\u010c\7\32\2\2\u010c\u010d\7\35\2\2\u010d"+
+		"\u010e\7\31\2\2\u010e\u010f\5\36\20\2\u010f\u0110\7\32\2\2\u0110\u0112"+
+		"\3\2\2\2\u0111\u00fd\3\2\2\2\u0111\u0100\3\2\2\2\u0111\u0106\3\2\2\2\u0112"+
+		"!\3\2\2\2\'*/\668:@HScfjptz\u0082\u0087\u008d\u0091\u0098\u009d\u00a2"+
+		"\u00a5\u00a9\u00af\u00c1\u00c5\u00ce\u00d1\u00d4\u00de\u00e1\u00e5\u00f0"+
+		"\u00f3\u00f6\u00fb\u0111";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
