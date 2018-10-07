@@ -127,15 +127,20 @@ public class VirtualMachine
                     //the number of arguments passed to the constructor
                     int numArgs = memoryManager.pop();
                      //memoryManager.allocate(1,new int[]{dftAddress});
-                    int[] arguments = new int[numArgs];
+                    if(numArgs >= 0)
+                    {
+                        int[] arguments = new int[numArgs];
 
-                    for(int i = numArgs - 1; i >= 0; i--)
-                        arguments[i] = memoryManager.pop();
+                        for (int i = numArgs - 1; i >= 0; i--)
+                            arguments[i] = memoryManager.pop();
 
-                    ObjectInfo object = memoryManager.allocate(numArgs, arguments, dftAddress);
-                    memoryManager.push(object.getStartIndex());
-                    //setting the dispatch table address
-                      object.setDftAddress(dftAddress);
+                        ObjectInfo object = memoryManager.allocate(numArgs, arguments, dftAddress);
+                        memoryManager.push(object.getStartIndex());
+                        //setting the dispatch table address
+                        object.setDftAddress(dftAddress);
+                    }
+                    else
+                        memoryManager.push(-1);
 
                     break;
                 case SVMParser.LC:

@@ -84,6 +84,7 @@ public class VardecNode implements INode
         ArrayList<SemanticError> res = new ArrayList<>();
 
         res.addAll(this.type.checkSemantics(env));
+        boolean isNull = false;
 
         //in declarations expressions are not mandatory in the grammar we have defined
         if(expression != null)
@@ -95,9 +96,16 @@ public class VardecNode implements INode
             if(type.getType() instanceof ClassType)
             {
                 env.getClassType(ctx.type().ID().getSymbol());
+
+                if(expression instanceof NullNode)
+                {
+                    isNull = true;
+                    ((NullNode) expression).setClassID(((ClassType) this.type.getType()).getClassName());
+                }
             }
 
             env.addEntry(ctx.ID().getSymbol(), type.getType(), env.offset--, isAttribute);
+            env.updateIsNull(ctx.ID().getText(), isNull);
         }
         catch (VariableAlreadyDefinedException |
                 UndeclaredClassException e)

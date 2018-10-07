@@ -17,7 +17,7 @@ public class NullNode implements INode
     public NullNode(ParserRuleContext ctx)
     {
         this.ctx = ctx;
-        this.classID = "-1";
+        this.classID = "null";
     }
 
     public void setClassID(String classID)
@@ -47,7 +47,7 @@ public class NullNode implements INode
         //when coding the VM we must remember to check that if both arguments size and labels
         //are equal to -1, we have a null reference initialization
         return "push -1\n" +
-                "push " + classID + "\n" +
+                "push class" + classID + "\n" +
                 "new\n";
     }
 

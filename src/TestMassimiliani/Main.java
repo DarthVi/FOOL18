@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "classTestPippo4.fool";
+            String fileName = "classTestNullConditional.fool";
             CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 

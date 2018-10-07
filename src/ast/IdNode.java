@@ -143,4 +143,9 @@ public class IdNode implements INode
 
         return res;
     }
+
+    public STentry getEntry()
+    {
+        return entry;
+    }
 }

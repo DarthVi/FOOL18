@@ -341,6 +341,8 @@ public class Environment
             {
                 sb.append(dtEntry.getMethodLabel()).append("\n");
             }
+
+            sb.append("classnull:\n");
         }
 
         return sb.toString();
