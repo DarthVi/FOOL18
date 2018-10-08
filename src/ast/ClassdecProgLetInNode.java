@@ -72,7 +72,7 @@ public class ClassdecProgLetInNode implements INode
             for(INode stat : stats)
                 s.append(stat.codeGeneration());
         }
-        s.append("halt\n").append(env.generateCode());
+        s.append("halt\n").append(env.generateCode()).append("classnull:\n");;
 
         return s.toString();
     }
