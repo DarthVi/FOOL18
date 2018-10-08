@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "classTestCond3.fool";
+            String fileName = "classTestOrderMember.fool";
             CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 

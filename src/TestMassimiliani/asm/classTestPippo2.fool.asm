@@ -96,9 +96,8 @@ js
 classpippo:
 function0
 function1
-classnull:
 classpaperino:
-function1
 function2
+function1
 function3
 classnull:

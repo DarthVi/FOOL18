@@ -164,6 +164,15 @@ public class ClassDecNode implements INode
                     }
                 }
 
+                for(int i= 0; i < parentType.getDeclaredOrderMembers().size(); i++)
+                {
+                    if(!parentType.getDeclaredOrderMembers().get(i).getMemberID().equals(this.members.get(i).getId()))
+                    {
+                        throw new IncorrectOrderConstructorException(((FOOLParser.ClassdecContext) (ctx)).
+                                ID(0).getSymbol());
+                    }
+                }
+
                 //we must retrieve parent methods to check for overrides
 
                 //get overridden methods
@@ -251,7 +260,8 @@ public class ClassDecNode implements INode
                 | UndeclaredClassException
                 | ClassMemberOverridingException
                 | MethodAlreadyDefinedException
-                | MissingMemberException e)
+                | MissingMemberException
+                | IncorrectOrderConstructorException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
