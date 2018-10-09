@@ -12,3 +12,9 @@ class pluto(int b)
     int zee()
         b + 10;
 }
+
+let
+    paperino p = new paperino();
+    pluto l = new pluto(5);
+in
+    print(p.foo(l));

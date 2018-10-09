@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "classAsClassMember.fool";
+            String fileName = "classForwardReferenceBetweenClasses.fool";
             CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 
