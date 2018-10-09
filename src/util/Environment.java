@@ -15,7 +15,7 @@ import type.IType;
 public class Environment
 {
     public int offset = 0;
-    private ArrayList<HashMap<String,STentry>> symTable;
+    public ArrayList<HashMap<String,STentry>> symTable;
 
     //map from string to defined class declarations
     private HashMap<String, ClassType> symClassTypes;
@@ -116,6 +116,12 @@ public class Environment
         return this;
     }
 
+    public Environment addEntry(String id, STentry entry)
+    {
+        symTable.get(symTable.size() - 1).put(id, entry);
+        return this;
+    }
+
     @SuppressWarnings("Duplicates")
     public Environment updateIsNull(String id, boolean isNull)
     {
@@ -204,6 +210,25 @@ public class Environment
         return entry;
     }
 
+    public STentry getEntry(String id) throws UndeclaredVariableException
+    {
+        ListIterator<HashMap<String, STentry>> li = this.symTable.listIterator(this.symTable.size());
+        STentry entry = null;
+
+        while(li.hasPrevious())
+        {
+            HashMap<String, STentry> map = li.previous();
+
+            if((entry = map.get(id)) != null)
+                break;
+        }
+
+        if(entry == null)
+            throw new UndeclaredVariableException(id);
+
+        return entry;
+    }
+
     /**
      * Returns the latest entry corresponding to the token searched
      * @param token
@@ -255,6 +280,16 @@ public class Environment
     public ClassType getClassType(Token name) throws UndeclaredClassException
     {
         ClassType type = symClassTypes.get(name.getText());
+
+        if(type == null)
+            throw new UndeclaredClassException(name);
+
+        return type;
+    }
+
+    public ClassType getClassType(String name) throws UndeclaredClassException
+    {
+        ClassType type = symClassTypes.get(name);
 
         if(type == null)
             throw new UndeclaredClassException(name);

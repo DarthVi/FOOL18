@@ -1,5 +1,6 @@
 package TestMassimiliani;
 
+import lib.FOOLlib;
 import org.antlr.v4.runtime.CodePointCharStream;
 import parser.*;
 import visitors.FunctionVisitor;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import visitors.FOOLVisitorImpl;
 import visitors.SVMVisitor;
+import visitors.VarDecVisitors;
 import vm.VirtualMachine;
 
 
@@ -31,7 +33,7 @@ public class Main {
         try {
 
 
-            String fileName = "test.fool";
+            String fileName = "classAsClassMember.fool";
             CharStream input = CharStreams.fromFileName("TestMassimiliani/" +fileName);
 
 
@@ -47,6 +49,11 @@ public class Main {
             FOOLParser.ProgContext progContext = parser.prog();
             if (parser.getNumberOfSyntaxErrors() > 0)
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
+
+            VarDecVisitors varDecVisitors = new VarDecVisitors();
+            varDecVisitors.visit(progContext);
+
+            System.out.println(FOOLlib.getNumberDeclarations());
 
 
             FunctionVisitor funVisitor = new FunctionVisitor();

@@ -14,7 +14,7 @@ grammar FOOL;
 
 prog   : exp SEMIC                                  #singleExp
        | let (exp SEMIC | stats)                    #letInExp
-       | classdec+ (let (exp SEMIC | stats))?       #classdecExp
+       | classdec+ let? (exp SEMIC | stats)?       #classdecExp
        ;
 
 let       : LET dec+ IN ;
@@ -34,7 +34,7 @@ dec   : vardec           #varDeclaration
       | fun              #funDeclaration
       ;
 
-classdec    : CLASS ID (EXTENDS ID)? (LPAR argdec (SEMIC argdec)* RPAR)?
+classdec    : CLASS ID (EXTENDS ID)? LPAR ( argdec (SEMIC argdec)*)? RPAR
               (CLPAR fun* CRPAR)? ;
 
 
@@ -70,7 +70,7 @@ value  : (MINUS)?  INTEGER                                        #intVal
 stats:  (stat)+ ;
 
 stat:   varasm SEMIC  #varasmStat
-        | PRINT LPAR exp RPAR #printStat
+        | PRINT LPAR exp RPAR SEMIC #printStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat
         ;
 

@@ -1,0 +1,27 @@
+class testClass (int a) {
+     int hello() a;
+ }
+
+class A (testClass x) {
+    int pippo() 12;
+    void main() x.hello();
+    int pito() 1;
+}
+
+
+class B(int a; int b; testClass c) {
+    testClass t() new testClass(a+b);
+    testClass t2() new testClass(a*b);
+    testClass t3() new testClass(a-b);
+    void test() c.hello();
+}
+
+let
+    A nuovaA() new A(new testClass(1));
+    int aaa = 12;
+    B b = new B(1,2, new testClass(10));
+    int yyyy = 123;
+    testClass c = b.t();
+    A f = nuovaA();
+in
+   f.pippo();

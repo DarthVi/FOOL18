@@ -12,6 +12,6 @@ public class MethodAlreadyDefinedException extends FunctionAlreadyDefinedExcepti
     @Override
     public String getMessage()
     {
-        return line + ":" + column + " method already defined: <" + this.functionName + ">";
+        return line + ":" + column + " method already defined or badly overridden: <" + this.functionName + ">";
     }
 }

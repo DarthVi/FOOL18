@@ -126,15 +126,21 @@ public class VirtualMachine
                     int dftAddress = memoryManager.pop();
                     //the number of arguments passed to the constructor
                     int numArgs = memoryManager.pop();
-                     memoryManager.allocate(1,new int[]{dftAddress});
-                    int[] arguments = new int[numArgs];
+                     //memoryManager.allocate(1,new int[]{dftAddress});
+                    if(numArgs >= 0)
+                    {
+                        int[] arguments = new int[numArgs];
 
-                    for(int i = numArgs - 1; i >= 0; i--)
-                        arguments[i] = memoryManager.pop();
-                    ObjectInfo object = memoryManager.allocate(numArgs, arguments);
-                    memoryManager.push(memoryManager.getHeapstart());
-                    //setting the dispatch table address
-                      object.setDftAddress(dftAddress);
+                        for (int i = numArgs - 1; i >= 0; i--)
+                            arguments[i] = memoryManager.pop();
+
+                        ObjectInfo object = memoryManager.allocate(numArgs, arguments, dftAddress);
+                        memoryManager.push(object.getStartIndex());
+                        //setting the dispatch table address
+                        object.setDftAddress(dftAddress);
+                    }
+                    else
+                        memoryManager.push(-1);
 
                     break;
                 case SVMParser.LC:
@@ -151,13 +157,15 @@ public class VirtualMachine
 
 
                     ObjectInfo objInfo = memoryManager.getObjInfo(objectAddress);
-                    int realOffset = objInfo.startIndex + objectOffset;
+
+                    int fieldAdd = objInfo.startIndex + objectOffset;
+                    int realOffset = fieldAdd - objectAddress;
                     memoryManager.push(realOffset);
                     memoryManager.push(objectAddress);
                     break;
                 case SVMParser.HALT :
                     System.out.println((memoryManager.sp < memoryManager.getMemorySize()) ?
-                            memoryManager.getMemory(memoryManager.sp) :
+                            "Last value before halting: " + memoryManager.getMemory(memoryManager.sp) :
                             "Empty stack!");
                     return;
             }

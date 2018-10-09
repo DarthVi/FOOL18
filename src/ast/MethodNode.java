@@ -178,6 +178,12 @@ public class MethodNode extends FunctionNode
         return funl + "\n";
     }
 
+    @Override
+    public int hashCode()
+    {
+        return id.hashCode();
+    }
+
 
     //TODO: see what's to override among  checksemantics and typecheck
 }

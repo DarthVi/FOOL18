@@ -16,7 +16,7 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
     @Override
     public INode visitSingleExp(FOOLParser.SingleExpContext ctx) {
-        return visit(ctx.exp());
+        return  new SingleExp(visit(ctx.exp()));
     }
 
     @Override
@@ -132,9 +132,13 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
             isAttribute = true;
 
+        boolean isClass = false;
+
+        if (typeNode.getType().getTypeID().toString().contains("CLASS")) isClass=true;
+
         //isAttribute = false because it is not relevant in this case to discriminate variables from members
         return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(),
-                isAttribute, ctx);
+                isAttribute, isClass, ctx);
     }
 
     @Override
@@ -420,15 +424,17 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
             letNode = new LetNode(declarations, ctx);
 
-            if (ctx.exp() != null)
-                exp = visit(ctx.exp());
-            else
+
+        }
+
+        if (ctx.exp() != null)
+            exp = visit(ctx.exp());
+        else if(ctx.stats() != null)
+        {
+            for (FOOLParser.StatContext sc : ctx.stats().stat())
             {
-                for (FOOLParser.StatContext sc : ctx.stats().stat())
-                {
-                    INode stat = visit(sc);
-                    statements.add(stat);
-                }
+                INode stat = visit(sc);
+                statements.add(stat);
             }
         }
 

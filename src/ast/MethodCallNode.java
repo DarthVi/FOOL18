@@ -1,8 +1,8 @@
 package ast;
 
+import exception.*;
 import exception.NullPointerException;
-import exception.TypeException;
-import exception.UndeclaredClassException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import parser.FOOLParser;
@@ -28,8 +28,6 @@ public class MethodCallNode  extends FunCallNode  {
         super(token, args, ctx);
         this.objectID = objectID;
         this.methodID = methodID;
-
-
     }
 
 
@@ -71,26 +69,23 @@ public class MethodCallNode  extends FunCallNode  {
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
-
-
         ArrayList<SemanticError> errors = new ArrayList<>();
 
         nestinglevel = env.getNestingLevel();
-
 
 
         try
         {
             ClassType classType = null;
 
-            if(objectID.equals("this"))
+             if(objectID.equals("this"))
             {
                 STentry thisEntry = env.getEntry(
                         ((FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
 
                 objectOffset = 0;
 
-                classType = (ClassType) thisEntry.getType();
+                classType = env.getClassType(((ClassType) thisEntry.getType()).getClassName());
                 objectNestingLevel = 3;
             }
             else
@@ -114,14 +109,12 @@ public class MethodCallNode  extends FunCallNode  {
 
                 if(! (objectType instanceof ClassType))
                 {
-                    errors.add(new SemanticError("Invocazione di metodo su un tipo non oggetto"));
+                    throw new InvalidMethodInvocation(((
+                            FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
                 }
                 else
-                    classType = (ClassType) objectType;
-
-                if(errors.size()>0) return errors;
+                    classType = env.getClassType(((ClassType) objectType).getClassName());
             }
-
 
             STentry classEntry = env.getEntry(
                     ((FOOLParser.ObjCallContext) ctx).ID(0).getSymbol());
@@ -143,30 +136,29 @@ public class MethodCallNode  extends FunCallNode  {
                     methodOffset = i;
                     found = true;
                 }
-
             }
 
-            System.out.println(classType.getClassMethods() + "  " + objectID);
+            //System.out.println(classType.getClassMethods() + "  " + objectID);
             ClassMethod classMethod = ((ClassMethod) classType.getClassMethods().get(methodID));
 
             if(classMethod == null)
             {
-                errors.add(new SemanticError("Object " + objectID + " doesn't have a " + methodID + " method."));
+                throw new MissingMethodException(objectID, methodID);
             }
             else
                 methodType = classMethod.getMethodType();
 
-
             //checkSemantics of effective arguments
-            actualArgs.checkSemantics(env);
+            errors.addAll(actualArgs.checkSemantics(env));
 
         }
         catch (UndeclaredClassException |
-                NullPointerException e)
+                NullPointerException    |
+                InvalidMethodInvocation |
+                MissingMethodException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
-
 
         return errors;
     }

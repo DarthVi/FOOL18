@@ -11,7 +11,7 @@ add
 lw
 copy
 lw
-push 2
+push 0
 add
 lc
 js
@@ -33,7 +33,7 @@ function1:
 cfp
 lra
 push 1
-push 0 
+push 0
 lfp
 add
 lw
@@ -52,20 +52,21 @@ function2:
 cfp
 lra
 push 1
-push 0 
+push 0
 lfp
 add
 lw
 calchoff
 add
 lw
-lfp
-lfp
 push 2
+push 0
 lfp
 add
 lw
-js
+calchoff
+add
+lw
 add
 srv
 sra
@@ -77,7 +78,9 @@ js
 classpippo:
 function0
 function1
+classnull:
 classpaperino:
 function0
 function1
 function2
+classnull:

@@ -1,4 +1,4 @@
-// Generated from C:/Users/Lorenzo/Desktop/src/parser\SVM.g4 by ANTLR 4.6
+// Generated from /home/vincenzo/IdeaProjects/FOOL18new/src/parser/SVM.g4 by ANTLR 4.7
 package parser;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class SVMLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.6", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -25,6 +25,10 @@ public class SVMLexer extends Lexer {
 		STORERV=16, LOADFP=17, STOREFP=18, COPYFP=19, LOADHP=20, STOREHP=21, PRINT=22, 
 		HALT=23, NEW=24, COPY=25, CALCHOFF=26, LC=27, COL=28, LABEL=29, NUMBER=30, 
 		WHITESP=31, ERR=32;
+	public static String[] channelNames = {
+		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
+	};
+
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
@@ -100,6 +104,9 @@ public class SVMLexer extends Lexer {
 	public String getSerializedATN() { return _serializedATN; }
 
 	@Override
+	public String[] getChannelNames() { return channelNames; }
+
+	@Override
 	public String[] getModeNames() { return modeNames; }
 
 	@Override
@@ -122,7 +129,7 @@ public class SVMLexer extends Lexer {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2\"\u00d7\b\1\4\2\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\"\u00d7\b\1\4\2\t"+
 		"\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -140,14 +147,14 @@ public class SVMLexer extends Lexer {
 		" \u00ce\3 \3 \3!\3!\3!\3!\3!\2\2\"\3\3\5\4\7\5\t\6\13\7\r\b\17\t\21\n"+
 		"\23\13\25\f\27\r\31\16\33\17\35\20\37\21!\22#\23%\24\'\25)\26+\27-\30"+
 		"/\31\61\32\63\33\65\34\67\359\36;\37= ?!A\"\3\2\5\4\2C\\c|\5\2\62;C\\"+
-		"c|\5\2\13\f\17\17\"\"\u00db\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3"+
-		"\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2"+
-		"\2\25\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37"+
-		"\3\2\2\2\2!\3\2\2\2\2#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3"+
-		"\2\2\2\2-\3\2\2\2\2/\3\2\2\2\2\61\3\2\2\2\2\63\3\2\2\2\2\65\3\2\2\2\2"+
-		"\67\3\2\2\2\29\3\2\2\2\2;\3\2\2\2\2=\3\2\2\2\2?\3\2\2\2\2A\3\2\2\2\3C"+
-		"\3\2\2\2\5H\3\2\2\2\7L\3\2\2\2\tP\3\2\2\2\13T\3\2\2\2\rY\3\2\2\2\17]\3"+
-		"\2\2\2\21`\3\2\2\2\23c\3\2\2\2\25e\3\2\2\2\27i\3\2\2\2\31n\3\2\2\2\33"+
+		"c|\5\2\13\f\17\17\"\"\2\u00db\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t"+
+		"\3\2\2\2\2\13\3\2\2\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2"+
+		"\2\2\25\3\2\2\2\2\27\3\2\2\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2"+
+		"\37\3\2\2\2\2!\3\2\2\2\2#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2"+
+		"+\3\2\2\2\2-\3\2\2\2\2/\3\2\2\2\2\61\3\2\2\2\2\63\3\2\2\2\2\65\3\2\2\2"+
+		"\2\67\3\2\2\2\29\3\2\2\2\2;\3\2\2\2\2=\3\2\2\2\2?\3\2\2\2\2A\3\2\2\2\3"+
+		"C\3\2\2\2\5H\3\2\2\2\7L\3\2\2\2\tP\3\2\2\2\13T\3\2\2\2\rY\3\2\2\2\17]"+
+		"\3\2\2\2\21`\3\2\2\2\23c\3\2\2\2\25e\3\2\2\2\27i\3\2\2\2\31n\3\2\2\2\33"+
 		"q\3\2\2\2\35u\3\2\2\2\37y\3\2\2\2!}\3\2\2\2#\u0081\3\2\2\2%\u0085\3\2"+
 		"\2\2\'\u0089\3\2\2\2)\u008d\3\2\2\2+\u0091\3\2\2\2-\u0095\3\2\2\2/\u009b"+
 		"\3\2\2\2\61\u00a0\3\2\2\2\63\u00a4\3\2\2\2\65\u00a9\3\2\2\2\67\u00b2\3"+

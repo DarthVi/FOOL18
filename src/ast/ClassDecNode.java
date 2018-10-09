@@ -114,6 +114,7 @@ public class ClassDecNode implements INode
             if(this.parentStr == null)
             {
                 this.classType.setClassMethods(classMethods);
+
                 env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
 
                 //building the DFT (dispatch function table) of this class, check function javadoc
@@ -160,6 +161,15 @@ public class ClassDecNode implements INode
                             throw new ClassMemberOverridingException(((FOOLParser.ClassdecContext) (ctx)).
                                     ID(0).getSymbol());
                         }
+                    }
+                }
+
+                for(int i= 0; i < parentType.getDeclaredOrderMembers().size(); i++)
+                {
+                    if(!parentType.getDeclaredOrderMembers().get(i).getMemberID().equals(this.members.get(i).getId()))
+                    {
+                        throw new IncorrectOrderConstructorException(((FOOLParser.ClassdecContext) (ctx)).
+                                ID(0).getSymbol());
                     }
                 }
 
@@ -250,7 +260,8 @@ public class ClassDecNode implements INode
                 | UndeclaredClassException
                 | ClassMemberOverridingException
                 | MethodAlreadyDefinedException
-                | MissingMemberException e)
+                | MissingMemberException
+                | IncorrectOrderConstructorException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
@@ -324,23 +335,25 @@ public class ClassDecNode implements INode
                     if (check != null)
                         throw new MethodAlreadyDefinedException(entry.getCtx().ID().getSymbol());
                 }
-            }
+                else
+                {
+                    //we generate a new label for each overridden method and store it in the dispatch table
+                    int index = overriddenString.indexOf(entry.getMethodId());
+                    MethodNode mn = overriddenMethods.get(index);
 
-            //we generate a new label for each overridden method and store it in the dispatch table
-            for (MethodNode methodNode : overriddenMethods)
-            {
-                String label = FOOLlib.freshFunLabel();
-                DTableEntry dTableEntry = new DTableEntry(methodNode.getId(), label,
-                        (FOOLParser.FunContext) methodNode.getCtx());
+                    String label = FOOLlib.freshFunLabel();
+                    DTableEntry dTableEntry = new DTableEntry(mn.getId(), label,
+                            (FOOLParser.FunContext) mn.getCtx());
 
-                DTableEntry check = dTable.put(methodNode.getId(), dTableEntry);
-                effectiveDtable.add(dTableEntry);
-                fromIdtoLabelFunc.put(methodNode.getId(), label);
+                    DTableEntry check = dTable.put(mn.getId(), dTableEntry);
+                    effectiveDtable.add(dTableEntry);
+                    fromIdtoLabelFunc.put(mn.getId(), label);
 
-                //checking for invalid multiple entries for the same function name
-                if (check != null)
-                    throw new MethodAlreadyDefinedException(
-                            ((FOOLParser.FunContext) methodNode.getCtx()).ID().getSymbol());
+                    //checking for invalid multiple entries for the same function name
+                    if (check != null)
+                        throw new MethodAlreadyDefinedException(
+                                ((FOOLParser.FunContext) mn.getCtx()).ID().getSymbol());
+                }
             }
 
             //generates new label for each new method, then stores it in the DFT

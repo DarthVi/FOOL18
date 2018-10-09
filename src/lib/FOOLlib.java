@@ -7,6 +7,15 @@ public class FOOLlib {
     private static int labCount=0;
     private static int funLabCount=0;
     private static String funCode="";
+    private static int numberDeclarations = 0;
+
+    public static int getNumberDeclarations() {
+        return numberDeclarations;
+    }
+
+    public static void increaseNumberDeclaration() {
+        numberDeclarations++;
+    }
 
     public static String freshLabel() {
         return "label"+(labCount++);
@@ -25,5 +34,7 @@ public class FOOLlib {
     public static String getfun() {
         return funCode;
     }
+
+
 
 }

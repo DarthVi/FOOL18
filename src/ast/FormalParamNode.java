@@ -2,6 +2,7 @@ package ast;
 
 import exception.TypeException;
 import exception.VariableAlreadyDefinedException;
+import lib.FOOLlib;
 import org.antlr.v4.runtime.ParserRuleContext;
 import parser.FOOLParser;
 import type.IType;
@@ -21,12 +22,14 @@ public class FormalParamNode implements INode
     protected IType type;
     protected boolean isAttribute;
     protected ParserRuleContext ctx;
+    protected boolean isClass;
 
-    public FormalParamNode(String id, IType type, boolean isAttribute, ParserRuleContext ctx)
+    public FormalParamNode(String id, IType type, boolean isAttribute, boolean isClass, ParserRuleContext ctx)
     {
         this.id = id;
         this.type = type;
         this.isAttribute = isAttribute;
+        this.isClass = isClass;
         this.ctx = ctx;
     }
 
@@ -52,7 +55,16 @@ public class FormalParamNode implements INode
     {
         ArrayList<SemanticError> res = new ArrayList<>();
 
-        if(!isAttribute) {
+        System.out.println(FOOLlib.getNumberDeclarations());
+        if(isClass) {
+            try {
+                env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, 2+FOOLlib.getNumberDeclarations(), false);
+            } catch (VariableAlreadyDefinedException e) {
+                res.add(new SemanticError(e.getMessage()));
+            }
+        }
+
+        else if(!isAttribute) {
             try {
                 env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset--, isAttribute);
             } catch (VariableAlreadyDefinedException e) {
