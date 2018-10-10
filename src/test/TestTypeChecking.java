@@ -216,4 +216,94 @@ public class TestTypeChecking
             fail("Exception thrown with valid code");
         }
     }
+
+    @Test
+    public void testClassAsClassMember(){
+        try {
+            run("class_as_class_member.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassDispatching(){
+        try {
+            run("class_dispatching_test.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassAsArgument(){
+        try {
+            run("class_as_argument.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassAsMethodArg(){
+        try {
+            run("class_as_argument.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassCond(){
+        try {
+            run("class_cond.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassForwardReferenceBetweenClasses(){
+        try {
+            run("class_forward_reference_between_classes.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassNullConditional(){
+        try {
+            run("class_null_conditional.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassNullEqual(){
+        try {
+            run("class_null_equal.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testClassOrderMember(){
+        try {
+            run("class_order_member.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @Test
+    public void testSubsubclassDeclaration2(){
+        try {
+            run("subsubclass_declaration_2.fool");
+        } catch (LexerException | ParserException | TypeException | IOException | SemanticException e) {
+            fail("Exception thrown with valid code");
+        }
+    }
 }
