@@ -53,16 +53,19 @@ public class IfNode implements INode {
         //to return
         if(elType instanceof ClassType && thType instanceof ClassType)
         {
-            ClassType currentElP = ((ClassType) elType).getParent();
-            ClassType currentThP = ((ClassType) thType).getParent();
+            int elLevel = 0;
+            int thenLevel = 0;
 
-            while( !(currentElP.getParent() != null & currentThP.getParent() != null) )
+            ClassType currentElP = ((ClassType) elType);
+            ClassType currentThP = ((ClassType) thType);
+
+            while( !(currentElP.getParent() == null & currentThP.getParent() == null) )
             {
                 if(currentElP.isSubtypeOf(currentThP))
                     return currentThP;
 
                 if(currentThP.isSubtypeOf(currentElP))
-                    return currentThP;
+                    return currentElP;
 
                 if(currentElP.getParent() != null)
                     currentElP = currentElP.getParent();
@@ -70,9 +73,15 @@ public class IfNode implements INode {
                 if(currentThP.getParent() != null)
                     currentThP = currentThP.getParent();
             }
+
+            if(currentElP.isSubtypeOf(currentThP))
+                return currentThP;
+
+            if(currentThP.isSubtypeOf(currentElP))
+                return currentElP;
         }
 
-        throw new TypeException("Type error in then and else branches ", ctx);
+        throw new TypeException("Type error in then and else branches", ctx);
     }
 
     @Override

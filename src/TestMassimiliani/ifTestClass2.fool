@@ -1,0 +1,36 @@
+class A()
+{
+    int foo()
+        1;
+}
+
+class B extends A()
+{
+    int gee()
+        2;
+}
+
+class D extends A()
+{
+    int dee()
+        5;
+}
+
+class C extends D()
+{
+    int bee()
+        3;
+}
+
+class E extends B()
+{
+    int wee()
+        7;
+}
+
+let
+    C c = new C();
+    E e = new E();
+    A a;
+in
+   a = if true then { e } else { c };

@@ -7,6 +7,7 @@ import exception.SemanticException;
 import exception.TypeException;
 import org.junit.Before;
 import org.junit.Test;
+import type.ClassType;
 import type.IType;
 import util.SemanticError;
 
@@ -15,8 +16,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertThat;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 public class TestSemantics
 {
@@ -403,6 +406,99 @@ public class TestSemantics
         {
             fail("Exception thrown with valid code");
         }
+    }
+
+    @Test
+    public void testIfClass1()
+    {
+        String filePath = "src/unitTestCovella/ifTestClass1.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        }catch(TypeException e)
+        {
+            assertEquals("Type error: \"Type error in then and else branches\" " +
+                    "at line 24, column 4.", e.getMessage());
+        }
+        catch (Exception e)
+        {
+            fail("Wrong exception thrown");
+        }
+
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
+    public void testIfClass2()
+    {
+        String filePath = "src/unitTestCovella/ifTestClass2.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+
+            assertThat(type, instanceOf(ClassType.class));
+
+            assertEquals("A", ((ClassType) type).getClassName());
+        }
+        catch (LexerException | ParserException | TypeException | IOException | SemanticException e)
+        {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
+    public void testIfClass3()
+    {
+        String filePath = "src/unitTestCovella/ifTestClass3.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+
+            assertThat(type, instanceOf(ClassType.class));
+
+            assertEquals("A", ((ClassType) type).getClassName());
+        }
+        catch (LexerException | ParserException | TypeException | IOException | SemanticException e)
+        {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
+    public void testIfClassWrongAssignment()
+    {
+        String filePath = "src/unitTestCovella/ifTestClassWrongAssignment.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        }catch(TypeException e)
+        {
+            assertEquals("Type error: \"assignment not allowed if rhs is not a subtype or the same tipe of lhs\" " +
+                    "at line 48, column 4.", e.getMessage());
+        }
+        catch (Exception e)
+        {
+            fail("Wrong exception thrown");
+        }
+
     }
 
     public String getStringFromFile(String path) throws IOException

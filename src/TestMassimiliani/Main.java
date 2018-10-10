@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "classForwardReferenceBetweenClasses.fool";
+            String fileName = "ifTestClass2.fool";
             CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 
