@@ -132,13 +132,9 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
         if(FOOLParser.ruleNames[ctx.getParent().getRuleIndex()].equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec]))
             isAttribute = true;
 
-        boolean isClass = false;
-
-        if (typeNode.getType().getTypeID().toString().contains("CLASS")) isClass=true;
-
         //isAttribute = false because it is not relevant in this case to discriminate variables from members
         return new FormalParamNode(ctx.ID().getSymbol().getText(), typeNode.getType(),
-                isAttribute, isClass, ctx);
+                isAttribute, ctx);
     }
 
     @Override

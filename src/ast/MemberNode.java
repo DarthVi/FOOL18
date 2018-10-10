@@ -8,14 +8,12 @@ public class MemberNode extends FormalParamNode
 {
     public MemberNode(String id, IType type, ParserRuleContext ctx)
     {
-        super(id, type, true,true, ctx);
+        super(id, type, true, ctx);
     }
 
     public MemberNode(FormalParamNode fn)
     {
-        super  (fn.id, fn.type, fn.isAttribute,
-                fn.type.getTypeID().toString().contains("CLASS"),       //check if the parameter is a object
-                fn.ctx);
+        super(fn.id, fn.type, fn.isAttribute, fn.ctx);
     }
 
     @Override
@@ -29,9 +27,8 @@ public class MemberNode extends FormalParamNode
         return (FOOLParser.ArgdecContext) super.ctx;
     }
 
-    public IType getType() {
+    public IType getType()
+    {
         return this.type;
     }
-
-
 }

@@ -1,35 +1,31 @@
 push 0
-push 12
-push 1
-push classtestClass
+push 0
+push classC
 new
-push 1
-push classA
+push 0
+push classE
 new
-lfp
+push 0
+push 1
+push 1
+beq label0
 push -2
 lfp
 add
 lw
-copy
-lw
-push 1
+b label1
+label0:
+push -3
+lfp
 add
-lc
-js
+lw
+label1:
 halt
 
 function0:
 cfp
 lra
 push 1
-push 0
-lfp
-add
-lw
-calchoff
-add
-lw
 srv
 sra
 pop
@@ -41,7 +37,7 @@ js
 function1:
 cfp
 lra
-push 12
+push 2
 srv
 sra
 pop
@@ -53,18 +49,7 @@ js
 function2:
 cfp
 lra
-lfp
-push 1
-lfp
-lw
-add
-lw
-copy
-lw
-push 0
-add
-lc
-js
+push 5
 srv
 sra
 pop
@@ -76,7 +61,19 @@ js
 function3:
 cfp
 lra
-push 1
+push 3
+srv
+sra
+pop
+sfp
+lrv
+lra
+js
+
+function4:
+cfp
+lra
+push 7
 srv
 sra
 pop
@@ -85,9 +82,19 @@ lrv
 lra
 js
 classA:
+function0
+classB:
+function0
 function1
+classC:
+function0
 function2
 function3
-classtestClass:
+classD:
 function0
+function2
+classE:
+function0
+function1
+function4
 classnull:

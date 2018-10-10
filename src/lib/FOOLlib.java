@@ -2,20 +2,14 @@ package lib;
 
 import ast.*;
 
+import java.util.HashMap;
+
 public class FOOLlib {
 
     private static int labCount=0;
     private static int funLabCount=0;
+    private static int methodLabCount = 0;
     private static String funCode="";
-    private static int numberDeclarations = 0;
-
-    public static int getNumberDeclarations() {
-        return numberDeclarations;
-    }
-
-    public static void increaseNumberDeclaration() {
-        numberDeclarations++;
-    }
 
     public static String freshLabel() {
         return "label"+(labCount++);
@@ -23,6 +17,10 @@ public class FOOLlib {
 
     public static String freshFunLabel() {
         return "function"+(funLabCount++);
+    }
+
+    public static String freshmethodLabel() {
+        return "function"+(methodLabCount++);
     }
 
     public static String getCode() {
@@ -34,7 +32,4 @@ public class FOOLlib {
     public static String getfun() {
         return funCode;
     }
-
-
-
 }

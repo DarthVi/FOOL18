@@ -53,7 +53,7 @@ lrv
 lra
 js
 
-function3:
+function2:
 cfp
 lra
 push 1
@@ -81,7 +81,7 @@ lrv
 lra
 js
 
-function2:
+function3:
 cfp
 lra
 push 2

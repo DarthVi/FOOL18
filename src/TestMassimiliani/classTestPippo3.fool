@@ -11,7 +11,7 @@ class pluto(bool barf)
 
 class paperino extends pippo(int a; int v) {
     int p() a+v;
-    int pluto(pluto c) c.abbaia();
+
 }
 
 let
@@ -20,6 +20,6 @@ let
     //pluto z = new pluto(true);
 
 in
-    //x.p();
-    //x.pluto(z);
-    x.pluto(5);
+    x.p();
+    x.pluto(z);
+    //x.pluto(5);

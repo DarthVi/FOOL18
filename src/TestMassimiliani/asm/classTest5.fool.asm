@@ -57,7 +57,7 @@ lfp
 add
 lw
 push 2
-push 0 
+push 0
 lfp
 add
 lw
@@ -97,7 +97,7 @@ function2:
 cfp
 lra
 push 1
-push 0 
+push 0
 lfp
 add
 lw
@@ -107,7 +107,7 @@ lw
 push 1
 beq label0
 push 4
-push 0 
+push 0
 lfp
 add
 lw
@@ -117,7 +117,7 @@ lw
 b label1
 label0:
 push 3
-push 0 
+push 0
 lfp
 add
 lw
@@ -141,3 +141,4 @@ function0
 classPluto:
 function0
 function1
+classnull:

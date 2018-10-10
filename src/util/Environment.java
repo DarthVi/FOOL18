@@ -15,7 +15,7 @@ import type.IType;
 public class Environment
 {
     public int offset = 0;
-    public ArrayList<HashMap<String,STentry>> symTable;
+    private ArrayList<HashMap<String,STentry>> symTable;
 
     //map from string to defined class declarations
     private HashMap<String, ClassType> symClassTypes;

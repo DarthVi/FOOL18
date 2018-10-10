@@ -1,6 +1,5 @@
 package TestMassimiliani;
 
-import lib.FOOLlib;
 import org.antlr.v4.runtime.CodePointCharStream;
 import parser.*;
 import visitors.FunctionVisitor;
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import visitors.FOOLVisitorImpl;
 import visitors.SVMVisitor;
-import visitors.VarDecVisitors;
 import vm.VirtualMachine;
 
 
@@ -33,8 +31,8 @@ public class Main {
         try {
 
 
-            String fileName = "classAsClassMember.fool";
-            CharStream input = CharStreams.fromFileName("TestMassimiliani/" +fileName);
+            String fileName = "ifTestClass1.fool";
+            CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 
             //LEXER
@@ -49,11 +47,6 @@ public class Main {
             FOOLParser.ProgContext progContext = parser.prog();
             if (parser.getNumberOfSyntaxErrors() > 0)
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
-
-            VarDecVisitors varDecVisitors = new VarDecVisitors();
-            varDecVisitors.visit(progContext);
-
-            System.out.println(FOOLlib.getNumberDeclarations());
 
 
             FunctionVisitor funVisitor = new FunctionVisitor();
@@ -88,12 +81,12 @@ public class Main {
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            BufferedWriter out = new BufferedWriter(new FileWriter("TestMassimiliani/asm/" + fileName +".asm"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("src/TestMassimiliani/asm/" + fileName +".asm"));
             out.write(code);
             out.close();
 
             //CODE EXECUTION
-            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("TestMassimiliani/asm/" + fileName +".asm");
+            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("src/TestMassimiliani/asm/" + fileName +".asm");
             SVMLexer lexerASM = new SVMLexer(isASM);
 
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);

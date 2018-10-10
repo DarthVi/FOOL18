@@ -3,7 +3,6 @@ package ast;
 import exception.TypeException;
 import exception.UndeclaredClassException;
 import exception.VariableAlreadyDefinedException;
-import lib.FOOLlib;
 import parser.FOOLParser;
 import type.ClassType;
 import type.IType;
@@ -59,8 +58,6 @@ public class VardecNode implements INode
                 }*/
             }
 
-
-
             //declarations and assignment modify the environment but they only return void
             return new VoidType();
 
@@ -94,8 +91,6 @@ public class VardecNode implements INode
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         ArrayList<SemanticError> res = new ArrayList<>();
-
-        FOOLlib.increaseNumberDeclaration();
 
         res.addAll(this.type.checkSemantics(env));
         boolean isNull = false;
