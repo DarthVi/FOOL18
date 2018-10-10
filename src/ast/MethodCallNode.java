@@ -147,7 +147,7 @@ public class MethodCallNode  extends FunCallNode  {
                 methodType = classMethod.getMethodType();
 
             //checkSemantics of effective arguments
-            actualArgs.checkSemantics(env);
+            errors.addAll(actualArgs.checkSemantics(env));
 
         }
         catch (UndeclaredClassException |

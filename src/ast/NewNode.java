@@ -78,6 +78,7 @@ public class NewNode implements INode
         }catch(UndeclaredClassException e)
         {
             errors.add(new SemanticError(e.getMessage()));
+            return errors;
         }
 
         //we must have the same actual arguments defined in the constructor

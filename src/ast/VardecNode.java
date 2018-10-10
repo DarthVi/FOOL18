@@ -8,6 +8,7 @@ import type.ClassType;
 import type.IType;
 import type.VoidType;
 import util.Environment;
+import util.STentry;
 import util.SemanticError;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class VardecNode implements INode
     private INode expression;
     private FOOLParser.VardecContext ctx;
     private boolean isAttribute;
+    private Environment env;
 
     public VardecNode(TypeNode type, String id, INode expression, FOOLParser.VardecContext ctx, boolean isAttribute)
     {
@@ -47,6 +49,13 @@ public class VardecNode implements INode
 
                 if(!dxType.isSubtypeOf(sxType))
                     throw new TypeException("rhs value is not a subtype of the lhs declaration", ctx);
+                /*else
+                {
+                    //update environment information
+                    STentry sTentry = env.getEntry(ctx.ID().getSymbol());
+                    sTentry.setType(dxType);
+                    env.addEntry(ctx.ID().getText(), sTentry);
+                }*/
             }
 
             //declarations and assignment modify the environment but they only return void
@@ -84,6 +93,7 @@ public class VardecNode implements INode
         ArrayList<SemanticError> res = new ArrayList<>();
 
         res.addAll(this.type.checkSemantics(env));
+        boolean isNull = false;
 
         //in declarations expressions are not mandatory in the grammar we have defined
         if(expression != null)
@@ -92,18 +102,35 @@ public class VardecNode implements INode
         //we try to add entries to the symbol table
         try
         {
+            IType assignedType = type.getType();
+
             if(type.getType() instanceof ClassType)
             {
                 env.getClassType(ctx.type().ID().getSymbol());
+
+                if(expression instanceof NullNode)
+                {
+                    isNull = true;
+                    ((NullNode) expression).setClassID(((ClassType) this.type.getType()).getClassName());
+                }
+                /*else if(expression.typeCheck() instanceof ClassType)
+                {
+                    ClassType classt = (ClassType) expression.typeCheck();
+                    ClassType classType = env.getClassType(classt.getClassName());
+                    assignedType = classType;
+                }*/
             }
 
-            env.addEntry(ctx.ID().getSymbol(), type.getType(), env.offset--, isAttribute);
+            env.addEntry(ctx.ID().getSymbol(), assignedType, env.offset--, isAttribute);
+            env.updateIsNull(ctx.ID().getText(), isNull);
         }
         catch (VariableAlreadyDefinedException |
                 UndeclaredClassException e)
         {
             res.add(new SemanticError(e.getMessage()));
         }
+
+        this.env = env;
 
         return res;
     }

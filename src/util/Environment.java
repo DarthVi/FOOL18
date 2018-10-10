@@ -116,6 +116,12 @@ public class Environment
         return this;
     }
 
+    public Environment addEntry(String id, STentry entry)
+    {
+        symTable.get(symTable.size() - 1).put(id, entry);
+        return this;
+    }
+
     @SuppressWarnings("Duplicates")
     public Environment updateIsNull(String id, boolean isNull)
     {

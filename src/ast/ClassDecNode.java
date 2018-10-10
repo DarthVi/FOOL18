@@ -35,6 +35,65 @@ public class ClassDecNode implements INode
         this.ctx = ctx;
     }
 
+    public HashMap<String, String> getFromIdtoLabelFunc()
+    {
+        return fromIdtoLabelFunc;
+    }
+
+    public void setFromIdtoLabelFunc(HashMap<String, String> fromIdtoLabelFunc)
+    {
+        this.fromIdtoLabelFunc = fromIdtoLabelFunc;
+    }
+
+    public ClassType getClassType()
+    {
+        return classType;
+    }
+
+    public void setClassType(ClassType classType)
+    {
+        this.classType = classType;
+    }
+
+    public ArrayList<MemberNode> getMembers()
+    {
+        return members;
+    }
+
+    public void setMembers(ArrayList<MemberNode> members)
+    {
+        this.members = members;
+    }
+
+    public ArrayList<MethodNode> getMethods()
+    {
+        return methods;
+    }
+
+    public void setMethods(ArrayList<MethodNode> methods)
+    {
+        this.methods = methods;
+    }
+
+    public String getParentStr()
+    {
+        return parentStr;
+    }
+
+    public void setParentStr(String parentStr)
+    {
+        this.parentStr = parentStr;
+    }
+
+    public ParserRuleContext getCtx()
+    {
+        return ctx;
+    }
+
+    public void setCtx(ParserRuleContext ctx)
+    {
+        this.ctx = ctx;
+    }
 
     @Override
     public IType typeCheck() throws TypeException
@@ -91,128 +150,6 @@ public class ClassDecNode implements INode
 
         try
         {
-            //we build the classtype information for members
-            HashMap<String, ClassMember> classMembers = new HashMap<>();
-            for(MemberNode mn : members)
-            {
-                ClassMember mb = new ClassMember(mn.getId(), mn.getType(), mn.getCtx());
-                classMembers.put(mn.getId(), mb);
-            }
-
-            this.classType.setClassMembers(classMembers);
-
-            //building classtype information for methods
-            HashMap<String, ClassMethod> classMethods = new HashMap<>();
-            for(MethodNode mn : methods)
-            {
-                ClassMethod mm = new ClassMethod(mn.getId(), mn.getFunctionType());
-                classMethods.put(mn.getId(), mm);
-            }
-
-            this.classType.setClassMethods(classMethods);
-
-            if(this.parentStr == null)
-            {
-                this.classType.setClassMethods(classMethods);
-
-                env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(), classType);
-
-                //building the DFT (dispatch function table) of this class, check function javadoc
-                //and comments for details
-                buildDftTable(new ArrayList<>(), this.methods, null, env);
-
-            }
-            else
-            {
-                ClassType parentType = null;
-
-                //we check if the declared parent exists, otherwise the method throws an exception
-                parentType = env.getClassType(((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol());
-
-                this.classType.setParent(parentType);
-
-                //we set the current parent
-                ClassType currentParent = classType.getParent();
-
-                ArrayList<MethodNode> tempMethods = new ArrayList<>(this.methods);
-
-                ArrayList<MethodNode> overriddenMethods = new ArrayList<>();
-
-                //we must check that the constructor has all the members of the parent
-                for(Object o : currentParent.getClassMembers().values())
-                {
-                    ClassMember parentMember = (ClassMember) o;
-
-                    if(!this.members.stream().map(MemberNode::getId).collect(Collectors.toList()).contains(
-                            parentMember.getMemberID()))
-                    {
-                        throw new MissingMemberException(((FOOLParser.ClassdecContext) (ctx)).
-                                ID(0).getSymbol(), ((FOOLParser.ClassdecContext) (ctx)).
-                                ID(0).getSymbol().getText(), parentMember.getMemberID());
-                    }
-                    else
-                    {
-                        ClassMember childMember = (ClassMember) this.classType.getClassMembers()
-                                .get(parentMember.getMemberID());
-
-                        //checking that the subclass correctly use the type of the parent member without overriding it
-                        if(!childMember.getType().toString().equals(parentMember.getType().toString()))
-                        {
-                            throw new ClassMemberOverridingException(((FOOLParser.ClassdecContext) (ctx)).
-                                    ID(0).getSymbol());
-                        }
-                    }
-                }
-
-                //we must retrieve parent methods to check for overrides
-
-                //get overridden methods
-                overriddenMethods.addAll(getOverriddenMethods(tempMethods, currentParent));
-
-                //inheriting parent's not overridden methods
-                List<String> overriddenString =
-                        overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
-                for(Object o : parentType.getClassMethods().values())
-                {
-                    ClassMethod cm = (ClassMethod) o;
-
-                    if(!overriddenString.contains(cm.getMethodID()))
-                        classMethods.put(cm.getMethodID(), cm);
-                }
-
-                this.classType.setClassMethods(classMethods);
-
-
-
-                //overridden methods and new methods must have a new fresh label to be put
-                //inside this class' DFT
-                //for inherited not overridden methods we must get the old label and put it
-                //inside the current class DFT
-
-
-                env.addClassType(((FOOLParser.ClassdecContext) (ctx)).ID(0).getSymbol(),
-                        ((FOOLParser.ClassdecContext) (ctx)).ID(1).getSymbol(),
-                        classType);
-
-
-                //building the DFT (dispatch function table) of this class, check function javadoc
-                //and comments for details
-                buildDftTable(overriddenMethods, tempMethods, classType.getParent(), env);
-
-            }
-
-
-            //we need this to allow the user to make a new call (new Object(..))
-            //and using inside the constructor the same ordering defined
-            //here during class declaration
-            ArrayList<ClassMember> membersOrderedAsDeclaration = new ArrayList<>();
-            for(MemberNode mn : this.members)
-            {
-                ClassMember cm = new ClassMember(mn.getId(), mn.getType(), mn.getCtx());
-                membersOrderedAsDeclaration.add(cm);
-            }
-            this.classType.setDeclaredOrderMembers(membersOrderedAsDeclaration);
-
             //adding a new scope
             env.addHashMap();
             //calling the checkSemantics on members: we need this to populate the symbol table and allow
@@ -251,144 +188,14 @@ public class ClassDecNode implements INode
                 | UndeclaredClassException
                 | ClassMemberOverridingException
                 | MethodAlreadyDefinedException
-                | MissingMemberException e)
+                | MissingMemberException
+                | IncorrectOrderConstructorException e)
         {
             errors.add(new SemanticError(e.getMessage()));
         }
 
 
         return errors;
-    }
-
-    /** Overridden methods and new methods must have a new fresh label to be put
-     *  inside this class' DFT.
-     *  For inherited not overridden methods we must get the old label and put it
-     *  inside the current class DFT
-     * @param overriddenMethods
-     * @param newMethods
-     * @param parent
-     * @param env
-     */
-    @SuppressWarnings("Duplicates")
-    public void buildDftTable(ArrayList<MethodNode> overriddenMethods, ArrayList<MethodNode> newMethods,
-                              ClassType parent, Environment env) throws MethodAlreadyDefinedException
-    {
-        //this is used for checking correctness
-        HashMap<String, DTableEntry> dTable = new HashMap<>();
-        //this class' dispatch table
-        ArrayList<DTableEntry> effectiveDtable = new ArrayList<>();
-
-        //setting current class dft index to point appropriately to the new collection of dispatch tables
-        String currentClassDftIndex = this.getClassID();
-
-        if(parent == null)
-        {
-            //generates new label for each new method, then stores it in the DFT
-            for (MethodNode mn : newMethods)
-            {
-                String label = FOOLlib.freshFunLabel();
-                DTableEntry dTableEntry = new DTableEntry(mn.getId(),label,
-                        (FOOLParser.FunContext) mn.getCtx());
-                DTableEntry check = dTable.put(mn.getId(), dTableEntry);
-                effectiveDtable.add(dTableEntry);
-                fromIdtoLabelFunc.put(mn.getId(), label);
-
-                //checking for invalid multiple entries for the same function name
-                if (check != null)
-                    throw new MethodAlreadyDefinedException(
-                            ((FOOLParser.FunContext) mn.getCtx()).ID().getSymbol());
-            }
-        }
-        else
-        {
-            //we need the collection made up of overriddenMethods string to ease up some operations
-            //in line 255
-            List<String> overriddenString =
-                    overriddenMethods.stream().map(MethodNode::getId).collect(Collectors.toList());
-
-            //getting the index to the parent's dispatch table
-            String parentDftIndex = parent.getClassName();
-
-            //getting the parent's dispatch table
-            ArrayList<DTableEntry> parentTable = env.getDftTable(parentDftIndex);
-
-            //we iterate through the parent's table, if we are not overriding, we inherit the method
-            //simply by storing in the dTable the old function label previously set by the the parent
-            for (DTableEntry entry : parentTable)
-            {
-                if (!overriddenString.contains(entry.getMethodId()))
-                {
-                    DTableEntry check = dTable.put(entry.getMethodId(), entry);
-                    effectiveDtable.add(entry);
-
-                    //checking for invalid multiple entries for the same function name
-                    if (check != null)
-                        throw new MethodAlreadyDefinedException(entry.getCtx().ID().getSymbol());
-                }
-            }
-
-            //we generate a new label for each overridden method and store it in the dispatch table
-            for (MethodNode methodNode : overriddenMethods)
-            {
-                String label = FOOLlib.freshFunLabel();
-                DTableEntry dTableEntry = new DTableEntry(methodNode.getId(), label,
-                        (FOOLParser.FunContext) methodNode.getCtx());
-
-                DTableEntry check = dTable.put(methodNode.getId(), dTableEntry);
-                effectiveDtable.add(dTableEntry);
-                fromIdtoLabelFunc.put(methodNode.getId(), label);
-
-                //checking for invalid multiple entries for the same function name
-                if (check != null)
-                    throw new MethodAlreadyDefinedException(
-                            ((FOOLParser.FunContext) methodNode.getCtx()).ID().getSymbol());
-            }
-
-            //generates new label for each new method, then stores it in the DFT
-            for (MethodNode mn : newMethods)
-            {
-                String label = FOOLlib.freshFunLabel();
-                DTableEntry dTableEntry = new DTableEntry(mn.getId(),label,
-                        (FOOLParser.FunContext) mn.getCtx());
-                DTableEntry check = dTable.put(mn.getId(), dTableEntry);
-                effectiveDtable.add(dTableEntry);
-                fromIdtoLabelFunc.put(mn.getId(), label);
-
-                //checking for invalid multiple entries for the same function name
-                if (check != null)
-                    throw new MethodAlreadyDefinedException(
-                            ((FOOLParser.FunContext) mn.getCtx()).ID().getSymbol());
-            }
-        }
-
-        //adds the DFT to the collection of DFTs
-        env.addDftTable(currentClassDftIndex, effectiveDtable);
-    }
-
-    public ArrayList<MethodNode> getOverriddenMethods(ArrayList<MethodNode> methods,
-                                                      ClassType parent)
-    {
-        ArrayList<MethodNode> overriddenMethods = new ArrayList<>();
-        ListIterator<MethodNode> iter = methods.listIterator();
-
-        while(iter.hasNext())
-        {
-            MethodNode mn = iter.next();
-            String mName = mn.getId();
-
-            ClassMethod childMethod = (ClassMethod) classType.getClassMethods().get(mName);
-
-            ClassMethod parentMethod = (ClassMethod) parent.getClassMethods().get(mName);
-
-            if (parentMethod != null &&
-                    childMethod.getMethodType().isOverriding(parentMethod.getMethodType()))
-            {
-                overriddenMethods.add(mn);
-                iter.remove();
-            }
-        }
-
-        return overriddenMethods;
     }
 
     @Override

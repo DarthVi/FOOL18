@@ -420,15 +420,17 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
             letNode = new LetNode(declarations, ctx);
 
-            if (ctx.exp() != null)
-                exp = visit(ctx.exp());
-            else
+
+        }
+
+        if (ctx.exp() != null)
+            exp = visit(ctx.exp());
+        else if(ctx.stats() != null)
+        {
+            for (FOOLParser.StatContext sc : ctx.stats().stat())
             {
-                for (FOOLParser.StatContext sc : ctx.stats().stat())
-                {
-                    INode stat = visit(sc);
-                    statements.add(stat);
-                }
+                INode stat = visit(sc);
+                statements.add(stat);
             }
         }
 
