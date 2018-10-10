@@ -1,0 +1,9 @@
+let
+    int factorial(int n)
+        if (n>0) then {
+            n*factorial(n-1)
+        } else {
+            1
+        };
+in
+    factorial(5);

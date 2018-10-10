@@ -174,4 +174,8 @@ public class VirtualMachine
         }
     }
 
+    public String getResult(){
+        return String.valueOf(memoryManager.getMemory(memoryManager.sp));
+    }
+
 }

@@ -7,14 +7,19 @@ import exception.SemanticException;
 import exception.TypeException;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CodePointCharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import parser.FOOLLexer;
 import parser.FOOLParser;
+import parser.SVMLexer;
+import parser.SVMParser;
 import type.IType;
 import util.Environment;
 import util.SemanticError;
 import visitors.FOOLVisitorImpl;
 import visitors.FunctionVisitor;
+import visitors.SVMVisitor;
+import vm.VirtualMachine;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -23,6 +28,7 @@ import java.util.ArrayList;
 public class MockCompilerSteps
 {
     private Environment environment;
+    private String ASMCode;
 
     public INode buildAST(String code) throws LexerException, ParserException, SemanticException
     {
@@ -75,7 +81,21 @@ public class MockCompilerSteps
     }
 
     public String codeGeneration(INode node){
-        return node.codeGeneration();
+        ASMCode = node.codeGeneration();
+        return ASMCode;
+    }
+
+    public String execute(){
+        CodePointCharStream isASM = CharStreams.fromString(ASMCode);
+        SVMLexer lexerASM = new SVMLexer(isASM);
+        CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
+        SVMParser parserASM = new SVMParser(tokensASM);
+        SVMParser.CodeContext codeContext = parserASM.code();
+        SVMVisitor svmVisitor = new SVMVisitor();
+        svmVisitor.visit(codeContext);
+        VirtualMachine vm = new VirtualMachine(svmVisitor.getCode());
+        vm.cpu();
+        return vm.getResult();
     }
 
     public Environment getEnvironment()

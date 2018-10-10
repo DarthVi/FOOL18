@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 
 @Suite.SuiteClasses({
         TestSemantics.class,
-        TestTypeChecking.class
+        TestTypeChecking.class,
+        TestCodeGeneration.class
 })
 
 public class TestMain {

@@ -1,0 +1,9 @@
+let
+    int fibonacci(int n)
+        if (n>2) then {
+            fibonacci(n-1)+fibonacci(n-2)
+        } else {
+            1
+        };
+in
+    fibonacci(6);
