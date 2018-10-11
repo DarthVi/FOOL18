@@ -56,7 +56,6 @@ lra
 lfp
 push 1
 lfp
-lw
 add
 lw
 copy

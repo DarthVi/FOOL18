@@ -169,6 +169,26 @@ public class MethodCallNode  extends FunCallNode  {
 
         StringBuilder getAR = new StringBuilder();
 
+        // we need to increase the nestinglevel if the method call is inside a function or a method
+        int offsetObject = 0;
+        ParserRuleContext ctxIterator = ctx;
+        // if ctx contains RULE_fun or RULE_classdec we are inside function or method
+        while (offsetObject==0 && ctxIterator != null) {
+
+            if(FOOLParser.ruleNames[ctxIterator.getRuleIndex()].
+                    equals(FOOLParser.ruleNames[FOOLParser.RULE_fun]) ||
+                    FOOLParser.ruleNames[ctxIterator.getRuleIndex()].
+                    equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec])
+              ) offsetObject=1;
+
+            else ctxIterator = ctxIterator.getParent();
+        }
+
+        System.out.println(offsetObject);
+
+        for (int i = 0; i < nestinglevel + offsetObject - objectNestingLevel; i++)
+            getAR.append("lw\n");
+
         for (int i = 0; i < nestinglevel - objectNestingLevel; i++)
             getAR.append("lw\n");
 
