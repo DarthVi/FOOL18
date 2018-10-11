@@ -27,7 +27,13 @@ public class FOOLlib {
         return funCode;
     }
 
-    public static void insertfun(String c) { funCode += "\n" + c; }
+    public static void insertfun(String c) {
+        int indexofColon = c.indexOf(":");
+        String label = c.substring(0, indexofColon);
+
+        if(!label.equals("function" + funLabCount))
+            funCode += "\n" + c;
+    }
 
     public static String getfun() {
         return funCode;

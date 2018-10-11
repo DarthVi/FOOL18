@@ -2,6 +2,8 @@ package util;
 
 import parser.FOOLParser;
 
+import java.util.Objects;
+
 /**
  * Virtual function table entry (a.k.a. dispatch table entry), we
  * need it to allow dynamic dispatch
@@ -42,5 +44,20 @@ public class DTableEntry
     public FOOLParser.FunContext getCtx()
     {
         return ctx;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DTableEntry that = (DTableEntry) o;
+        return Objects.equals(methodId, that.methodId);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(methodId);
     }
 }
