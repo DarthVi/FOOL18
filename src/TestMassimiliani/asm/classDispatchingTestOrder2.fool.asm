@@ -20,26 +20,7 @@ halt
 function0:
 cfp
 lra
-push 2
-srv
-sra
-pop
-sfp
-lrv
-lra
-js
-
-function1:
-cfp
-lra
-push 1
-push 0
-lfp
-add
-lw
-calchoff
-add
-lw
+push 12
 srv
 sra
 pop
@@ -51,23 +32,19 @@ js
 function2:
 cfp
 lra
-push 1
-push 0
-lfp
-add
-lw
-calchoff
-add
-lw
-push 2
-push 0
-lfp
-add
-lw
-calchoff
-add
-lw
-add
+push 1235
+srv
+sra
+pop
+sfp
+lrv
+lra
+js
+
+function1:
+cfp
+lra
+push 12
 srv
 sra
 pop
@@ -77,10 +54,7 @@ lra
 js
 classpippo:
 function0
-function1
-classnull:
 classpaperino:
-function0
 function1
 function2
 classnull:

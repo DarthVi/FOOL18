@@ -1,0 +1,8 @@
+let
+    int a = 1;
+    int b = 2;
+    int f() a+1000;
+in
+    a = 100;
+    b = f();
+

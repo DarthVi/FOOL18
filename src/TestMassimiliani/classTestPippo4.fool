@@ -1,14 +1,25 @@
-class testClass (int a) {
-     int hello() a;
- }
+class pippo(int a) {
+    int pluto(int c) 2;
+    int minnie() a;
+}
 
-class A (testClass x) {
-    int pippo() 12;
-    void main() x.hello();
-    int pito() 1;
+class pluto(bool barf)
+{
+    int abbaia()
+        if barf then { 3 } else { 4 };
+}
+
+class paperino extends pippo(int a; int v) {
+    int p() a+v;
+    int sclera(pluto c) c.abbaia();
 }
 
 let
-    A c = new A(new testClass(12));
+    paperino x = new paperino(3,5);
+    pippo y = new pippo(1);
+    pluto z = new pluto(true);
+
 in
-    c.main();
+    //x.p();
+    x.sclera(z);
+    //x.pluto(5);

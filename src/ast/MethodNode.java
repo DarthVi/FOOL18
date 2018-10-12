@@ -157,7 +157,7 @@ public class MethodNode extends FunctionNode
         for (INode dec : params)
             popParl.append("pop\n");
 
-        String funl = FOOLlib.freshmethodLabel();
+        String funl = functionLabel;
         FOOLlib.insertfun(funl
                 + ":\n"
                 + "cfp\n"                   //setta $fp a $sp
