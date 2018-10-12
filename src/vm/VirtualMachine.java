@@ -16,15 +16,13 @@ public class VirtualMachine
         this.code = code;
     }
 
-    public void cpu() {
+    public int cpu() {
 
         //int iter = 0;
 
         while ( true ) {
             int bytecode = code[memoryManager.ip++]; // fetch
             // System.out.println("\n" + bytecode);
-
-
 
             int v1,v2, value;
             int address;
@@ -167,7 +165,7 @@ public class VirtualMachine
                     System.out.println((memoryManager.sp < memoryManager.getMemorySize()) ?
                             "Last value before halting: " + memoryManager.getMemory(memoryManager.sp) :
                             "Empty stack!");
-                    return;
+                    return  memoryManager.getMemory(memoryManager.sp);
             }
 
             //iter++;

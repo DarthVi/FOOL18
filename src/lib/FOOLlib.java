@@ -35,6 +35,12 @@ public class FOOLlib {
             funCode += "\n" + c;
     }
 
+    public static void resetFOOLlib() {
+        labCount=0;
+        funLabCount=0;
+        funCode="";
+    }
+
     public static String getfun() {
         return funCode;
     }
