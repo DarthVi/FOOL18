@@ -22,6 +22,8 @@ public class VarNode implements INode{
     private IType type;
     private INode exp;
     private ParserRuleContext ctx;
+    private STentry entry = null;
+    private int currentNestingLevel;
 
     public VarNode(String id, INode exp, ParserRuleContext ctx)
     {
@@ -44,19 +46,29 @@ public class VarNode implements INode{
     @Override
     public String codeGeneration()
     {
-            return exp.codeGeneration();
+        StringBuilder getAR = new StringBuilder();
+        for (int i = 0; i < currentNestingLevel - entry.getNestingLevel(); i++)
+            getAR.append("lw\n");
+
+        return exp.codeGeneration() +
+                "push " + entry.getOffset() + "\n" + //metto offset sullo stack
+                "lfp\n" + getAR + //risalgo la catena statica
+                "add\n" +
+                //carico sullo stack il valore all'indirizzo ottenuto
+                "sw\n";
+        //return exp.codeGeneration();
     }
 
     @Override
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         ArrayList<SemanticError> res = new ArrayList<>();
-        STentry entry = null;
         Token token = ((FOOLParser.VarasmContext) ctx).ID().getSymbol();
 
         try
         {
             entry = env.getEntry(token);
+            currentNestingLevel = env.getNestingLevel();
             //we need this in typeCheck() to check if the type return from the expression is compatible
             //with the type of the variable defined during declaration
             this.type = entry.getType();

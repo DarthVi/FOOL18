@@ -73,6 +73,12 @@ public class VardecNode implements INode
     {
         if(expression != null)
             return expression.codeGeneration();
+        else if (type.getType() instanceof ClassType && expression == null)
+        {
+            NullNode nullNode = new NullNode(ctx);
+            nullNode.setClassID(((FOOLParser.VardecContext) ctx).type().ID().getText());
+            return nullNode.codeGeneration();
+        }
         else
             return "push 0\n"; //TODO: check if it produces desired behaviour
     }
