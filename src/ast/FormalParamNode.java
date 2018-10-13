@@ -54,7 +54,7 @@ public class FormalParamNode implements INode
 
         if(!isAttribute) {
             try {
-                env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset--, isAttribute);
+                env.addEntry(((FOOLParser.ArgdecContext) ctx).ID().getSymbol(), type, env.offset++, isAttribute);
             } catch (VariableAlreadyDefinedException e) {
                 res.add(new SemanticError(e.getMessage()));
             }

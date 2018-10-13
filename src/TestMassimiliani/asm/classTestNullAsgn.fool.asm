@@ -2,9 +2,16 @@ push 0
 push -1
 push classpippo
 new
+push -1
+push classclarabella
+new
 push 0
 push classclarabella
 new
+push -3
+lfp
+add
+sw
 push -2
 lfp
 add
