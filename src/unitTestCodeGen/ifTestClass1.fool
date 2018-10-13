@@ -1,0 +1,24 @@
+class A()
+{
+    int foo()
+        1;
+}
+
+class B()
+{
+    int gee()
+        2;
+}
+
+class C extends B()
+{
+    int bee()
+        3;
+}
+
+let
+    A a = new A();
+    B b = new B();
+    C c = new C();
+in
+    if true then { a.foo() } else { c.bee() };

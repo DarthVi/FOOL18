@@ -1,0 +1,27 @@
+class A() {
+    int f1() 1;
+    int f2() 2;
+    int f3() 3;
+}
+
+class B extends A() {
+    int f1() 10;
+    int f4() 4;
+}
+
+class C extends A() {
+    int f1() 100;
+}
+
+let
+    A a = new A();
+    B b = new B();
+    C c = new C();
+    A d = if (true) then {new B()} else {new C()};
+in
+    d.f1();
+
+
+
+
+

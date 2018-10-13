@@ -1,0 +1,9 @@
+class A() {
+    int f() 3;
+}
+
+let
+    A a = new A();
+    A b = null;
+in
+    if(b==null) then {a.f()} else {666} ;

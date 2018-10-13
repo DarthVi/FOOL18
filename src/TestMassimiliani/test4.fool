@@ -1,0 +1,21 @@
+let
+    int x = 1;
+    int y = 2;
+    int z = 3;
+    int f ()
+        let int x = 12;
+        in x+y;
+    int yippy = 12;
+    int g ()
+        let int y = 12;
+        in x+y;
+    int zorro ( int e)
+        let int r = 12;
+        in r+1;
+
+
+in
+    12 + 3;
+    g();
+    z(23) + f();
+

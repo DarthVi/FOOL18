@@ -1,0 +1,14 @@
+class paperino()
+{
+    int foo(pluto a)
+        if a.gee() == 0 then { 1 } else { a.zee() };
+}
+
+class pluto(int b)
+{
+    int gee()
+        b - 1;
+
+    int zee()
+        b + 10;
+}

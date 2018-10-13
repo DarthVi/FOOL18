@@ -1,0 +1,22 @@
+class A() {
+    int f() 1;
+    int g() 2;
+    int h() 3;
+}
+
+class B extends A(int k) {
+    int h() 3;
+    int e() 4;
+    int f() k;
+}
+
+class C extends B (int k) {
+    int f() 10;
+    int g() 20;
+
+}
+
+let
+    C b = new C(7);
+in
+    b.h() + b.e() + b.f() + b.g();

@@ -1,0 +1,18 @@
+let
+    int y = 5+2;
+    int p = 12;
+    bool z = true;
+    bool faa(int n, int m)
+    let
+        int x = m;
+    in
+        faa(12,12);
+    void caso()
+    let
+        bool pazzo = faa(1,1);
+    in
+        void;
+
+
+in
+      caso();
