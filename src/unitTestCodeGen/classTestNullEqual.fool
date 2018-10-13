@@ -1,0 +1,17 @@
+class pippo(int clara)
+{
+    int chiamaClara(bool doIt)
+        if (doIt) then { 3 } else { 5 };
+}
+
+class clarabella()
+{
+    int boh()
+        4;
+}
+
+let
+    pippo p = null;
+    clarabella b = new clarabella();
+in
+    if p == null then { 10 } else { 20 };
