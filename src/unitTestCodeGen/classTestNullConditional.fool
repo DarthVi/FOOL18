@@ -1,0 +1,11 @@
+class pippo()
+{
+    int bla()
+        4;
+}
+
+let
+    pippo funRetTest(bool check)
+        if check then { new pippo() } else { new pippo() };
+in
+    if funRetTest(false) == null then { 10 } else { 40 };

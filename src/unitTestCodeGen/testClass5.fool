@@ -1,0 +1,11 @@
+class A(int a; int b) {
+    int somma() a+b;
+    int diff() a-b;
+    int mult() a*b;
+    int div() a/b;
+}
+
+let
+    A x = new A(10, 5);
+in
+    x.div()+x.somma()+x.diff()+x.mult();

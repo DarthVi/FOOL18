@@ -1,0 +1,8 @@
+let
+    int x=12;
+    void f() x=x-12;
+in
+    x=x-1;
+    x=x-2;
+    x=x-3;
+    print(x);

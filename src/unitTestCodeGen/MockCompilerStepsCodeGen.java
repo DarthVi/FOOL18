@@ -1,5 +1,6 @@
-package TestMassimiliani;
+package unitTestCodeGen;
 
+import lib.FOOLlib;
 import org.antlr.v4.runtime.CodePointCharStream;
 import parser.*;
 import visitors.FunctionVisitor;
@@ -25,15 +26,14 @@ import visitors.SVMVisitor;
 import vm.VirtualMachine;
 
 
-public class Main {
+public class MockCompilerStepsCodeGen {
+    private static String directory = "src/unitTestCodeGen/";
 
-    public static void main(String[] args) {
+    public static int main(String fileName) {
         try {
 
-
-            String fileName = "test12.fool";
-            CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
-
+            FOOLlib.resetFOOLlib();
+            CharStream input = CharStreams.fromFileName(directory + fileName);
 
             //LEXER
             FOOLLexer lexer = new FOOLLexer(input);
@@ -47,6 +47,7 @@ public class Main {
             FOOLParser.ProgContext progContext = parser.prog();
             if (parser.getNumberOfSyntaxErrors() > 0)
                 throw new ParserException("Errori rilevati: " + parser.getNumberOfSyntaxErrors() + "\n");
+
 
 
             FunctionVisitor funVisitor = new FunctionVisitor();
@@ -77,16 +78,16 @@ public class Main {
             //CODE GENERATION
             System.out.println("BEGIN CODE GENERATION...");
             String code = ast.codeGeneration();
-          //  code += "halt";                                            //to stop execution
+            //  code += "halt";                                            //to stop execution
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            BufferedWriter out = new BufferedWriter(new FileWriter("src/TestMassimiliani/asm/" + fileName +".asm"));
+            BufferedWriter out = new BufferedWriter(new FileWriter(directory+"/asm/" + fileName +".asm"));
             out.write(code);
             out.close();
 
             //CODE EXECUTION
-            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("src/TestMassimiliani/asm/" + fileName +".asm");
+            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName(directory+"/asm/" + fileName +".asm");
             SVMLexer lexerASM = new SVMLexer(isASM);
 
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);
@@ -101,7 +102,7 @@ public class Main {
 
             VirtualMachine vm = new VirtualMachine(svmVisitor.getCode());
             System.out.println();
-             vm.cpu();
+            return  vm.cpu();
 
             //ExecuteVM vm = new ExecuteVM(svmVisitor.getCode());
             //for(int i=0; i<svmVisitor.getCode().length; i++) System.out.println(svmVisitor.getCode()[i]);
@@ -110,7 +111,7 @@ public class Main {
 
         } catch (IOException | LexerException | ParserException | SemanticException | TypeException  e ) {
             System.out.println(e.getMessage());
+            return -100;
         }
-
     }
 }

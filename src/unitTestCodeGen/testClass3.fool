@@ -1,0 +1,23 @@
+class A() {
+    int f(int y) y;
+    int g() 2;
+    int h() 3;
+}
+
+class B extends A(int k) {
+    int h() 3;
+    int e() 4;
+    int f(int y) y*y;
+}
+
+class C extends A (int k) {
+    int f(int y) y*y*y;
+    int g() 20;
+
+}
+
+let
+    bool c = false && true;
+    A a = if(c) then {new B(10)} else {new C(30)};
+in
+    a.f(3) + a.h();
