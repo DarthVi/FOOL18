@@ -1,20 +1,18 @@
 push 0
-push 1
-push 2
+push 12
 push function0
-push 100
+push -2
+lfp
+add
+lw
+push 1000
+add
 halt
 
 function0:
 cfp
 lra
-push -2
-lfp
-lw
-add
-lw
-push 1000
-add
+push 1
 srv
 sra
 pop
