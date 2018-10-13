@@ -1,0 +1,27 @@
+class pippo (int a; int b) {
+    int somma() a+b;
+    int divisione() a/b;
+    int moltiplicazione () a*b;
+    int sottrazione () a-b;
+}
+
+class pluto () {
+    int dodici() 12;
+
+    bool p(int value)
+        let
+            int x = 2;
+            int a = 3;
+            bool b = true;
+            pippo f = new pippo(10,20);
+            pluto c = new pluto();
+        in
+            f.somma() +c.dodici();
+}
+
+let
+    pluto y = new pluto();
+    pippo x = new pippo(20,5);
+
+in
+   y.p(10);

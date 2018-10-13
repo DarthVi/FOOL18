@@ -1,12 +1,56 @@
 push 0
-push function4
-lfp
+push 10
+push 5
+push 2
+push classA
+new
 lfp
 push -2
 lfp
 add
 lw
+copy
+lw
+push 3
+add
+lc
 js
+lfp
+push -2
+lfp
+add
+lw
+copy
+lw
+push 0
+add
+lc
+js
+lfp
+push -2
+lfp
+add
+lw
+copy
+lw
+push 1
+add
+lc
+js
+lfp
+push -2
+lfp
+add
+lw
+copy
+lw
+push 2
+add
+lc
+js
+add
+add
+add
 halt
 
 function0:
@@ -114,24 +158,6 @@ add
 lw
 div
 srv
-sra
-pop
-sfp
-lrv
-lra
-js
-
-function4:
-cfp
-lra
-push 10
-push 5
-push 2
-push classA
-new
-push 1
-srv
-pop
 sra
 pop
 sfp

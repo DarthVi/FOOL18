@@ -1,0 +1,6 @@
+let
+    int x = 12;
+    int f() 1;
+in
+    x=x+1000;
+    x;

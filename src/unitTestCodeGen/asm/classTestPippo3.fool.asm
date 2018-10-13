@@ -1,11 +1,31 @@
 push 0
-push function4
+push 3
+push 5
+push 2
+push classpaperino
+new
+push 1
+push 1
+push classpippo
+new
+push 1
+push 1
+push classpluto
+new
 lfp
+push -4
 lfp
+add
+lw
 push -2
 lfp
 add
 lw
+copy
+lw
+push 2
+add
+lc
 js
 halt
 
@@ -20,15 +40,6 @@ lw
 calchoff
 add
 lw
-push 2
-push 0
-lfp
-add
-lw
-calchoff
-add
-lw
-add
 srv
 sra
 pop
@@ -48,15 +59,13 @@ lw
 calchoff
 add
 lw
-push 2
-push 0
-lfp
-add
-lw
-calchoff
-add
-lw
-sub
+push 1
+beq label0
+push 4
+b label1
+label0:
+push 3
+label1:
 srv
 sra
 pop
@@ -84,7 +93,7 @@ lw
 calchoff
 add
 lw
-mult
+add
 srv
 sra
 pop
@@ -96,51 +105,31 @@ js
 function3:
 cfp
 lra
+lfp
 push 1
-push 0
 lfp
 add
 lw
-calchoff
-add
+copy
 lw
-push 2
 push 0
-lfp
 add
-lw
-calchoff
-add
-lw
-div
+lc
+js
 srv
 sra
+pop
 pop
 sfp
 lrv
 lra
 js
-
-function4:
-cfp
-lra
-push 10
-push 5
-push 2
-push classA
-new
-push 1
-srv
-pop
-sra
-pop
-sfp
-lrv
-lra
-js
-classA:
-function0
+classpluto:
 function1
+classpippo:
+function0
+classpaperino:
+function0
 function2
 function3
 classnull:
