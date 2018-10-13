@@ -132,7 +132,6 @@ new
 lfp
 push -2
 lfp
-lw
 add
 lw
 copy
@@ -144,7 +143,6 @@ js
 lfp
 push -2
 lfp
-lw
 add
 lw
 copy
@@ -156,7 +154,6 @@ js
 lfp
 push -2
 lfp
-lw
 add
 lw
 copy
@@ -168,7 +165,6 @@ js
 lfp
 push -2
 lfp
-lw
 add
 lw
 copy
