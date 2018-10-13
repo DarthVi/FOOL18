@@ -4,5 +4,6 @@ let
     int f() a+1000;
 in
     a = 100;
+    print(a);
 
 
