@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "ifTestClass2.fool";
+            String fileName = "classDispatchingTestOrder2.fool";
             CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
 
 

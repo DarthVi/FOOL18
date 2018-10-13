@@ -8,10 +8,7 @@ import util.DTableEntry;
 import util.Environment;
 import util.SemanticError;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClassdecProgLetInNode implements INode
@@ -217,7 +214,8 @@ public class ClassdecProgLetInNode implements INode
 
                 classType.setDeclaredOrderMembers(membersOrderedAsDeclaration);
 
-                cn.setFromIdtoLabelFunc(fromIdtoLabelFunc);
+                cn.setFromIdtoLabelFunc(new HashMap<>(fromIdtoLabelFunc));
+                fromIdtoLabelFunc = new HashMap<>();
 
             }
         }catch (ClassAlreadyDefinedException
@@ -264,6 +262,7 @@ public class ClassdecProgLetInNode implements INode
 
         return errors;
     }
+
 
     @Override
     public String toString()

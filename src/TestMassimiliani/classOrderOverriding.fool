@@ -1,0 +1,24 @@
+class pippo(int a)
+{
+    int retVal()
+        a + 1;
+
+    bool gee()
+        true;
+}
+
+class pluto extends pippo(int a)
+{
+    bool foo(bool b)
+        b;
+
+    int retVal()
+        a + 2;
+}
+
+let
+    pippo p = new pluto(4);
+in
+    print(p.retVal());
+    print(p.gee());
+    //print(p.foo());

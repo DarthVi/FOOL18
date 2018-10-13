@@ -1,0 +1,14 @@
+class pippo(int a) {
+    int ret() 12;
+ }
+
+class paperino extends pippo(int a; int v) {
+  int k() 1235;
+  int ret() 12;
+}
+
+let
+    paperino x = new paperino(3,5);
+
+in
+    x.ret();
