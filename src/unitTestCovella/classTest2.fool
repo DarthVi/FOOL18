@@ -1,0 +1,20 @@
+class Pippo (bool postazione; int portatili)
+{
+    int f(int x, int y)
+        x + y;
+}
+
+class Pluto extends Pippo (bool postazione; int portatili; int quaderno)
+{
+    void g(bool val)
+        let
+            bool x;
+        in
+            val = x;
+}
+
+let
+    int x = 1;
+    bool y = true;
+in
+    y = false;
