@@ -29,14 +29,11 @@ push -2
 lfp
 add
 sw
-<<<<<<< HEAD
-=======
 push -2
 lfp
 add
 lw
 print
->>>>>>> master
 halt
 
 function0:

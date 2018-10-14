@@ -1,0 +1,11 @@
+class A()
+{
+bool a() not false;
+bool b() not true;
+int c() -5;
+}
+
+let
+    A a = new A();
+in
+    if( a.a() ) then {-(a.c())} else {666};

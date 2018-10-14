@@ -151,11 +151,92 @@ public class TestCodeGeneration {
 
     @Test
     public void test13()  {
-        //TODO: check
+
         int result = compiler.main(  "test13.fool");
         if(result == -100) fail ("CPU error");
         else if (result != 6) fail("The result is wrong! \n" +
                 "the result had to be 6 but it is " + result );
+    }
+
+    @Test
+    public void test14()  {
+
+        int result = compiler.main(  "test14.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 0) fail("The result is wrong! \n" +
+                "the result had to be 0 but it is " + result );
+    }
+
+    @Test
+    public void test15()  {
+
+        int result = compiler.main(  "test15.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 13) fail("The result is wrong! \n" +
+                "the result had to be 13 but it is " + result );
+    }
+
+    @Test
+    public void test16()  {
+
+        int result = compiler.main(  "test16.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 19) fail("The result is wrong! \n" +
+                "the result had to be 19 but it is " + result );
+    }
+
+    @Test
+    public void test17()  {
+
+        int result = compiler.main(  "test17.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != -10) fail("The result is wrong! \n" +
+                "the result had to be -10 but it is " + result );
+    }
+
+    @Test
+    public void test18()  {
+
+        int result = compiler.main(  "test18.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != -15) fail("The result is wrong! \n" +
+                "the result had to be -15 but it is " + result );
+    }
+
+    @Test
+    public void test19()  {
+
+        int result = compiler.main(  "test19.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != -5) fail("The result is wrong! \n" +
+                "the result had to be -5 but it is " + result );
+    }
+
+    @Test
+    public void test20()  {
+
+        int result = compiler.main(  "test20.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 5) fail("The result is wrong! \n" +
+                "the result had to be 5 but it is " + result );
+    }
+
+    @Test
+    public void test001()  {
+
+        int result = compiler.main(  "test001.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 42) fail("The result is wrong! \n" +
+                "the result had to be 42 but it is " + result );
+    }
+
+    @Test
+    public void test002()  {
+
+        int result = compiler.main(  "test002.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 7) fail("The result is wrong! \n" +
+                "the result had to be 7 but it is " + result );
     }
 
     @Test
@@ -211,6 +292,88 @@ public class TestCodeGeneration {
         else if (result != 3) fail("The result is wrong! \n" +
                 "the result had to be 3 but it is " + result );
     }
+
+    @Test
+    public void testClass7()  {
+
+        int result = compiler.main(  "testClass7.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 15) fail("The result is wrong! \n" +
+                "the result had to be 15 but it is " + result );
+    }
+
+    @Test
+    public void testClass8()  {
+
+        int result = compiler.main(  "testClass8.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 5) fail("The result is wrong! \n" +
+                "the result had to be 5 but it is " + result );
+    }
+
+    @Test
+    public void testClass9()  {
+
+        int result = compiler.main(  "testClass9.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 120) fail("The result is wrong! \n" +
+                "the result had to be 120 but it is " + result );
+    }
+
+    @Test
+    public void testClass10()  {
+
+        int result = compiler.main(  "testClass10.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 120) fail("The result is wrong! \n" +
+                "the result had to be 120 but it is " + result );
+    }
+
+    @Test
+    public void testClass11()  {
+
+        int result = compiler.main(  "testClass11.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 14) fail("The result is wrong! \n" +
+                "the result had to be 14 but it is " + result );
+    }
+
+    @Test
+    public void testClass12()  {
+
+        int result = compiler.main(  "testClass12.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 1860) fail("The result is wrong! \n" +
+                "the result had to be 1860 but it is " + result );
+    }
+
+    @Test
+    public void testClass13()  {
+
+        int result = compiler.main(  "testClass13.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 21) fail("The result is wrong! \n" +
+                "the result had to be 21 but it is " + result );
+    }
+
+    @Test
+    public void testClass14()  {
+
+        int result = compiler.main(  "testClass14.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 4) fail("The result is wrong! \n" +
+                "the result had to be 4 but it is " + result );
+    }
+
+    @Test
+    public void testClass15()  {
+
+        int result = compiler.main(  "testClass15.fool");
+        if(result == -100) fail ("CPU error");
+        else if (result != 5) fail("The result is wrong! \n" +
+                "the result had to be 5 but it is " + result );
+    }
+
 
     @Test
     public void ifTestClass1()  {

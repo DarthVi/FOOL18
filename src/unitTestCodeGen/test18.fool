@@ -1,0 +1,9 @@
+class A() {
+    int f() -10;
+}
+
+let
+    int g(int n) -n;
+    A a = new A();
+in
+    a.f() + g(5);

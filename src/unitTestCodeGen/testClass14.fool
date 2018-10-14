@@ -1,0 +1,18 @@
+class A(int a) {
+    int f() a-5;
+}
+
+class B (A a) {
+    int g() a.f();
+    int u() 100000;
+}
+
+let
+    int f (B b)
+        let
+            int k=1;
+        in
+            b.g();
+
+in
+    f(new B (new A(9)));

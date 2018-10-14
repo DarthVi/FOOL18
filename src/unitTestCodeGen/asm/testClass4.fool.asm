@@ -132,10 +132,6 @@ new
 lfp
 push -2
 lfp
-<<<<<<< HEAD
-lw
-=======
->>>>>>> master
 add
 lw
 copy
@@ -147,10 +143,6 @@ js
 lfp
 push -2
 lfp
-<<<<<<< HEAD
-lw
-=======
->>>>>>> master
 add
 lw
 copy
@@ -162,10 +154,6 @@ js
 lfp
 push -2
 lfp
-<<<<<<< HEAD
-lw
-=======
->>>>>>> master
 add
 lw
 copy
@@ -177,10 +165,6 @@ js
 lfp
 push -2
 lfp
-<<<<<<< HEAD
-lw
-=======
->>>>>>> master
 add
 lw
 copy

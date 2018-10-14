@@ -1,0 +1,23 @@
+class block(int x; int y; int z) {
+    int main() x;
+}
+
+class bblock extends block(int x; int y; int z; int k; block b) {
+    int main() k;
+    block piece() b;
+}
+
+let
+    bblock foo(int k)
+        let
+            block b1= new block(1,0, 3);
+            bblock b = new bblock(1,0,3,7, b1);
+        in
+            if k == 0 then {
+                b
+            } else {
+                foo(k-1)
+            };
+    bblock b = foo(2);
+in
+    b.main();

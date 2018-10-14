@@ -1,0 +1,11 @@
+let
+    int f(int a, int b)
+        a+b;
+    int g()
+        let int k = 4;
+        in k;
+    int k(int n)
+        if(n==0) then { 0 } else { n + k(n-1) } ;
+
+in
+    f(g(), k(5));
