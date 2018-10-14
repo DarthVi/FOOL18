@@ -5,4 +5,8 @@ let
 
 in
     a=f()+f()+f();
+<<<<<<< HEAD
     a;
+=======
+    print(a);
+>>>>>>> master
