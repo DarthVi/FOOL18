@@ -31,8 +31,8 @@ public class Main {
         try {
 
 
-            String fileName = "testFuncallFromMethod.fool";
-            CharStream input = CharStreams.fromFileName("src/TestMassimiliani/" +fileName);
+            String fileName = "classTestNullConditional.fool";
+            CharStream input = CharStreams.fromFileName("src/testDebuggingGeneric/" +fileName);
 
 
             //LEXER
@@ -81,12 +81,12 @@ public class Main {
             System.out.println(code);
             System.out.println("END CODE GENERATION...\n");
 
-            BufferedWriter out = new BufferedWriter(new FileWriter("src/TestMassimiliani/asm/" + fileName +".asm"));
+            BufferedWriter out = new BufferedWriter(new FileWriter("src/testDebuggingGeneric/asm/" + fileName +".asm"));
             out.write(code);
             out.close();
 
             //CODE EXECUTION
-            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("src/TestMassimiliani/asm/" + fileName +".asm");
+            CodePointCharStream isASM = (CodePointCharStream) CharStreams.fromFileName("src/testDebuggingGeneric/asm/" + fileName +".asm");
             SVMLexer lexerASM = new SVMLexer(isASM);
 
             CommonTokenStream tokensASM = new CommonTokenStream(lexerASM);

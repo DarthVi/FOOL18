@@ -309,7 +309,7 @@ public class TestSemantics
     @Test
     public void simpleCorrectClassdec()
     {
-        String filePath = "src/unitTestCovella/classTest1.fool";
+        String filePath = "src/unitTestSemantics/classTest1.fool";
 
         try
         {
@@ -338,7 +338,7 @@ public class TestSemantics
     @Test
     public void simpleParentChildClassdec()
     {
-        String filePath = "src/unitTestCovella/classTest2.fool";
+        String filePath = "src/unitTestSemantics/classTest2.fool";
 
         try
         {
@@ -370,7 +370,7 @@ public class TestSemantics
     @SuppressWarnings("Duplicates")
     public void incorrect3ClassdecHierarchyMissingMember()
     {
-        String filePath = "src/unitTestCovella/classTest3.fool";
+        String filePath = "src/unitTestSemantics/classTest3.fool";
 
         try
         {
@@ -393,7 +393,7 @@ public class TestSemantics
     @SuppressWarnings("Duplicates")
     public void testClassdecAccessToMembers()
     {
-        String filePath = "src/unitTestCovella/classTest4.fool";
+        String filePath = "src/unitTestSemantics/classTest4.fool";
 
         try
         {
@@ -411,7 +411,7 @@ public class TestSemantics
     @Test
     public void testIfClass1()
     {
-        String filePath = "src/unitTestCovella/ifTestClass1.fool";
+        String filePath = "src/unitTestSemantics/ifTestClass1.fool";
 
         try
         {
@@ -435,7 +435,7 @@ public class TestSemantics
     @Test
     public void testIfClass2()
     {
-        String filePath = "src/unitTestCovella/ifTestClass2.fool";
+        String filePath = "src/unitTestSemantics/ifTestClass2.fool";
 
         try
         {
@@ -458,7 +458,7 @@ public class TestSemantics
     @Test
     public void testIfClass3()
     {
-        String filePath = "src/unitTestCovella/ifTestClass3.fool";
+        String filePath = "src/unitTestSemantics/ifTestClass3.fool";
 
         try
         {
@@ -481,7 +481,7 @@ public class TestSemantics
     @Test
     public void testMethodNotDefinedInClass()
     {
-        String filePath = "src/unitTestCovella/testUndefFunMethod.fool";
+        String filePath = "src/unitTestSemantics/testUndefFunMethod.fool";
 
         try
         {
@@ -505,7 +505,7 @@ public class TestSemantics
     @Test
     public void testIfClassWrongAssignment()
     {
-        String filePath = "src/unitTestCovella/ifTestClassWrongAssignment.fool";
+        String filePath = "src/unitTestSemantics/ifTestClassWrongAssignment.fool";
 
         try
         {
