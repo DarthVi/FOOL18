@@ -1,28 +1,12 @@
 package unitTestCodeGen;
 
-import ast.INode;
-import exception.LexerException;
-import exception.ParserException;
-import exception.SemanticException;
-import exception.TypeException;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 import org.junit.Before;
 import org.junit.Test;
-import type.ClassType;
-import type.IType;
-import unitTestCovella.MockCompilerSteps;
-import util.SemanticError;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThat;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.fail;
-import static org.hamcrest.CoreMatchers.instanceOf;
 
 public class TestCodeGeneration {
     private MockCompilerStepsCodeGen compiler;

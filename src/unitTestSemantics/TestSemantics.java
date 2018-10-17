@@ -1,4 +1,4 @@
-package unitTestCovella;
+package unitTestSemantics;
 
 import ast.INode;
 import exception.LexerException;

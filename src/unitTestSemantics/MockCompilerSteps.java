@@ -1,4 +1,4 @@
-package unitTestCovella;
+package unitTestSemantics;
 
 import visitors.FOOLVisitorImpl;
 import visitors.FunctionVisitor;

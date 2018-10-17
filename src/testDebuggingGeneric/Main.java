@@ -1,4 +1,4 @@
-package TestMassimiliani;
+package testDebuggingGeneric;
 
 import org.antlr.v4.runtime.CodePointCharStream;
 import parser.*;
