@@ -1,0 +1,24 @@
+let
+    int x = 1;
+    int y = 2;
+    bool a = true;
+    bool b = false;
+
+    int and1()
+        if(a || b) then {3} else {4};
+
+    int or1()
+         if(a && b) then {3} else {5};
+
+    int and2(bool a, bool b, int c)
+        if(a && b) then {c*2} else {c/2};
+
+    int or2(bool a, bool b, int c)
+            if(a || b) then {c*2} else {c/2};
+
+in
+    and1() + or1() + and2(true, a, 20) + or2(b, b, 10) ;
+
+
+
+

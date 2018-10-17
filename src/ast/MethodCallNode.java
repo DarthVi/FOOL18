@@ -176,8 +176,6 @@ public class MethodCallNode  extends FunCallNode  {
         while (offsetObject==0 && ctxIterator != null) {
 
             if(FOOLParser.ruleNames[ctxIterator.getRuleIndex()].
-                    equals(FOOLParser.ruleNames[FOOLParser.RULE_fun]) ||
-                    FOOLParser.ruleNames[ctxIterator.getRuleIndex()].
                     equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec])
               ) offsetObject=1;
 

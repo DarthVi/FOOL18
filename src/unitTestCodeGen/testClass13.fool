@@ -1,0 +1,16 @@
+class A(int a) {
+    int f() 10 + a;
+}
+
+class B(A a) {
+    int f() a.f();
+}
+
+class C (B b) {
+    int f() b.f();
+}
+
+let
+    C c = new C(new B(new A(11)));
+in
+    c.f();

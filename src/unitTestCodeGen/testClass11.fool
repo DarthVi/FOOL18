@@ -1,0 +1,12 @@
+class A(int j) {
+    int f() j;
+    int g() 2;
+}
+
+let
+    int f(int a, int b, A c)
+         a+b+c.f();
+
+    A a = new A(5);
+in
+    f(2,7,a);

@@ -1,0 +1,8 @@
+let
+    int g(int a) a*2;
+
+    int f(int a, int b, int c)
+        (g(a)-g(b))+g(c);
+
+in
+    f(2,4,2);

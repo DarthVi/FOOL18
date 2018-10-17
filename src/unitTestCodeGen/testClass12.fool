@@ -1,0 +1,16 @@
+let
+
+int f(int k)
+    if (k==0) then {0} else {k+g(k-1)};
+int g(int k)
+     if (k==0) then {0} else {k+h(k-1)};
+int h(int k)
+     if (k==0) then {0} else {k+l(k-1)};
+int l(int k)
+     if (k==0) then {0} else {k+f(k-1)};
+
+int value = 30;
+
+in
+
+    g(value) + f(value) + h(value) + l(value) ;

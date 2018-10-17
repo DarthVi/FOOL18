@@ -1,0 +1,18 @@
+class A(int k) {
+    int f() k;
+    int g() 2;
+}
+
+class B() {
+    int pippo(A a)
+        let
+            A aa = new A(10);
+        in
+            aa.f() + a.f();
+}
+
+let
+    B b = new B();
+    A a = new A(5);
+in
+    b.pippo(a);

@@ -1,0 +1,22 @@
+class A() {
+      int ric1(int k)
+            let
+                int x = k;
+            in
+                if(x==0) then {1}
+                        else { x*this.ric1(x-1)};
+
+}
+
+let
+    int f(int x)
+        let
+            A a = new A();
+        in
+            if(x==0) then {1}
+                     else { x*a.ric1(x-1)};
+
+
+in
+    f(5);
+

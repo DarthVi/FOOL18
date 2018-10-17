@@ -1,0 +1,11 @@
+let
+    int f(int a, int b)
+        a+b;
+    bool b = true && false;
+    bool c = true || false;
+in
+    f(
+        if(b || c) then {10} else {5},
+        (10-4)/2
+    )
+    ;

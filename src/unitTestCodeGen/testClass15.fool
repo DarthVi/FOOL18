@@ -1,0 +1,22 @@
+class A(int a; int b; int c){
+    int f() a+b+c;
+    int k() 1;
+}
+
+class B extends A (int a; int b; int c; int d) {
+    int k() d;
+}
+
+class C extends A (int a; int b; int c) {
+    int k() (this.f())/2;
+}
+
+let
+    int g(int a, int b, int c, int d) 1;
+    A h(int a, int b, int c, int d) if((a+b)==(c+d)) then {new B(a,b,c,d)} else {new C (a,b,c)} ;
+
+
+    A a = h(2,3,4,1);
+    A b = h(3,3,2,1);
+in
+    a.k() + b.k();
