@@ -148,6 +148,7 @@ public class VirtualMachine
                 case SVMParser.COPY:
                     value = memoryManager.getMemory(memoryManager.sp);
                     memoryManager.push(value);
+                    break;
                 case SVMParser.CALCHOFF:
                     int objectAddress = memoryManager.pop();
                     int objectOffset = memoryManager.pop();

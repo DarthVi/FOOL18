@@ -1,0 +1,11 @@
+class A() {
+//int f() 2;
+int g() ciccio();
+}
+
+let
+    int ciccio() 4;
+    A a = new A();
+in
+    //print(ciccio());
+    print(a.g());

@@ -1,0 +1,18 @@
+class A()
+{
+    int f()
+        2;
+
+    int g()
+        f(6);
+}
+
+let
+    int f(int x)
+        x;
+
+    A a = new A();
+
+in
+    print(f(4));
+    print(a.g());

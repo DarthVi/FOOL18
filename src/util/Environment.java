@@ -249,7 +249,7 @@ public class Environment
                 break;
         }
 
-        if(entry == null)
+        if(entry == null || !(entry.getType() instanceof FunctionType))
             throw new UndefinedFunctionException(token);
 
         return entry;

@@ -1,20 +1,29 @@
 push 0
-push 3
-push 5
-push 2
-push classpaperino
+push function2
+push 0
+push classA
 new
+lfp
+push 4
 lfp
 push -2
 lfp
 add
 lw
+js
+print
+lfp
+push -3
+lfp
+add
+lw
 copy
 lw
-push 0
+push 1
 add
 lc
 js
+print
 halt
 
 function0:
@@ -32,14 +41,14 @@ js
 function1:
 cfp
 lra
+lfp
+push 6
+lfp
 push 1
-push 0
 lfp
 add
 lw
-calchoff
-add
-lw
+js
 srv
 sra
 pop
@@ -52,27 +61,18 @@ function2:
 cfp
 lra
 push 1
-push 0
 lfp
 add
 lw
-calchoff
-add
-lw
-push 3
-add
 srv
 sra
+pop
 pop
 sfp
 lrv
 lra
 js
-classpippo:
+classA:
 function0
 function1
-classpaperino:
-function0
-function1
-function2
 classnull:

@@ -479,6 +479,30 @@ public class TestSemantics
 
     @SuppressWarnings("Duplicates")
     @Test
+    public void testMethodNotDefinedInClass()
+    {
+        String filePath = "src/unitTestCovella/testUndefFunMethod.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+        }
+        catch (LexerException | ParserException | TypeException | IOException e)
+        {
+            fail("Incorrect exception thrown");
+        } catch (SemanticException e)
+        {
+            assertEquals(2, e.errors.size());
+            assertEquals("Method v not defined in the class that uses it.", e.errors.get(0).msg);
+            assertEquals("7:14 call to undefined function <v>", e.errors.get(1).msg);
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
     public void testIfClassWrongAssignment()
     {
         String filePath = "src/unitTestCovella/ifTestClassWrongAssignment.fool";

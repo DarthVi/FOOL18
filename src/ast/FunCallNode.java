@@ -1,5 +1,6 @@
 package ast;
 
+import exception.MissingMethodException;
 import exception.TypeException;
 import exception.UndefinedFunctionException;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -111,6 +112,22 @@ public class FunCallNode implements INode
     public ArrayList<SemanticError> checkSemantics(Environment env)
     {
         ArrayList<SemanticError> errors = new ArrayList<>();
+
+        boolean isInsideMethod = false;
+        ParserRuleContext ctxIterator = ctx;
+        // if ctx contains RULE_fun or RULE_classdec we are inside function or method
+        while (!isInsideMethod && ctxIterator != null) {
+
+            if(FOOLParser.ruleNames[ctxIterator.getRuleIndex()].
+                    equals(FOOLParser.ruleNames[FOOLParser.RULE_classdec])
+            ) isInsideMethod = true;
+
+            else ctxIterator = ctxIterator.getParent();
+        }
+
+        if(isInsideMethod)
+            errors.add(new SemanticError(new MissingMethodException(id).getMessage()));
+
         try {
             entry = env.getFunEntry(token);
         } catch (UndefinedFunctionException e) {

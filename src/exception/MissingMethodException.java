@@ -11,9 +11,18 @@ public class MissingMethodException extends RuntimeException
         this.methodID = methodID;
     }
 
+    public MissingMethodException(String methodID)
+    {
+        this.objectID = null;
+        this.methodID = methodID;
+    }
+
     @Override
     public String getMessage()
     {
-        return "Object " + objectID + " doesn't have a " + methodID + " method.";
+        if(objectID != null)
+            return "Object " + objectID + " doesn't have a " + methodID + " method.";
+        else
+            return "Method " + methodID + " not defined in the class that uses it.";
     }
 }
