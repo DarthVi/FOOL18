@@ -168,6 +168,7 @@ public class VirtualMachine
                     int indexOfMember = memoryManager.pop();
                     int realAddress = oAddr + indexOfMember + 1;
                     memoryManager.setMemory(realAddress, value);
+                    memoryManager.push(value);
                     break;
                 case SVMParser.HALT :
                     System.out.println((memoryManager.sp < memoryManager.getMemorySize()) ?

@@ -100,6 +100,8 @@ public class MemberAsmNode implements INode
             this.objectNestingLevel = entryObject.getNestingLevel();
             this.objectOffset = entryObject.getOffset();
 
+            errors.addAll(exp.checkSemantics(env));
+
         }catch(UndeclaredVariableException
                 | MissingMemberException
                 | InvalidMemberAccessException e)

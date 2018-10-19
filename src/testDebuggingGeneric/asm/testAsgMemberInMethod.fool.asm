@@ -4,7 +4,7 @@ push 1
 push classA
 new
 lfp
-push 5
+push 7
 push -2
 lfp
 add
@@ -15,7 +15,6 @@ push 1
 add
 lc
 js
-print
 halt
 
 function0:
@@ -40,15 +39,16 @@ js
 function1:
 cfp
 lra
-push 1
+push 0
+push 0
 lfp
 add
 lw
 push 1
 lfp
-lw
 add
-sw
+lw
+mm
 srv
 sra
 pop

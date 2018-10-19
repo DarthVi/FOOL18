@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "testAsgMember.fool";
+            String fileName = "testAsgMemberInMethod.fool";
             CharStream input = CharStreams.fromFileName("src/testDebuggingGeneric/" +fileName);
 
 
