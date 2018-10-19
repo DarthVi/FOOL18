@@ -191,12 +191,25 @@ public interface FOOLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStats(FOOLParser.StatsContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FOOLParser#memberasm}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMemberasm(FOOLParser.MemberasmContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code varasmStat}
 	 * labeled alternative in {@link FOOLParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitVarasmStat(FOOLParser.VarasmStatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code memberasmStat}
+	 * labeled alternative in {@link FOOLParser#stat}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMemberasmStat(FOOLParser.MemberasmStatContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code printStat}
 	 * labeled alternative in {@link FOOLParser#stat}.

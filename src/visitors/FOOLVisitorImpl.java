@@ -457,4 +457,20 @@ public class FOOLVisitorImpl extends FOOLBaseVisitor<INode>
 
         return res;
     }
+
+    @Override
+    public INode visitMemberasm(FOOLParser.MemberasmContext ctx)
+    {
+        String objectId = ctx.ID(0).getText();
+        String memberId = ctx.ID(1).getText();
+        INode exp = visit(ctx.exp());
+
+        return new MemberAsmNode(objectId, memberId, exp, ctx);
+    }
+
+    @Override
+    public INode visitMemberasmStat(FOOLParser.MemberasmStatContext ctx)
+    {
+        return visit(ctx.memberasm());
+    }
 }

@@ -162,6 +162,13 @@ public class VirtualMachine
                     memoryManager.push(realOffset);
                     memoryManager.push(objectAddress);
                     break;
+                case SVMParser.MM:
+                    value = memoryManager.pop();
+                    int oAddr = memoryManager.pop();
+                    int indexOfMember = memoryManager.pop();
+                    int realAddress = oAddr + indexOfMember + 1;
+                    memoryManager.setMemory(realAddress, value);
+                    break;
                 case SVMParser.HALT :
                     System.out.println((memoryManager.sp < memoryManager.getMemorySize()) ?
                             "Last value before halting: " + memoryManager.getMemory(memoryManager.sp) :

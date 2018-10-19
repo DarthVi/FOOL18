@@ -31,7 +31,7 @@ public class Main {
         try {
 
 
-            String fileName = "classTestNullConditional.fool";
+            String fileName = "testAsgMember.fool";
             CharStream input = CharStreams.fromFileName("src/testDebuggingGeneric/" +fileName);
 
 

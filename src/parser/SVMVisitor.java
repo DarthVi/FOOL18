@@ -229,4 +229,11 @@ public interface SVMVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCopy(SVMParser.CopyContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code modmember}
+	 * labeled alternative in {@link SVMParser#assembly}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitModmember(SVMParser.ModmemberContext ctx);
 }

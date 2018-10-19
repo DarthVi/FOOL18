@@ -49,6 +49,7 @@ assembly:
 	  | LC              #lc
 	  | CALCHOFF        #calchoff
 	  | COPY            #copy
+	  | MM              #modmember
 
 	  ;
 
@@ -83,6 +84,7 @@ NEW      : 'new' ; //operator used to instantiate objects
 COPY     : 'copy' ;
 CALCHOFF : 'calchoff'; //calculate real offset of object from logical and physical ones
 LC       : 'lc';
+MM       : 'mm';
 COL	 : ':' ;
 LABEL	 : ('a'..'z'|'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')* ;
 NUMBER	 : '0' | ('-')?(('1'..'9')('0'..'9')*) ;

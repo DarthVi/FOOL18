@@ -69,7 +69,10 @@ value  : (MINUS)?  INTEGER                                        #intVal
 
 stats:  (stat)+ ;
 
+memberasm: ID '.' ID ASM exp;
+
 stat:   varasm SEMIC  #varasmStat
+        | memberasm SEMIC #memberasmStat
         | PRINT LPAR exp RPAR SEMIC #printStat
         | IF cond=exp THEN CLPAR thenBranch=stats CRPAR ELSE CLPAR elseBranch=stats CRPAR   #ifStat
         ;

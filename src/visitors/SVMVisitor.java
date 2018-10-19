@@ -248,6 +248,13 @@ public class SVMVisitor extends SVMBaseVisitor
         return null;
     }
 
+    @Override
+    public Object visitModmember(SVMParser.ModmemberContext ctx)
+    {
+        addCode(SVMParser.MM);
+        return null;
+    }
+
     /**
      * After having collected references, we must put them them where needed in order
      * to be used appropriately in the VM code.

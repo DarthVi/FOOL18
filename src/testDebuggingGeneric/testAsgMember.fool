@@ -1,0 +1,12 @@
+class A(int p)
+{
+    int getP()
+        p;
+}
+
+let
+    A a = new A(3);
+in
+    print(a.getP());
+    a.p = 5;
+    print(a.getP());
