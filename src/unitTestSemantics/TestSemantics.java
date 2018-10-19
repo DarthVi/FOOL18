@@ -479,6 +479,29 @@ public class TestSemantics
 
     @SuppressWarnings("Duplicates")
     @Test
+    public void testIfClass4()
+    {
+        String filePath = "src/unitTestSemantics/ifTestClass4.fool";
+
+        try
+        {
+            String code = getStringFromFile(filePath);
+            root = compiler.buildAST(code);
+            errors = compiler.checkSemantics(root, compiler.getEnvironment());
+            IType type = compiler.typeCheck(root);
+
+            assertThat(type, instanceOf(ClassType.class));
+
+            assertEquals("A", ((ClassType) type).getClassName());
+        }
+        catch (LexerException | ParserException | TypeException | IOException | SemanticException e)
+        {
+            fail("Exception thrown with valid code");
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Test
     public void testMethodNotDefinedInClass()
     {
         String filePath = "src/unitTestSemantics/testUndefFunMethod.fool";
