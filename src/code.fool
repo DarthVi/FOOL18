@@ -1,5 +1,25 @@
+class A()
+{
+    int n()
+        1;
+}
+
+class B extends A()
+{
+    int n()
+        2;
+}
+
+class C extends A()
+{
+    int n()
+        3;
+}
+
 let
-    int x = 2;
-    int y = 3;
+    B b = new B();
+    C c = new C();
+    A a = if true then { c } else { b };
 in
-    x+y+1;
+    print(a.n());
+    //print(a.n());
