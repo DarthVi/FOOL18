@@ -1,10 +1,10 @@
-Progetto FOOL COMPILER
+#Progetto FOOL COMPILER
 
-Corso: Compilatori e Interpreti
+##Corso: Compilatori e Interpreti
 
 Anno Accademico: 2017/2018
 
-Laurea Magistrale in Informatica
+Laurea Magistrale in Informatica, Università di Bologna
 
 
 
@@ -19,7 +19,6 @@ Laurea Magistrale in Informatica
 Realizzato da:
 
 | Vito Vincenzo Covella | Lorenzo Massimiliani | Lorenzo Vainigli |
-| --- | --- | --- |
 
 #
 
