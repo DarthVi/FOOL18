@@ -1,6 +1,6 @@
-##Progetto FOOL COMPILER
+# Progetto FOOL COMPILER
 
-Corso: Compilatori e Interpreti
+## Corso: Compilatori e Interpreti
 
 Anno Accademico: 2017/2018
 
